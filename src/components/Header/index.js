@@ -1,5 +1,7 @@
 import React from "react";
-import './Header.scss'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import './Header.scss';
 
 const Header = () => {
     const menu = [ 
@@ -16,7 +18,10 @@ const Header = () => {
                 ))}
             </ul>
             <div className="title"><a href="/">취향저격이쥬?</a></div>
-            <div className="login"><a href="/">로그인</a></div>
+            <div className="my-profile">
+                <div className="login"><a href="/"><FontAwesomeIcon icon={faUser} /></a></div>
+                <div className="cart"><a href="/"><FontAwesomeIcon icon={faCartShopping} /></a></div>
+            </div>
         </div>
     )
 }

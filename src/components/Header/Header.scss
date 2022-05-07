@@ -9,12 +9,12 @@
     align-items: center;
     background-color: #8ce99a;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
 
     .menu {
         display: flex;
-        margin-left: 14%;
+        margin-left: 12%;
         li {
             margin-right: 2.4rem;
         }
@@ -27,8 +27,14 @@
         font-weight: 700;
     }
 
-    .login {
-        margin-right: 14%;
+    .my-profile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 10%;
+
+        .login {
+            margin-right: 1.6rem;
+        }
     }
 }
-

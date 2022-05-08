@@ -1,15 +1,63 @@
 import React from "react";
 import './Footer.scss';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
+    const Menus = [
+        {id: 1, title: "고객센터", contents: ["이메일|gmlwh124@naver.com"]},
+        {id: 2, title: "문의", contents : ["공지사항", "FAQ", "1:1문의"]},
+        {id: 3, title: "혜택", contents : ["혜택내용1", "혜택내용2"]},
+        {id: 4, title: "우리의 가치관", contents: ["Find Your Type", "Try Something NEW"]}
+    ];
+
+    const tags = [
+        '주소 : 경기도 김포한강 1로 9, 905동 1001호',
+        '사업자등록번호 : 777-22-44444',
+        '상호 : 취향저격이쥬?',
+        '사업자정보확인',
+        '대표 : 문희조',
+        '고객 문의 이메일 : gmlwh124@naver.com',
+        '고객 센터 : 010-4038-0540',
+        '통신판매업신고번호 : 제2022-경기화성-0540호',
+        '개인정보취급방침 및 이용약관',
+        '개인정보관리책임자: 문희조'
+    ]
+
     return (
         <div className="footer-area">
-            <ul className="icon-area">
-                <li>아이콘1</li>
-                <li>아이콘2</li>
-                <li>아이콘3</li>
-            </ul>
-            <div className="">Find Your Favorite!!</div>
+            <div className="content-area">
+                <div className="help-area">
+                    {Menus.map(menu => (
+                        <div key={menu.id}className="help-box">
+                            <div key={menu.title}className="help-title">{menu.title}</div>
+                            <ul>
+                                {menu.contents.map(content=> (
+                                    <li key={content} className="help-content">{content}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+                <div>
+
+                </div>
+                <div className="divider"></div>
+                <div className="icon-box">
+                    <a href="/"><FontAwesomeIcon icon={faInstagram} /></a> 
+                    <a href="/"><FontAwesomeIcon icon={faFacebookF} /></a> 
+                    <a href="/"><FontAwesomeIcon icon={faPencil} /></a> 
+                </div>
+                <div className="Goal">Try Something New!!</div>
+                <div className="txt">주식회사 희조컴퍼니</div>
+                <div className="tag-area">
+                    {tags.map(tag => (
+                        <p key={tag.toString()}>{tag}</p>
+                    ))}
+                </div>
+                <div className="txt">CopyRight 2022. 희조컴퍼니 Co. all rights reserved.</div>
+            </div>
         </div>
     )
 };

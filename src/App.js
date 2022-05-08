@@ -1,6 +1,6 @@
 import React from "react";
 import { Footer, Header } from "./components";
-import { Home } from './pages';
+import { Home, Login } from './pages';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
@@ -19,6 +19,7 @@ function App() {
       <GlobalStyle/>
       <Header/>
       <Home/>
+      <Login/>
       <Footer/>
     </React.Fragment>
   )

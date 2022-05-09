@@ -8,75 +8,78 @@
 
     .result_box{
         width: 30vw;
+        height: 75vh;
         border: 2px solid gray;
         border-radius: 0.8rem;
-    }
-
-    .content_section{
-        height: 35vh;
-
-        h2{
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: 0.8rem 0 0.8rem 0;
-        }
-
-        p{
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 0.8rem 0 0.8rem 0;
-        }
         
-        .img_section{
+        .content_section{
+            height: 35vh;
+    
+            h2{
+                font-size: 1.4rem;
+                font-weight: 700;
+                margin: 0.8rem 0 0.8rem 0;
+            }
+    
+            p{
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin: 0.8rem 0 0.8rem 0;
+            }
+            
+            .img_section{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                height: 25vh;
+    
+                .image{
+                    border: 2px solid gray;
+                    border-radius: 0.8rem;
+                    width: 16vw;
+                    height: 22vh;
+    
+                    .cocktailImage{
+                        width: 13vw;
+                        height: 20vh;
+                    }
+                
+                }
+            }
+    
+    
+        }
+    
+        .button_section{
             display: flex;
-            justify-content: center;
+            justify-content: space-evenly;
             align-items: center;
             text-align: center;
-            height: 25vh;
-
-            .image{
-                border: 2px solid gray;
+            height: 20vh;
+    
+            button{
+                padding: $padding;
                 border-radius: 0.8rem;
-                width: 16vw;
-                height: 22vh;
-
-                .cocktailImage{
-                    width: 13vw;
-                    height: 20vh;
-                }
-            
+                background-color: #e9ecef;
+                cursor: pointer;
             }
         }
-
-
-    }
-
-    .button_section{
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        text-align: center;
-        height: 20vh;
-
-        button{
-            padding: $padding;
-            border-radius: 0.8rem;
-            background-color: #e9ecef;
-            cursor: pointer;
+    
+        .sns_share_section{
+            height: 15vh;
+            
+            .list_title{
+                margin-bottom: $margin*2;
+                font-size: 1rem;
+                font-weight: 700;
+            }
+    
+            a{
+                padding: $padding;
+            }
         }
     }
 
-    .sns_share_section{
-        height: 15vh;
-        
-        .list_title{
-            margin-bottom: $margin*2;
-            font-size: 1rem;
-            font-weight: 700;
-        }
 
-        a{
-            padding: $padding;
-        }
-    }
 }

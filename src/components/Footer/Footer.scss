@@ -1,18 +1,16 @@
 @import '../../variables';
 
 .footer-area {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     display: flex;    
     justify-content: center;
     align-items: center;
-    background-color: #8ce99a;
+    background-color: $default-color;
     color: white;
     font-weight: 600;
 
     .content-area {
-        margin-top: $margin;
+        margin-top: $margin*2;
         padding: $padding;
         width: 80%;
 
@@ -57,9 +55,9 @@
 
         .tag-area {
             display: flex;
-            font-size: 0.66rem;
             flex-wrap: wrap;
             justify-content: center;
+            font-size: 0.66rem;
             
             p {
                 margin: $margin*0.2 0;

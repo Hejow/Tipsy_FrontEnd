@@ -5,21 +5,21 @@ import './Header.scss';
 
 const Header = () => {
     const menu = [ 
-        { title : '메뉴1', location: '/' },
-        { title : '메뉴2', location: '/' },
-        { title : '메뉴3', location: '/' },
+        { title : '알아보기', location: '/' },
+        { title : '추천받기', location: '/' },
+        { title : '찾아보기', location: '/' },
     ];
 
     return (
         <div className="header-area">
-            <ul className="menu">
+            <ul className="nav-menu">
                 {menu.map(({title, location}) => (
                     <li key={title}><a href={location}>{title}</a></li>
                 ))}
             </ul>
-            <div className="title"><a href="/">취향저격이쥬?</a></div>
+            <div className="header-title"><a href="/">취향저격이쥬?</a></div>
             <div className="my-profile">
-                <div className="login"><a href="/"><FontAwesomeIcon icon={faUser} /></a></div>
+                <div className="login"><a href="/login"><FontAwesomeIcon icon={faUser} /></a></div>
                 <div className="cart"><a href="/"><FontAwesomeIcon icon={faCartShopping} /></a></div>
             </div>
         </div>

@@ -1,77 +1,71 @@
-.login{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+@import '../../variables';
+
+.login-area{
+    padding: $padding*12 0;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    
-    .logo{
-        font-size: 2rem;
-        margin-bottom: 1rem;
+
+    .login-title {
+        text-align: center;
+        margin: $margin*2 0;
+        font-size: 1.8rem;
         font-weight: 700;
     }
 
-    .input{
-        width: 27rem;
-        height: 3.5rem;
-        padding: 0.8rem;
-        border: 1px solid #adb5bd;
-        border-radius: 0.5rem;
-
-        #input_id, #input_pw{
-            width: 100%;
-            height: 100%;
-            border: none;
-            padding: 0;
-        }
-    }
-
-    .login_box{
-        .name{
-            text-align: left;
-            margin: 1rem 0 1rem;
+    .login-box {
+        display: inline-block;
+        margin: $margin*2 0;
+        width: 30vw;
+        
+        .input-type { 
+            display: flex;
             font-size: 0.8rem;
             font-weight: 700;
         }
+
+        .input-content {
+            margin: $margin 0;
+            height: 3rem;
+            border: 1px solid #adb5bd;
+            border-radius: 0.5rem;
+
+            input {
+                height: 100%;
+                width: 100%;
+                border: none;
+            }
+        }
+
+        button{
+            margin-top: $margin;
+            width: 100%;
+            height: 3rem;
+            background-color: $default-color;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
     }
 
-    
-    #login_button{
-        margin: 20px 0 0;
-        background-color: #8ce99a;
-        width: 100%;
-        border: 0;
-        height: 2.5rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 0.5rem;
-    }
-    
-    input:focus{
-        outline: none;
-    }
-
-    .find{
+    .find-area{
+        margin-bottom: $margin;
+        display: flex;
+        justify-content: center;
         font-size: 0.8rem;
         font-weight: 700;
-        margin-top: 1rem;
 
-        .find_id{
-            margin-right: 1rem;
+        p::after {
+            margin: $margin;
+            content: '|';
         }
 
-        .find_pw{
-            margin: 0 1rem 0 1rem ;
-        }
-
-        .join{
-            margin-left: 1rem;
+        p:last-child::after {
+            content: none;
         }
     }
-    
-
 }
 
 

@@ -6,54 +6,42 @@ const Login = () => {
     const [inputPw, setInputPw] = useState("");
 
     const handleClick = (e) => {
+        e.preventDefault();
         alert("로그인이 되었습니다.");
     };
+
     return (
-        <div className="login">
-            <div className="logo">            
-                <h2>취향저격이쥬</h2>
-            </div>
-            <div className="login_box">
-                <div className="name">
-                        아이디
-                </div>
-                <div className="input">
+        <div className="login-area">
+            <div className="login-title">로그인</div>
+            <form onClick={handleClick} className="login-box">
+                <div className="input-type">아이디</div>
+                <div className="input-content">
                     <input
                         type="text"
-                        id ="input_id"
-                        name="input_id" 
+                        name='id'
                         value={inputId}
                         placeholder="ID"
                         onChange={(e) => {
                             setInputId(e.target.value)
                         }}/>
                 </div>
-                <div className="name">
-                        비밀번호
-                </div>
-                <div className="input">
+                <div className="input-type">비밀번호</div>
+                <div className="input-content">
                     <input 
                         type="password"
-                        id= "input_pw" 
-                        name="input_pw" 
+                        name='password'
                         value={inputPw}
                         placeholder = "Password"
                         onChange={(e) => {
                             setInputPw(e.target.value)
                         }}/>
                 </div>
-            </div>
-            <div className="button">
-                <button onClick={handleClick} id="login_button">로그인</button>
-            </div>
-            <div className="find">
-            <span>
-                    <a href="/" className="find_id">아이디 찾기</a>
-                    |
-                    <a href="/" className="find_pw">비밀번호 찾기</a>
-                    |
-                    <a href="/" className="join">회원가입</a>
-                </span>
+                <button type='submit'>로그인</button>
+            </form>
+            <div className="find-area">
+                <p><a href="/">아이디 찾기</a></p>
+                <p><a href="/">비밀번호 찾기</a></p>
+                <p><a href="/">회원가입</a></p>
             </div>
         </div>
     )

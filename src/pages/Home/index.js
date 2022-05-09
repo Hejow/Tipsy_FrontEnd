@@ -1,13 +1,25 @@
 import React from "react";
 import './Home.scss';
 
-const Home = () => {
+const Wrapper = ({ img, children }) => {
     return (
-        <React.Fragment>
-            <div className="home-area">
-                This is Home
-            </div>
-        </React.Fragment>
+        <div style={{
+            backgroundImage: `url(${process.env.PUBLIC_URL}${img})`}}
+            className='main-section bg'>
+            {children}
+        </div>
+    )
+};
+
+const Home = () => {
+    const imgs = [
+        '/img/wine.png',
+    ];
+
+    return (
+        <Wrapper img={imgs[0]}>
+            <div>Hello this is Home</div>
+        </Wrapper>
     )
 };
 

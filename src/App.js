@@ -1,6 +1,6 @@
-import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer, Header } from "./components";
-import { Home, Login } from './pages';
+import { Home, Login, Test, TestResult } from './pages';
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
@@ -10,18 +10,23 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     text-decoration: none;
     color: inherit;
+    outline: none;
   }
 `;
 
 function App() {
   return (
-    <React.Fragment>
+    <BrowserRouter>
       <GlobalStyle/>
       <Header/>
-      <Home/>
-      <Login/>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/test' element={<Test />} />
+        <Route path='/testresult' element={<TestResult />} />
+      </Routes>
       <Footer/>
-    </React.Fragment>
+    </BrowserRouter>
   )
 }
 

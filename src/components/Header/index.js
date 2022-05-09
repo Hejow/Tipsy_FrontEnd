@@ -14,7 +14,7 @@ const Header = () => {
     const menu = [ 
         { title : '알아보기', location: '/test' },
         { title : '추천받기', location: '/' },
-        { title : '찾아보기', location: '/' },
+        { title : '찾아보기', location: '/findshop' },
     ];
 
     const location = useLocation();
@@ -38,7 +38,7 @@ const Header = () => {
             window.removeEventListener("scroll", handleScroll);
         };
     });
-
+    
     return (
         <div className={
             location.pathname === '/' ? 
@@ -47,10 +47,10 @@ const Header = () => {
         }>
             <ul className="nav-menu">
                 {menu.map(({title, location}) => (
-                    <li className='pointer' key={title} onClick={() => navigate({location})}>{title}</li>
+                    <li className='pointer' key={title} onClick={() => navigate(`${location}`)}>{title}</li>
                 ))}
             </ul>
-            <div className="header-title pointer" onClcik={() => navigate('/')}>취향저격이쥬?</div>
+            <div className="header-title pointer" onClick={() => navigate('/')}>취향저격이쥬?</div>
             <div className="my-profile">
                 <div className="login pointer" onClick={() => navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
                 <div className="cart pointer"><FontAwesomeIcon icon={faCartShopping} /></div>

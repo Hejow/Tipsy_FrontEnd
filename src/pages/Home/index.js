@@ -18,7 +18,11 @@ const Home = () => {
 
     return (
         <Wrapper img={imgs[0]}>
-            <div className="test_start"><a href="/test">START</a></div>
+            <div className="main-ment ">
+                지금 마시는 술<br/>
+                정말로 당신의<br/>
+                취향인가요?
+            </div>
         </Wrapper>
     )
 };

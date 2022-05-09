@@ -1,19 +1,7 @@
-import React, {useState, useRef} from "react";
+import React from "react";
 import "./Test.scss";
 
 const Test = () => {
-    const Drink = [
-        {name: "soju", score: 0},
-        {name: "beer", score: 0},
-        {name: "wine", score: 0},
-        {name: "liquor", score: 0},
-        {name: "cocktail", score: 0},
-    ];
-
-    const handleClick = (e) => {
-        e.preventDefault();
-    }
-
     return (
         <div className="test">
             <div className="progress_bar">

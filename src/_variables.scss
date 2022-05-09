@@ -3,5 +3,11 @@ $margin: 0.8rem;
 $padding: 1rem;
 
 
-// default color
+// color
 $default-color: black;
+
+// class
+.ch-color {
+    background-color: rgba(0,0,0,0);
+    color: white;
+}

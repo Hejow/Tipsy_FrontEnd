@@ -13,7 +13,7 @@ const Login = () => {
     return (
         <div className="login-area">
             <div className="login-title">로그인</div>
-            <form onClick={handleClick} className="login-box">
+            <form className="login-box">
                 <div className="input-type">아이디</div>
                 <div className="input-content">
                     <input

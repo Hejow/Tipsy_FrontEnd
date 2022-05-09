@@ -18,7 +18,7 @@ const Home = () => {
 
     return (
         <Wrapper img={imgs[0]}>
-            <div>Hello this is Home</div>
+            <div className="test_start"><a href="/test">START</a></div>
         </Wrapper>
     )
 };

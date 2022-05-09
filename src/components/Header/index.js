@@ -1,17 +1,18 @@
 import React, {useState, useEffect} from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import './Header.scss';
 
 const Header = () => {
+    let navigate = useNavigate();
     const [scroll, setScroll] = useState({
         y: 0,
         active: false
     });
 
     const menu = [ 
-        { title : '알아보기', location: '/' },
+        { title : '알아보기', location: '/test' },
         { title : '추천받기', location: '/' },
         { title : '찾아보기', location: '/' },
     ];
@@ -46,13 +47,13 @@ const Header = () => {
         }>
             <ul className="nav-menu">
                 {menu.map(({title, location}) => (
-                    <li key={title}><a href={location}>{title}</a></li>
+                    <li className='pointer' key={title} onClick={() => navigate({location})}>{title}</li>
                 ))}
             </ul>
-            <div className="header-title"><a href="/">취향저격이쥬?</a></div>
+            <div className="header-title pointer" onClcik={() => navigate('/')}>취향저격이쥬?</div>
             <div className="my-profile">
-                <div className="login"><a href="/login"><FontAwesomeIcon icon={faUser} /></a></div>
-                <div className="cart"><a href="/"><FontAwesomeIcon icon={faCartShopping} /></a></div>
+                <div className="login pointer" onClick={() => navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
+                <div className="cart pointer"><FontAwesomeIcon icon={faCartShopping} /></div>
             </div>
         </div>
     )

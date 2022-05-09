@@ -21,13 +21,12 @@ function App() {
     <BrowserRouter>
       <GlobalStyle/>
       <Header />
-      {/* <Routes>
+      <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/test' element={<Test />} />
         <Route path='/testresult' element={<TestResult />} />
-      </Routes> */}
-      <TestResult/>
+      </Routes>
       <Footer/>
     </BrowserRouter>
   )

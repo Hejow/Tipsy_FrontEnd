@@ -5,11 +5,6 @@ const Login = () => {
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        alert("로그인이 되었습니다.");
-    };
-
     return (
         <div className="login-area">
             <div className="login-title">로그인</div>

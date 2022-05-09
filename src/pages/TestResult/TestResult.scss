@@ -2,11 +2,12 @@
 
 .test_result{
     display:flex;
-    padding: $padding*12 0;
+    padding: $padding*9 0;
     justify-content: center;
     text-align: center;
 
     .result_box{
+        padding: $padding*2;
         width: 30vw;
         height: 75vh;
         border: 2px solid gray;
@@ -15,16 +16,15 @@
         .content_section{
             height: 35vh;
     
-            h2{
+            h2 {
                 font-size: 1.4rem;
                 font-weight: 700;
-                margin: 0.8rem 0 0.8rem 0;
-            }
-    
-            p{
-                font-size: 1.2rem;
-                font-weight: 700;
-                margin: 0.8rem 0 0.8rem 0;
+                line-height: 2rem;
+
+                span {
+                    font-size: 1rem;
+                    color: red;
+                }
             }
             
             .img_section{
@@ -44,16 +44,13 @@
                         width: 13vw;
                         height: 20vh;
                     }
-                
                 }
             }
-    
-    
         }
     
         .button_section{
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-around;
             align-items: center;
             text-align: center;
             height: 20vh;
@@ -75,11 +72,10 @@
                 font-weight: 700;
             }
     
-            a{
+            a {
                 padding: $padding;
+                font-size: 1.6rem;
             }
         }
     }
-
-
 }

@@ -20,7 +20,7 @@ const Header = () => {
     const location = useLocation();
 
     const handleScroll = () => {
-        scroll.y > 19 ? setScroll({
+        scroll.y > 20 ? setScroll({
             y: window.pageYOffset, 
             active: true
         }) : setScroll({

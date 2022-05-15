@@ -1,9 +1,12 @@
 import React,  { useState }  from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 const Login = () => {
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
+
+    let naviagte = useNavigate();
 
     return (
         <div className="login-area">
@@ -34,9 +37,9 @@ const Login = () => {
                 <button type='submit'>로그인</button>
             </form>
             <div className="find-area">
-                <p><a href="/">아이디 찾기</a></p>
-                <p><a href="/">비밀번호 찾기</a></p>
-                <p><a href="/">회원가입</a></p>
+                <p className="pointer" onClick={() => naviagte('/login')}>아이디 찾기</p>
+                <p className="pointer" onClick={() => naviagte('/login')}>비밀번호 찾기</p>
+                <p className="pointer" onClick={() => naviagte('/login')}>회원가입</p>
             </div>
         </div>
     )

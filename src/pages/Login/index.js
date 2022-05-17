@@ -34,12 +34,12 @@ const Login = () => {
                             setInputPw(e.target.value)
                         }}/>
                 </div>
-                <button type='submit'>로그인</button>
+                <button type='button'>로그인</button>
             </form>
             <div className="find-area">
+                <p className="pointer" onClick={() => naviagte('/signup')}>회원가입</p>
                 <p className="pointer" onClick={() => naviagte('/login')}>아이디 찾기</p>
                 <p className="pointer" onClick={() => naviagte('/login')}>비밀번호 찾기</p>
-                <p className="pointer" onClick={() => naviagte('/signup')}>회원가입</p>
             </div>
         </div>
     )

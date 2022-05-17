@@ -1,5 +1,83 @@
 @import "../../variables";
 
 .signup-area {
+    display: flex;
     padding: $header-height 0;
+    justify-content: center;
+    align-items: center;
+
+    .signup-container {
+        padding: $padding*3 $padding*8;
+        border: 0.1px solid gray;
+        width: 34rem;
+
+        .signup-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .signup-row {
+            padding-top: $padding*0.6;
+            
+            .signup-type {
+                padding-top: $padding;
+                font-weight: 700;
+                font-size: 0.8rem;
+                color: gray;
+            }
+
+            .signup-input-area {
+                display: flex;
+                justify-content: space-between;
+                padding: $padding*0.8 0 $padding*0.2;
+                border-bottom: 1.5px solid gray;
+
+                .signup-input {
+                    font-size: 0.8rem;
+                }
+            } 
+            
+            .signup-radio-area {
+                display: flex;
+                padding-top: $padding*0.6;
+                
+                .signup-radio-box {
+                    font-size: 0.8rem;
+                    flex-basis: 6rem;
+
+                    &:first-child {
+                        padding-left: $padding*0.4;
+                    }
+                }
+
+                .signup-radio {
+                    position: relative;
+                    top: 1.6px;
+                }
+            }
+        }
+
+        .signup-btn {
+            padding-top: $padding;
+            text-align: center;
+        }
+    }    
+}
+
+input, select {
+    border: none;
+}
+
+.util {
+    display: none;
+}
+
+button {
+    border: none;
+    width: 100%;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border-radius: 8px;
+    line-height: 2rem;
 }

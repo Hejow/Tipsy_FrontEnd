@@ -39,7 +39,7 @@ const Login = () => {
             <div className="find-area">
                 <p className="pointer" onClick={() => naviagte('/login')}>아이디 찾기</p>
                 <p className="pointer" onClick={() => naviagte('/login')}>비밀번호 찾기</p>
-                <p className="pointer" onClick={() => naviagte('/login')}>회원가입</p>
+                <p className="pointer" onClick={() => naviagte('/signup')}>회원가입</p>
             </div>
         </div>
     )

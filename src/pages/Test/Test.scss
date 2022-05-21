@@ -5,50 +5,30 @@
     padding: $header-height 0;
     justify-content: center;
     text-align: center;
-    flex-direction: column;
-    
-    .progress_bar{
-        height: 10vh;
-    }
 
-    .question_area{
-        height: 5vh;
-        font-weight: 600;
-        font-size: 0.8rem;
+    
+    .test_area{
+        padding: $padding*3 $padding*0;
+        width: 30rem;
+        height: 26rem;
+        border: 0.1px solid gray;
+        border-radius: 0.8rem;
         
-    }
-    
-    .answer_area{
-        display: flex;
-        justify-content: center;
-        margin-top: $margin*5;
-
-
-        .choice_a{
-            margin-right: $margin;
-        }
-
-        .choice_b{
-            margin-left: $margin;
-        }
-
-        .choice_a, .choice_b{
-            text-align: center;
-            width: 20vw;
-            height: 10vh;
-            font-size: 0.8rem;
+        .question_area{
             font-weight: 600;
-            text-align: center;
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .choice{
+            width: 30vw;
+            margin-top: 0.8rem;
             border: 1px solid #e9ecef;
             border-radius: 0.8rem;
             background-color: #e9ecef;
             cursor: pointer;
-
-            .choice_text{
-                font-size: 0.8rem;
-            }
-
         }
-
     }
+    
 }

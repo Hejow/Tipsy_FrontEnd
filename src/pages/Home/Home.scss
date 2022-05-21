@@ -15,11 +15,63 @@
     z-index: 5000;
 
     .main-ment {
+        position: absolute;
         margin-left: 18%;
         font-size: 3rem;
         font-weight: 700;
         line-height: 4rem;
     }
 
+    .btn-scroll-down {
+        position:absolute;
+        left: 50%;
+        bottom: 4%;
+        font-size: 2.4rem;
+    }
 }
 
+.section {
+    padding: $padding*10 $padding*16;
+    justify-content: center;
+    align-items: center;
+
+    .section1-ment {
+        font-size: 1.4rem;
+        line-height: 2rem;
+    }
+
+    .section1-nav-btn {
+        padding-top: $padding*5;
+        display: block;
+        text-align: center;
+
+        .section1-to-test {
+            padding: $padding 0;
+            width: 30%;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+    }
+}
+
+.ani-mv {
+    animation: ani-mv 1s;
+}
+
+.ani-bounce {
+    animation: ani-bounce 1.3s infinite;
+}
+
+@keyframes ani-mv {
+    0% { 
+        transform: translateY(70px); 
+        opacity: 0;
+    }
+    100% { transform: translateY(0); }
+}
+
+@keyframes ani-bounce {
+    0% { transform: translateY(0px);}
+    50% { transform: translateY(-12px);}
+    100% {transform: translateY(00px);}
+}

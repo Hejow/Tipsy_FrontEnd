@@ -5,11 +5,8 @@ import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import './Header.scss';
 
 const Header = () => {
+    const location = useLocation();
     let navigate = useNavigate();
-    const [scroll, setScroll] = useState({
-        y: 0,
-        active: false
-    });
 
     const menu = [ 
         { title : '알아보기', location: '/test' },
@@ -17,32 +14,19 @@ const Header = () => {
         { title : '찾아보기', location: '/findshop' },
     ];
 
-    const location = useLocation();
+    const [isScroll, setIsScroll] = useState(false);
 
-    const handleScroll = () => {
-        scroll.y > 20 ? setScroll({
-            y: window.pageYOffset, 
-            active: true
-        }) : setScroll({
-            y: window.pageYOffset, 
-            active: false
-        })
-    };
-    
     useEffect(() => {
-        function scrollListener() {
-            window.addEventListener("scroll", handleScroll);
-        }
-        scrollListener();
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    });
+        window.addEventListener('scroll', () => {
+            window.pageYOffset > 20 ?
+            setIsScroll(true) : setIsScroll(false)
+        });
+    }, [isScroll]);
     
     return (
         <div className={
             location.pathname === '/' ? 
-            (scroll.active ? 'header-area' : 'header-area ch-color') :
+            (isScroll ? 'header-area' : 'header-area style-ch') :
             'header-area'
         }>
             <ul className="nav-menu">

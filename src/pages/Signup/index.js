@@ -64,7 +64,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className="signup-btn">
-                        <button type="button">회원가입하기</button>
+                        <button className="pointer" type="button">회원가입하기</button>
                     </div>
                 </form>
             </main>

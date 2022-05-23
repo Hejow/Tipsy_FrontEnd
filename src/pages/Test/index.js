@@ -33,30 +33,33 @@ const Test = () => {
     };
 
     return (
-        <section>
             <div className="test">
-                <div className="test_area">
-                    <div className="progress_bar">
-                        진행바
+                <article>
+                    <div className="test_area">
+                        <div className="test_header">
+                            <div className="test_title">주류 취향 테스트</div>
+                            <div className="progress_bar">진행바</div>
+                        </div>
+                    <section>
+                        <div className="question_area">질문</div>
+                        <div className="answer_area">
+                            <button type="submit" className="choice" onClick={nextSlideA}>
+                                선택지 1
+                            </button>
+                            <button type="submit" className="choice" onClick={nextSlideB}>
+                                선택지 2
+                            </button>
+                            <button type="submit" className="choice" onClick={nextSlideC}>
+                                선택지 3
+                            </button>
+                            <button type="submit" className="choice" onClick={nextSlideD}>
+                                선택지 4
+                            </button>
+                        </div>
+                    </section>
                     </div>
-                    <div className="question_area">질문</div>
-                    <div className="answer_area">
-                        <button type="submit" className="choice" onClick={nextSlideA}>
-                            선택지 1
-                        </button>
-                        <button type="submit" className="choice" onClick={nextSlideB}>
-                            선택지 2
-                        </button>
-                        <button type="submit" className="choice" onClick={nextSlideC}>
-                            선택지 3
-                        </button>
-                        <button type="submit" className="choice" onClick={nextSlideD}>
-                            선택지 4
-                        </button>
-                    </div>
-                </div>    
+                </article> 
             </div>
-        </section>
     );
 }
 

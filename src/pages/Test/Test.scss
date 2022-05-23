@@ -8,22 +8,43 @@
 
     
     .test_area{
-        padding: $padding*3 $padding*0;
-        width: 30rem;
-        height: 26rem;
+        padding: $padding*0 $padding*0;
+        width: 26rem;
+        height: 30rem;
         border: 0.1px solid gray;
         border-radius: 0.8rem;
+
+        .test_header{
+            
+
+            .test_title{
+                background-color: black;
+                color: #e9ecef;
+                border: 1px solid #e9ecef;
+                padding: 0.8rem 0 0.8rem;
+                font-size: 1.2rem;
+                font-weight: 600;
+                border-top-right-radius: 0.8rem;
+                border-top-left-radius: 0.8rem;
+
+            }
+
+            .progress_bar{
+                background-color: #e9ecef;
+            }
+        }
         
         .question_area{
             font-weight: 600;
             font-size: 1.4rem;
             margin-top: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 0.8rem;
         }
         
         .choice{
-            width: 30vw;
-            margin-top: 0.8rem;
+            width: 18rem;
+            height: 3.6rem;
+            margin-top: 1.2rem;
             border: 1px solid #e9ecef;
             border-radius: 0.8rem;
             background-color: #e9ecef;

@@ -16,6 +16,7 @@ const TestResult = () => {
                             <img className="cocktailImage" alt="cocktail" src="img/cocktail.png"></img>
                         </div>
                     </div>
+                </div>
                 <div className="button_section">
                     <button type="sumit">다시하기</button> 
                     <button type="sumit">추천받기</button> 
@@ -25,8 +26,6 @@ const TestResult = () => {
                     <a href="/testresult"><FontAwesomeIcon icon={faInstagram} /></a> 
                     <a href="/testresult"><FontAwesomeIcon icon={faFacebookF} /></a> 
                     <a href="/testresult"><FontAwesomeIcon icon={faPaperclip} /></a> 
-                </div>
-
                 </div>
             </div>
         </div>

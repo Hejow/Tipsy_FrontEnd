@@ -5,16 +5,17 @@
     padding: $header-height 0;
     justify-content: center;
     text-align: center;
+    
 
     .result_box{
-        padding: $padding*2;
-        width: 30vw;
-        height: 75vh;
-        border: 2px solid gray;
+        padding: $padding*0.3 $padding*2;
+        width: 26rem;
+        height: 40rem;
+        border: 0.1px solid gray;
         border-radius: 0.8rem;
         
         .content_section{
-            height: 35vh;
+            height: 20rem;
     
             h2 {
                 font-size: 1.4rem;
@@ -31,18 +32,17 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                text-align: center;
-                height: 25vh;
+                height: 16rem;
     
                 .image{
                     border: 2px solid gray;
                     border-radius: 0.8rem;
-                    width: 16vw;
-                    height: 22vh;
+                    width: 14rem;
+                    height: 12rem;
     
                     .cocktailImage{
-                        width: 13vw;
-                        height: 20vh;
+                        width: 12rem;
+                        height: 11.8rem;
                     }
                 }
             }
@@ -50,13 +50,13 @@
     
         .button_section{
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            text-align: center;
-            height: 20vh;
+            height: 8rem;
     
             button{
                 padding: $padding;
+                margin: $margin;
                 border-radius: 0.8rem;
                 background-color: #e9ecef;
                 cursor: pointer;
@@ -64,10 +64,10 @@
         }
     
         .sns_share_section{
-            height: 15vh;
+            height: 2rem;
             
             .list_title{
-                margin-bottom: $margin*2;
+                margin: $margin*4  $margin*2;
                 font-size: 1rem;
                 font-weight: 700;
             }

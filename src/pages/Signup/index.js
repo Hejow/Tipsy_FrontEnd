@@ -2,6 +2,14 @@ import { React,  } from "react";
 import './Signup.scss';
 
 const Signup = () => {
+    const years = Array.from({length: 2003-1900}, (v, i) => 2003-i);
+    const months = Array.from({length: 12}, (v, i) => i+1);
+    const days = [
+        Array.from({length:31}, (v,i) => i+1),
+        Array.from({length:30}, (v,i) => i+1),
+        Array.from({length:28}, (v,i) => i+1)        
+    ];
+
     return (
         <div className="signup-area">
             <main className="signup-container">
@@ -38,15 +46,21 @@ const Signup = () => {
                         <div className="signup-input-area">
                             <select name="year">
                                 <option value="">연도</option>
-                                <option value="">연</option>
+                                {years.map((y) => (
+                                    <option key={y} value={y}>{y}</option>
+                                ))}
                             </select>
                             <select name="month">
                                 <option value="">월</option>
-                                <option value="">월</option>
+                                {months.map((m) => (
+                                    <option key={m} value={m}>{m}</option>
+                                ))}
                             </select>
                             <select name="day">
                                 <option value="">일</option>
-                                <option value="">일</option>
+                                {
+                                    
+                                }
                             </select>
                         </div>
                     </div>

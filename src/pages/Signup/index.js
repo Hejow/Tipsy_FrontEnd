@@ -1,7 +1,16 @@
 import { React, useState } from "react";
 import './Signup.scss';
+import { firestore } from '../../firebase';
 
 const Signup = () => {
+    const user_info = firestore.collection('user_info');
+    const years = Array.from({length: 2003-1900}, (v, i) => 2003-i);
+    const months = Array.from({length: 12}, (v, i) => i+1);
+    const days = [
+        Array.from({length:31}, (v,i) => i+1),
+        Array.from({length:30}, (v,i) => i+1),
+        Array.from({length:28}, (v,i) => i+1)        
+    ];
     const [inputs, setInputs] = useState({
         id: '',
         password: '',
@@ -12,8 +21,16 @@ const Signup = () => {
         day: '',
         sex: ''
     })
-
     const { id, password, re_password, name, year, month, day } = inputs;
+
+    const CreateUser = (e) => {
+        e.preventDefault();
+        const info = {id: '', password: '', name: '', year: '', month: '', day: '', sex: ''};
+        for (let key of Object.keys(info)) {
+            info[key] = e.target[key].value;
+        }
+        user_info.doc(info.name).set(info);
+    }
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -23,22 +40,14 @@ const Signup = () => {
         });
     };
 
-    let selected_month = inputs.month === '2' ? 2 :
+    let selected_month = ( inputs.month === '2' ) ? 2 :
     ( [4,6,9,11].includes(parseInt(inputs.month)) ? 1 : 0);
-
-    const years = Array.from({length: 2003-1900}, (v, i) => 2003-i);
-    const months = Array.from({length: 12}, (v, i) => i+1);
-    const days = [
-        Array.from({length:31}, (v,i) => i+1),
-        Array.from({length:30}, (v,i) => i+1),
-        Array.from({length:28}, (v,i) => i+1)        
-    ];
 
     return (
         <div className="signup-area">
             <main className="signup-container">
                 <h2 className="signup-title">회원가입</h2>
-                <form>
+                <form  onSubmit={CreateUser}>
                     <div className="signup-row">
                         <div className="signup-type">아이디</div>
                         <div className="signup-input-area">
@@ -102,7 +111,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className="signup-btn">
-                        <button className="pointer" type="button">회원가입하기</button>
+                        <button className="pointer" type="submit">회원가입하기</button>
                     </div>
                 </form>
             </main>

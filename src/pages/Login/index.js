@@ -3,10 +3,21 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 
 const Login = () => {
-    const [inputId, setInputId] = useState("");
-    const [inputPw, setInputPw] = useState("");
-
     let naviagte = useNavigate();
+    const [inputs, setInputs] = useState({
+        id: '',
+        password: ''        
+    });
+
+    const {id, password} = inputs;
+
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        });
+    };
 
     return (
         <div className="login-area">
@@ -17,22 +28,18 @@ const Login = () => {
                     <input
                         type="text"
                         name='id'
-                        value={inputId}
+                        value={id}
                         placeholder="ID"
-                        onChange={(e) => {
-                            setInputId(e.target.value)
-                        }}/>
+                        onChange={onChange}/>
                 </div>
                 <div className="input-type">비밀번호</div>
                 <div className="input-content">
                     <input 
                         type="password"
                         name='password'
-                        value={inputPw}
+                        value={password}
                         placeholder = "Password"
-                        onChange={(e) => {
-                            setInputPw(e.target.value)
-                        }}/>
+                        onChange={onChange}/>
                 </div>
                 <button type='button'>로그인</button>
             </form>

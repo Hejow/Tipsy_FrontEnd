@@ -1,4 +1,3 @@
-/* global kakao */
 import React, {useEffect} from "react";
 import "./FindShop.scss";
 
@@ -16,6 +15,7 @@ const FindShop = () => {
         map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
         
     }, [])
+    
     return(
         <>
             <div className="findshop-area">

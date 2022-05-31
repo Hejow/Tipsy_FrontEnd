@@ -27,11 +27,11 @@ const Login = () => {
         user_info.doc(inputs.id).get()
         .then( info => {
             if (info.exists) {
-                const user_data = info.data();
-                if( inputs.id === user_data.id && inputs.password === user_data.password) {
+                const data = info.data();
+                if( inputs.id === data.id && inputs.password === data.password) {
                     naviagte('/');
-                    localStorage.setItem('id', inputs.id);
-                    localStorage.setItem('pw', inputs.password);
+                    const user_data = JSON.stringify(data);
+                    localStorage.setItem('user', user_data);
                 } else {
                     window.alert('아이디 또는 비밀번호를 확인하세요!!');
                 }

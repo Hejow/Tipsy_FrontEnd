@@ -1,0 +1,66 @@
+@import '../../variables';
+
+
+.findshop-area{
+    display: flex;
+    padding: $header-height 0;
+    justify-content: center;
+    align-items: center;
+
+    .findshop-container{
+        padding: $padding*0 $padding*0;
+        width: 40rem;
+        height: 38rem;
+        border: 0.1px solid gray;
+
+        .map_title_area{
+            background-color: black;
+            color: white;
+            height: 3rem;
+
+            .title{
+                font-weight: 700;
+                width: 20%;
+                padding: 1rem 0 1rem 1rem;
+            }
+        }
+
+        #map{
+            height: 14rem;
+        }
+
+        .shop_list{
+            display: flex;
+            flex-wrap: wrap;
+            height: 18rem;
+
+            .list_item{
+                padding: 0.8rem;
+                width: 50%;
+            }
+        }
+
+        .page_button{
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            line-height: 2.4rem;
+            height: 3rem;
+            border-top: 0.1px solid gray;
+
+            .page_indicate{
+                margin: 0 $margin*0.6;
+
+                span::after{
+                    margin: $margin*0.4;
+                    content: '/';
+                }
+
+                span:last-child::after {
+                    content: none;
+                }
+            }
+        }
+
+    }
+}

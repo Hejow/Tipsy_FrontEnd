@@ -52,7 +52,7 @@ const Signup = () => {
             }
     
             user_info.doc(info.id).set( { ...info, type: 'null' });
-            alert("회원가입이 완료되었습니다!!\n로그인 페이지로 이동합니다.");
+            window.alert("회원가입이 완료되었습니다!!\n로그인 페이지로 이동합니다.");
             navigate('/login');
         } else {
             setErrmsg(true);

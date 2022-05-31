@@ -1,8 +1,10 @@
 import React,  { useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
+import { firestore } from '../../firebase';
 
 const Login = () => {
+    const user_info = firestore.collection('user_info');
     let naviagte = useNavigate();
     const [inputs, setInputs] = useState({
         id: '',
@@ -19,10 +21,30 @@ const Login = () => {
         });
     };
 
+    const userLogin = (e) => {
+        e.preventDefault();
+        
+        user_info.doc(inputs.id).get()
+        .then( info => {
+            if (info.exists) {
+                const user_data = info.data();
+                if( inputs.id === user_data.id && inputs.password === user_data.password) {
+                    naviagte('/');
+                    localStorage.setItem('id', inputs.id);
+                    localStorage.setItem('pw', inputs.password);
+                } else {
+                    window.alert('아이디 또는 비밀번호를 확인하세요!!');
+                }
+            } else {
+                window.alert('해당 아이디가 존재하지 않습니다!!');
+            }
+        })
+    };
+
     return (
         <div className="login-area">
             <div className="login-title">로그인</div>
-            <form className="login-box">
+            <form className="login-box" onSubmit={userLogin}>
                 <div className="input-type">아이디</div>
                 <div className="input-content">
                     <input
@@ -41,7 +63,7 @@ const Login = () => {
                         placeholder = "Password"
                         onChange={onChange}/>
                 </div>
-                <button type='button'>로그인</button>
+                <button type='submit'>로그인</button>
             </form>
             <div className="find-area">
                 <p className="pointer" onClick={() => naviagte('/signup')}>회원가입</p>

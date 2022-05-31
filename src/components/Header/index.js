@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCartShopping, faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import './Header.scss';
 
 const Header = () => {
@@ -15,6 +15,7 @@ const Header = () => {
     ];
 
     const [isScroll, setIsScroll] = useState(false);
+    const [logOn, setLogon] = useState(false);
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
@@ -22,6 +23,20 @@ const Header = () => {
             setIsScroll(true) : setIsScroll(false)
         });
     }, [isScroll]);
+
+    useEffect(() => {
+        window.localStorage.length !== 0 ? 
+        setLogon(true) : setLogon(false);
+    }, [location]);
+
+    const logOut = () => {
+        localStorage.clear();
+        if (location.pathname !== '/') {
+            navigate('/');
+        } else {
+            window.location.reload();
+        }
+    }
     
     return (
         <div className={
@@ -36,7 +51,8 @@ const Header = () => {
             </ul>
             <div className="header-title pointer" onClick={() => navigate('/')}>취향저격이쥬?</div>
             <div className="my-profile">
-                <div className="login pointer" onClick={() => navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
+                <div className="login pointer" onClick={() => logOn ? navigate('/mypage') : navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
+                <div className={logOn ? "header-logout pointer" : "header-logout pointer hide"}><FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logOut} /></div>
                 <div className="cart pointer"><FontAwesomeIcon icon={faCartShopping} /></div>
             </div>
         </div>

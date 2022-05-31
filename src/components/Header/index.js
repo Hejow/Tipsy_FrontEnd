@@ -11,7 +11,7 @@ const Header = () => {
     const menu = [ 
         { title : '알아보기', location: '/test' },
         { title : '추천받기', location: '/' },
-        { title : '찾아보기', location: '/' },
+        { title : '찾아보기', location: '/findshop' },
     ];
 
     const [isScroll, setIsScroll] = useState(false);

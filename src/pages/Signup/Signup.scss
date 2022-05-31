@@ -21,7 +21,7 @@
             padding-top: $padding*0.6;
             
             .signup-type {
-                padding-top: $padding;
+                padding-top: $padding*0.8;
                 font-weight: 700;
                 color: gray;
             }
@@ -31,12 +31,14 @@
                 justify-content: space-between;
                 padding: $padding*0.8 0 $padding*0.2;
                 border-bottom: 1.5px solid gray;
+                transition: 0.6s;
+            }
 
-                .signup-input {
-                    font-size: 0.8rem;
-                }
-            } 
-            
+            .signup-input {
+                width: 80%;
+                font-size: 0.8rem;
+            }
+
             .signup-radio-area {
                 display: flex;
                 padding-top: $padding*0.6;
@@ -57,9 +59,18 @@
             }
         }
 
-        .signup-btn {
+        .signup-btn-area {
             padding-top: $padding;
             text-align: center;
+
+            .signup-btn {
+                border: none;
+                width: 100%;
+                font-weight: 700;
+                font-size: 0.8rem;
+                border-radius: 8px;
+                line-height: 2rem;
+            }
         }
     }    
 }
@@ -68,15 +79,26 @@ input, select {
     border: none;
 }
 
-.util {
-    display: none;
+.signup-input-err {
+    display: flex;
+    justify-content: space-between;
+    padding: $padding*0.8 0 $padding*0.2;
+    border-bottom: 1.5px solid rgba(red, 0.6);
+    transition: 0.6s;
 }
 
-button {
-    border: none;
-    width: 100%;
+.err-msg {
+    padding: $padding*0.4 0 0 $padding*0.4;
+    color: rgba(red, 0.6);
+    font-size: 0.6rem;
+    font-weight: 600;
+}
+
+.signup-id-check {
+    padding: $padding*0.3;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-size: 0.4rem;
     font-weight: 700;
-    font-size: 0.8rem;
-    border-radius: 8px;
-    line-height: 2rem;
+    color: gray;
 }

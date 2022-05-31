@@ -31,23 +31,25 @@
 }
 
 .section {
-    padding: $padding*10 $padding*16;
+    padding: $padding*12 $padding*16;
     justify-content: center;
     align-items: center;
+    border-bottom: 1px solid #000;
 
-    .section1-ment {
+    .section-ment {
         font-size: 1.4rem;
         line-height: 2rem;
     }
 
-    .section1-nav-btn {
+    .section-nav-btn {
         padding-top: $padding*5;
         display: block;
         text-align: center;
 
-        .section1-to-test {
+        .section-to-test {
             padding: $padding 0;
-            width: 30%;
+            width: 40%;
+            border-radius: 14px;
             font-size: 1.2rem;
             font-weight: 700;
         }
@@ -73,5 +75,5 @@
 @keyframes ani-bounce {
     0% { transform: translateY(0px);}
     50% { transform: translateY(-12px);}
-    100% {transform: translateY(00px);}
+    100% {transform: translateY(0px);}
 }

@@ -29,13 +29,13 @@
             }
         }
 
-        .divider {
+        .footer-divider {
             border-top: 1px solid white;
             margin: $margin*2 0;
             width: 100%;
         }
 
-        .icon-box {
+        .footer-icon-box {
             font-size: 1.4rem;
             margin: $margin*2 0 $margin;
             text-align: center;
@@ -48,31 +48,39 @@
             }
         }
 
-        .Goal {
+        .footer-goal {
             margin: $margin 0;
             text-align: center;
         }
 
-        .tag-area {
+        .footer-tag-area {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
+            width: 100%;
             font-size: 0.66rem;
-            
-            p {
-                margin: $margin*0.2 0;
-            }
 
-            ::after {
-                content: '|';
-                margin: $margin*0.2;
-            }
+            .footer-tags {
+                display: flex;
+                flex-wrap: wrap;    
+                justify-content: center;
+                width: 70%;
 
-            :last-child::after {
-                content: none;
+                p {
+                    margin: $margin*0.2 0;
+                }
+    
+                ::after {
+                    content: '|';
+                    margin: $margin*0.2;
+                }
+    
+                :last-child::after {
+                    content: none;
+                }
             }
         }
-        .txt {
+
+        .footer-txt {
             margin: $margin*1.4 0;
             text-align: center;
             font-size: 0.66rem;

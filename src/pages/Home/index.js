@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const sectionRef = useRef(null);
 
     return (

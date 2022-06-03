@@ -1,3 +1,3 @@
-export {default as Footer} from './Footer'
-export {default as Header} from './Header'
-export {default as Questions} from './Questions'
+export {default as Footer} from './Footer';
+export {default as Header} from './Header';
+export {default as Question} from './Question';

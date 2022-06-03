@@ -43,20 +43,22 @@ const Footer = () => {
                 <div>
 
                 </div>
-                <div className="divider"></div>
-                <div className="icon-box">
+                <div className="footer-divider"></div>
+                <div className="footer-icon-box">
                     <a href="/"><FontAwesomeIcon icon={faInstagram} /></a> 
                     <a href="/"><FontAwesomeIcon icon={faFacebookF} /></a> 
                     <a href="/"><FontAwesomeIcon icon={faPencil} /></a> 
                 </div>
-                <div className="Goal">Try Something New!!</div>
-                <div className="txt">주식회사 희조컴퍼니</div>
-                <div className="tag-area">
-                    {tags.map(tag => (
-                        <p key={tag.toString()}>{tag}</p>
-                    ))}
+                <div className="footer-goal">Try Something New!!</div>
+                <div className="footer-txt">주식회사 희조컴퍼니</div>
+                <div className="footer-tag-area">
+                    <div className="footer-tags">
+                        {tags.map(tag => (
+                            <p key={tag.toString()}>{tag}</p>
+                        ))}
+                    </div>
                 </div>
-                <div className="txt">CopyRight 2022. 희조컴퍼니 Co. all rights reserved.</div>
+                <div className="footer-txt">CopyRight 2022. 희조컴퍼니 Co. all rights reserved.</div>
             </div>
         </div>
     )

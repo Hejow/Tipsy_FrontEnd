@@ -1,55 +1,35 @@
 @import "../../variables";
 
-.test{
+.test-area {
     display: flex;
-    padding: $header-height 0;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    padding: $header-height 0;
 
-    .test_area{
-        padding: $padding*0 $padding*0;
-        width: 50rem;
-        height: 25rem;
+    .test-container {
+        width: 60vw;
+        border: 1px solid #000;
+        text-align: center;
 
-        .progress_bar{
-            border: 1px solid white;
-            border-radius: 0.8rem;
-            background-color: #f1f3f5;
-        }
-    
-        .question_area{
-            margin: $margin*3 0 $margin*2 0;
-            font-weight: 600;
-            font-size: 1.4rem;
-        }
-
-        .answer_area{
+        .test-progress-area {
             display: flex;
-            justify-content: space-evenly;
-            text-align: center;
+            justify-content: center;
+            padding-top: $padding*2;
 
-            .choice{
-                width: 8rem;
-                height: 10rem;
-                margin-top: $margin*5;
-                border: 1px solid #f1f3f5;
-                border-radius: 0.8rem;
-                background-color: #f1f3f5;
-                cursor: pointer;
+            .test-progress {
+                width: 60%;
+                height: 12px;
+                background-color: rgba(gray, 0.4);
+                border-radius: 4px;
 
-                .img{
-                    height: 8rem;
-                    margin-bottom: $margin*0.8;
-                }
-
-                .answer{
-                    font-size: 0.8rem;
-                    font-weight: 400;
+                .test-progress-bar {
+                    width: 70%;
+                    height: 100%;
+                    background-color: rgba(gray, 0.6);
+                    border-radius: 4px 0 0 4px;
+                    transition: 0.7s;
                 }
             }
         }
-        
-
     }
-    
 }

@@ -32,7 +32,7 @@ const Signup = () => {
 
     const { id, password, re_password, name, year, month, day } = inputs;
 
-    let navigate= useNavigate();
+    const navigate= useNavigate();
 
     const CreateUser = (e) => {
         e.preventDefault();

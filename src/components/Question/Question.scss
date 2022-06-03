@@ -1,0 +1,39 @@
+@import '../../variables';
+
+.question-area {
+    padding-top: $padding*2;
+    
+    .question-title {
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+
+    .question-content-area {
+        padding-top: $padding*1.4;
+
+        .question-img-area {
+            display: flex;
+            justify-content: center;
+
+            .question-img {
+                border: 1px solid #000;
+                width: 60%;
+                height: 200px;
+            }
+        }
+
+        .question-option-area {
+            padding: $padding*2 $padding;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .question-options {
+                margin: 0 $margin*2;
+                padding: $padding;
+                border: 1px solid #000;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

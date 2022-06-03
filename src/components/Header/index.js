@@ -6,7 +6,7 @@ import './Header.scss';
 
 const Header = () => {
     const location = useLocation();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     const menu = [ 
         { title : '알아보기', location: '/test' },
@@ -36,7 +36,7 @@ const Header = () => {
         } else {
             window.location.reload();
         }
-    }
+    };
     
     return (
         <div className={

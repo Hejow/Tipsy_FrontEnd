@@ -5,7 +5,7 @@ import { firestore } from '../../firebase';
 
 const Login = () => {
     const user_info = firestore.collection('user_info');
-    let naviagte = useNavigate();
+    const naviagte = useNavigate();
     const [inputs, setInputs] = useState({
         id: '',
         password: ''        

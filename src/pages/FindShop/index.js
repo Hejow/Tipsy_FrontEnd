@@ -11,8 +11,7 @@ const FindShop = () => {
 			level: 5
 		};
         const map = new kakao.maps.Map(container, options);
-        const mapTypeControl = new kakao.maps.MapTypeControl();
-        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
         
     }, [])
     

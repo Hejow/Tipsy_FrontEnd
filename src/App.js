@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer, Header} from "./components";
-import { Home, Login, Signup, Test, TestResult, Mypage, FindShop } from './pages';
+import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend} from './pages';
 import { ScrollTop } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
@@ -30,6 +30,7 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/findshop' element={<FindShop />}/>
         <Route path='/mypage' element={<Mypage />} />
+        <Route path='/recommend' element={<Recommend />} />
       </Routes>
       <Footer/>
     </BrowserRouter>

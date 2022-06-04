@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Test.scss";
 import { Question } from '../../components';
 
 const Test = () => {
+    const [ prog, setProg ] = useState(0);
+
     const question_list = [
         {
             title: '오늘 마실 술은 어떤 맛이 좋을까??',
@@ -18,7 +20,9 @@ const Test = () => {
         }
     ];
 
-    console.log(question_list);
+    const toNext = () => {
+        setProg(prog + 1);
+    };
 
     return (
         <div className="test-area">
@@ -28,7 +32,7 @@ const Test = () => {
                         <div className="test-progress-bar" ></div>
                     </div>
                 </div>
-                <Question list={question_list[0]}/>
+                <Question list={question_list[prog]} toNext={toNext} />
             </div>
         </div>
     );

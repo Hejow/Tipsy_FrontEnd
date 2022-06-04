@@ -5,3 +5,4 @@ export {default as Test} from './Test';
 export {default as TestResult} from './TestResult';
 export {default as Signup} from './Signup';
 export {default as Mypage} from './Mypage';
+export {default as Testguide } from './Testguide';

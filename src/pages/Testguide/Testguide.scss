@@ -1,0 +1,49 @@
+@import '../../variables';
+
+.testguide-area {
+    padding: $header-height 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .testguide-container {
+        text-align: center;
+        width: 50vw;
+        height: 50vh;
+        background-color: rgba(#f1f3f5, 0.8);
+        border-radius: 14px;
+
+        .testguide-ment {
+            padding-top: $padding * 4;
+            font-weight: 700;
+            font-size: 3rem;
+            line-height: 60px;
+        }
+
+        .testguide-tested {
+            padding: $padding*2 0 $padding;
+            font-size: 0.8rem;
+
+            span {
+                color: #74c0fc;
+                font-weight: 700;
+                font-size: 0.9rem;
+            }
+        }
+
+        .testguide-start-btn {
+            width: 20%;
+            height: 10%;
+            font-weight: 700;
+            font-size: 1.6rem;
+            border-radius: 14px;
+            background-color: rgba(gray, 0.2);
+        }
+
+        .testguide-notice {
+            padding-top: $padding;
+            color: gray;
+            font-size: 0.8rem;
+        }
+    }
+}

@@ -37,7 +37,7 @@ const Home = () => {
                     멘트3<br/>
                 </div>
                 <div className="section-nav-btn">
-                    <button className="section-to-test pointer" onClick={() => navigate('/test')}>테스트 하러가기</button>
+                    <button className="section-to-test pointer" onClick={() => navigate('/testguide')}>테스트 하러가기</button>
                 </div>
             </div>
         </>

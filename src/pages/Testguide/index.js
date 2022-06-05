@@ -14,7 +14,7 @@ const Testguide = () => {
                     술 취향!
                 </div>
                 <div className="testguide-tested">지금까지 <span>19,958</span>명이 자기 취향을 알아봤어요!!</div>
-                <button className="testguide-start-btn pointer" onClick={() => navigate('/test')}>알아보기</button>
+                <button className="testguide-start-btn pointer" onClick={() => navigate('/test')}>시 작!</button>
                 <div className="testguide-notice">&#8251; 절대적인 기준은 아니지만 추천에는 도움을 줍니다!! &#8251;</div>
             </div>
         </div>

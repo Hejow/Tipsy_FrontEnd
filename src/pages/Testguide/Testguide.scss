@@ -1,27 +1,27 @@
 @import '../../variables';
 
 .testguide-area {
-    padding: $header-height 0;
+    padding: $header-height 0 $header-height*0.6;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .testguide-container {
+        padding: $padding*5 0;
         text-align: center;
-        width: 50vw;
-        height: 50vh;
+        width: 40vw;
+        height: 60vh;
         background-color: rgba(#f1f3f5, 0.8);
         border-radius: 14px;
 
         .testguide-ment {
-            padding-top: $padding * 4;
             font-weight: 700;
             font-size: 3rem;
-            line-height: 60px;
+            line-height: 62px;
         }
 
         .testguide-tested {
-            padding: $padding*2 0 $padding;
+            padding: $padding*3 0 $padding;
             font-size: 0.8rem;
 
             span {
@@ -32,8 +32,8 @@
         }
 
         .testguide-start-btn {
-            width: 20%;
-            height: 10%;
+            width: 28%;
+            height: 14%;
             font-weight: 700;
             font-size: 1.6rem;
             border-radius: 14px;
@@ -42,7 +42,7 @@
 
         .testguide-notice {
             padding-top: $padding;
-            color: gray;
+            color: rgba(gray, 0.6);
             font-size: 0.8rem;
         }
     }

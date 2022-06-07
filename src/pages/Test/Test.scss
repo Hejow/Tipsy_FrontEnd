@@ -7,27 +7,47 @@
     padding: $header-height 0;
 
     .test-container {
-        width: 50vw;
-        border: 1px solid #000;
+        width: 60vw;
         text-align: center;
+        
+        .test-title-area{
+            padding-top: $padding*2;
+            display: flex;
+            justify-content: center;
+
+            .test-title-container{
+                display: flex;
+                justify-content: space-between;
+                width: 58%;
+                font-size: 0.8rem;
+
+                .test-title {
+                    font-weight: 700;
+                }
+
+                .test-cnt {
+                    color: rgba(gray, 0.8);
+                }
+            }
+        }
 
         .test-progress-area {
             display: flex;
             justify-content: center;
-            padding-top: $padding*2;
+            padding-top: $padding*0.6;
 
             .test-progress {
                 width: 60%;
-                height: 12px;
-                background-color: rgba(gray, 0.4);
+                height: 6px;
+                background-color: rgba(gray, 0.3);
                 border-radius: 4px;
 
                 .test-progress-bar {
-                    width: 70%;
+                    width: 30%;
                     height: 100%;
-                    background-color: rgba(gray, 0.6);
-                    border-radius: 4px 0 0 4px;
-                    transition: 0.7s;
+                    background-color: rgba(black, 0.8);
+                    border-radius: 4px;
+                    transition: 0.6s;
                 }
             }
         }

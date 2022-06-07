@@ -4,6 +4,7 @@ import { Question } from '../../components';
 
 const Test = () => {
     const [ prog, setProg ] = useState(0);
+    
     const question_list = [
         {
             title: '술은 자고로 무슨 맛이지??',

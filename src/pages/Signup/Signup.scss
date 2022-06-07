@@ -102,3 +102,13 @@ input, select {
     font-weight: 700;
     color: gray;
 }
+
+.signup-id-check-ok {
+    padding: $padding*0.3;
+    border: 0.1px solid gray;
+    border-radius: 4px;
+    font-size: 0.4rem;
+    font-weight: 700;
+    background-color: #8ce99a;
+    color: #495057;
+}

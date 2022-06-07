@@ -30,8 +30,11 @@ const Login = () => {
                 const data = info.data();
                 if( inputs.id === data.id && inputs.password === data.password) {
                     naviagte('/');
-                    const user_data = JSON.stringify(data);
-                    localStorage.setItem('user', user_data);
+                    const now_year = new Date().getFullYear();
+                    localStorage.setItem('FMT_user_id', data.id);
+                    localStorage.setItem('FMT_user_birth', now_year - data.year + 1);
+                    localStorage.setItem('FMT_user_type', data.type);
+                    localStorage.setItem('FMT_user_sex', data.sex);
                 } else {
                     window.alert('아이디 또는 비밀번호를 확인하세요!!');
                 }

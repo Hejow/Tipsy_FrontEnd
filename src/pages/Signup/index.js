@@ -86,6 +86,18 @@ const Signup = () => {
         });
     };
 
+    const onIdChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        });
+        setIsOk({
+            ...isOk,
+            id_check: false
+        })
+    }
+
     let selected_month = ( inputs.month === '2' ) ? 2 :
     ( [4,6,9,11].includes(parseInt(inputs.month)) ? 1 : 0);
 
@@ -103,7 +115,7 @@ const Signup = () => {
                             <input 
                                 name="id" 
                                 value={id} 
-                                onChange={onChange} 
+                                onChange={onIdChange} 
                                 onFocus={(e) => e.target.placeholder=''}
                                 onBlur={(e) => e.target.placeholder='ID'}
                                 placeholder='ID'
@@ -112,10 +124,10 @@ const Signup = () => {
                                 maxLength="20"
                             />
                             <span 
-                                className="signup-id-check pointer"
+                                className={isOk.id_check ? "signup-id-check-ok pointer" : "signup-id-check pointer"}
                                 onClick={isAvailable_id}
                             >
-                                중복확인
+                                {isOk.id_check ? '확인완료!' : '중복확인'}
                             </span>
                         </div>
                         <p className={ isOk.id ? 'hide err-msg' : 'err-msg'}>

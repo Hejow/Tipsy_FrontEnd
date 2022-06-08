@@ -1,11 +1,14 @@
 import React from "react";
 import "./TestResult.scss";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
 
 const TestResult = () => {
+    const { state } = useLocation();
+    console.log(state);
     return (
         <div className="test_result">
             <div className="result_box">

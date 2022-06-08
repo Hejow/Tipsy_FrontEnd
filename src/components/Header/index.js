@@ -9,7 +9,6 @@ const Header = () => {
     const navigate = useNavigate();
 
     const menu = [ 
-
         { title : '알아보기', location: '/testguide' },
         { title : '추천받기', location: '/recommend' },
         { title : '찾아보기', location: '/findshop' },

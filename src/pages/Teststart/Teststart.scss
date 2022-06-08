@@ -1,28 +1,30 @@
 @import '../../variables';
 
-.testguide-area {
+.teststart-area {
     padding: $header-height 0 $header-height*0.6;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .testguide-container {
+    .teststart-container {
         padding: $padding*5.6 0;
         text-align: center;
         width: 36vw;
         height: 66vh;
-        background-color: rgba(#f1f3f5, 0.6);
+        background-color: #ffec99;
         border-radius: 14px;
 
-        .testguide-ment {
+        .teststart-ment {
             font-weight: 700;
             font-size: 3rem;
             line-height: 62px;
+            color: #6f4f28;
         }
 
-        .testguide-tested {
+        .teststart-tested {
             padding: $padding*4 0 $padding*1.4;
             font-size: 0.8rem;
+            font-weight: 700;
 
             span {
                 color: #74c0fc;
@@ -31,22 +33,24 @@
             }
         }
 
-        .testguide-start-btn {
+        .teststart-start-btn {
             width: 28%;
             height: 12%;
             font-weight: 700;
             font-size: 1.6rem;
             border: 0.4px solid #000;
             border-radius: 14px;
-            background-color: rgba(gray, 0.2);
+            background-color: red;
+            color: white;
 
             &:hover {
                 background-color: rgba(#f1f3f5, 0.8);
+                color: black;
                 transition: 0.3s;
             }
         }
 
-        .testguide-notice {
+        .teststart-notice {
             padding-top: $padding*1.4;
             color: rgba(gray, 0.8);
             font-size: 0.8rem;

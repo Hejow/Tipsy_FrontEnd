@@ -53,3 +53,41 @@
         }
     }
 }
+
+.test-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    background-color: rgba(white, 0.4);
+    
+    .test-loading-circle {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        border: 0.24rem solid gray;
+        border-radius: 50%;
+        width: 2.2rem;
+        height: 2.2rem;
+        animation: loadingCircle 1s ease-in-out infinite;
+
+        .test-loading-empty {
+            position: absolute;
+            background-color: white;
+            width: 0.8rem;
+            height: 2rem;
+            top: -1rem;
+        }
+    }
+}
+
+@keyframes loadingCircle {
+    from {
+        transform: none;
+    } to {
+        transform: rotate(360deg);
+    }
+}

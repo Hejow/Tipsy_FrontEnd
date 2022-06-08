@@ -1,24 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Test.scss";
+import { useNavigate } from "react-router-dom";
 import { Question } from '../../components';
 
 const Test = () => {
     const [ prog, setProg ] = useState(0); 
     const [ result, setResult] = useState({
-        s:0, b:0, w1:0, w2:0, c:0
+        soju:0, beer:0, wine:0, wiskey:0, cocktail:0
     });
-    
+    const [ loading, setLoding ] = useState(false);
+    const navigate = useNavigate();
     const question_lists = [
         {
             title: '술은 자고로 무슨 맛이지??',
             options: [
                 {
                     opt:'술은 달아야지!',
-                    score:{s:2, b:3, w1:4, w2:1, c:4}
+                    score:{soju:2, beer:3, wine:4, wiskey:1, cocktail:4}
                 }, 
                 {
                     opt:'술은 써야지!',
-                    score:{s:4, b:3, w1:2, w2:5, c:2} 
+                    score:{soju:4, beer:3, wine:2, wiskey:5, cocktail:2} 
                 }
             ]
         },
@@ -27,11 +29,11 @@ const Test = () => {
             options: [
                 {
                     opt:'본연의 향!',
-                    score:{s:0, b:2, w1:3, w2:0, c:4}
+                    score:{soju:0, beer:2, wine:3, wiskey:0, cocktail:4}
                 }, 
                 {
                     opt:'달달한 향!',
-                    score:{s:4, b:1, w1:3, w2:4, c:1}
+                    score:{soju:4, beer:1, wine:3, wiskey:4, cocktail:1}
                 }
             ]
         },
@@ -40,11 +42,11 @@ const Test = () => {
             options: [
                 {
                     opt:'가벼운거 가자!',
-                    score:{s:1, b:3, w1:3, w2:3, c:5}
+                    score:{soju:1, beer:3, wine:3, wiskey:3, cocktail:5}
                 }, 
                 {
                     opt:'든든한거 가자!',
-                    score:{s:5, b:3, w1:3, w2:3, c:1}
+                    score:{soju:5, beer:3, wine:3, wiskey:3, cocktail:1}
                 }
             ]
         },
@@ -53,11 +55,11 @@ const Test = () => {
             options: [
                 {
                     opt:'다 불러서 마시자!',
-                    score:{s:4, b:4, w1:3, w2:3, c:1}
+                    score:{soju:4, beer:4, wine:3, wiskey:3, cocktail:1}
                 }, 
                 {
                     opt:'한 두명만 불러!',
-                    score:{s:2, b:2, w1:3, w2:3, c:5}
+                    score:{soju:2, beer:2, wine:3, wiskey:3, cocktail:5}
                 }
             ]
         },
@@ -66,11 +68,11 @@ const Test = () => {
             options: [
                 {
                     opt:'왁자지껄! 시끌벅적!',
-                    score:{s:4, b:4, w1:2, w2:3, c:1}
+                    score:{soju:4, beer:4, wine:2, wiskey:3, cocktail:1}
                 },
                 {
                     opt:'고급진 곳! 우아하게!',
-                    score:{s:2, b:2, w1:4, w2:3, c:5}
+                    score:{soju:2, beer:2, wine:4, wiskey:3, cocktail:5}
                 }
             ]
         },
@@ -79,11 +81,11 @@ const Test = () => {
             options: [
                 {
                     opt:'나 좀 마시지!',
-                    score:{s:4, b:1, w1:2, w2:5, c:2}
+                    score:{soju:4, beer:1, wine:2, wiskey:5, cocktail:2}
                 }, 
                 {
                     opt:'응애에오!',
-                    score:{s:2, b:5, w1:4, w2:1, c:4}
+                    score:{soju:2, beer:5, wine:4, wiskey:1, cocktail:4}
                 }
             ]
         },
@@ -92,11 +94,11 @@ const Test = () => {
             options: [
                 {
                     opt:'특별한 날에!',
-                    score:{s:2, b:2, w1:4, w2:5, c:4}
+                    score:{soju:2, beer:2, wine:4, wiskey:5, cocktail:4}
                 }, 
                 {
                     opt:'그냥 마시는거지!',
-                    score:{s:4, b:4, w1:2, w2:1, c:2}
+                    score:{soju:4, beer:4, wine:2, wiskey:1, cocktail:2}
                 }
             ]
         },
@@ -105,11 +107,11 @@ const Test = () => {
             options: [
                 {
                     opt:'비싼거 마시자!',
-                    score:{s:2, b:2, w1:4, w2:5, c:4}
+                    score:{soju:2, beer:2, wine:4, wiskey:5, cocktail:4}
                 }, 
                 { 
                     opt:'그냥 늘 마시던걸로!',
-                    score:{s:4, b:4, w1:2, w2:1, c:2}
+                    score:{soju:4, beer:4, wine:2, wiskey:1, cocktail:2}
                 }
             ]
         },
@@ -118,11 +120,11 @@ const Test = () => {
             options: [
                 {
                     opt:'취해야지! 양으로 승부!',
-                    score:{s:2, b:3, w1:4, w2:1, c:4}
+                    score:{soju:2, beer:3, wine:4, wiskey:1, cocktail:4}
                 }, 
                 {
                     opt:'안 취해도 OK! 질로 승부!',
-                    score:{s:4, b:3, w1:2, w2:5, c:2}
+                    score:{soju:4, beer:3, wine:2, wiskey:5, cocktail:2}
                 }
             ]
         },
@@ -131,11 +133,11 @@ const Test = () => {
             options: [
                 {
                     opt:'한 방에 그냥 탁!',
-                    score:{s:5, b:0, w1:0, w2:3, c:0}
+                    score:{soju:5, beer:0, wine:0, wiskey:3, cocktail:0}
                 }, 
                 {
                     opt:'한 잔을 여러 번!',
-                    score:{s:0, b:5, w1:5, w2:3, c:5}
+                    score:{soju:0, beer:5, wine:5, wiskey:3, cocktail:5}
                 }
             ]
         },
@@ -144,33 +146,38 @@ const Test = () => {
             options: [
                 {
                     opt:'부담없는 근처 술집!',
-                    score: {s:4, b:4, w1:2, w2:0, c:0}
+                    score: {soju:4, beer:4, wine:2, wiskey:0, cocktail:0}
                 },
                 {
                     opt:'압구정 어디 가자!',
-                    score: {s:0, b:0, w1:4, w2:5, c:3}
+                    score: {soju:0, beer:0, wine:4, wiskey:5, cocktail:3}
                 }
             ]
         }
     ];
 
-    
     const toResult = () => {
         if (prog < 10) setProg(prog+1);
-    };
-    
-    const getScores = (target) => {
-        Object.keys(result).map( (key) => 
-            setResult({
-                ...result,
-                [key]: result[key] + target[key]
-            })
-        )
+        else {
+            setLoding(true);
+            const test_result = Object.keys(result).find(key => (
+                result[key] === Math.max(...Object.values(result))
+            ));
+            setTimeout(() => {
+               navigate('/testresult', {state : test_result}) 
+            }, 1000);
+        }
     };
 
-    useEffect(() => {
-        console.log(result);
-    }, [result]);
+    const getResult = (obj) => {
+        setResult({
+            soju: result.soju + obj.soju,
+            beer: result.beer + obj.beer,
+            wine: result.wine + obj.wine,
+            wiskey: result.wiskey + obj.wiskey,
+            cocktail: result.cocktail + obj.cocktail,
+        })
+    };
 
     return (
         <div className="test-area">
@@ -193,7 +200,12 @@ const Test = () => {
                     lists={question_lists} 
                     progress={prog}
                     toResult={toResult} 
-                    getScores={getScores} />
+                    getResult={getResult} />
+            </div>
+            <div className={loading ? 'test-loading' : 'hide'}>
+                <div className="test-loading-circle">
+                    <div className="test-loading-empty"></div>
+                </div>
             </div>
         </div>
     );

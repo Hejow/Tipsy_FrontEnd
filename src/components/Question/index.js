@@ -1,7 +1,7 @@
 import React from 'react';
 import './Question.scss';
 
-const Question = ( {lists, progress, toResult, getScores }) => {
+const Question = ({lists, progress, toResult, getResult }) => {
     return (
         <div className='question-area'>
             <h2 className='question-title'>{lists[progress].title}</h2>
@@ -10,15 +10,15 @@ const Question = ( {lists, progress, toResult, getScores }) => {
             </div>
             <div className='question-option-area'>
                 <div className='question-option-box'>
-                {lists[progress].options.map((o) => 
+                {lists[progress].options.map((option) => 
                     <div 
-                        key={o.opt} 
+                        key={option.opt} 
                         className='question-options pointer' 
                         onClick={() => {
-                            getScores(o.score)
+                            getResult(option.score)
                             toResult()
                         }} 
-                    >{o.opt}</div>
+                    >{option.opt}</div>
                 )}
                 </div>
             </div>

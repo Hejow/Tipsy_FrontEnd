@@ -6,4 +6,4 @@ export {default as TestResult} from './TestResult';
 export {default as Signup} from './Signup';
 export {default as Mypage} from './Mypage';
 export {default as Recommend} from './Recommend';
-export {default as Testguide } from './Testguide';
+export {default as Teststart } from './Teststart';

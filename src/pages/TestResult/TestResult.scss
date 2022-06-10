@@ -1,81 +1,36 @@
-@import "../../variables";
+@import '../../variables';
 
-.test_result{
-    display:flex;
+.testresult-area {
     padding: $header-height 0;
+    display: flex;
     justify-content: center;
-    text-align: center;
-    
+    align-items: center;
 
-    .result_box{
-        padding: $padding*0.3 $padding*2;
-        width: 26rem;
-        height: 40rem;
-        border: 0.1px solid gray;
-        border-radius: 0.8rem;
-        
-        .content_section{
-            height: 20rem;
-    
-            h2 {
-                font-size: 1.4rem;
-                font-weight: 700;
-                line-height: 2rem;
+    .testresult-contents {
+        border: 1px solid #000;
+        width: 42vw;
+        height: 50vh;
+        text-align: center;
 
-                span {
-                    font-size: 1rem;
-                    color: red;
-                }
-            }
-            
-            .img_section{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 16rem;
-    
-                .image{
-                    border: 2px solid gray;
-                    border-radius: 0.8rem;
-                    width: 14rem;
-                    height: 12rem;
-    
-                    .cocktailImage{
-                        width: 12rem;
-                        height: 11.8rem;
-                    }
-                }
-            }
+        .testresult-mytype {
+            padding-top: $padding*0.8;
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: 1rem;
         }
-    
-        .button_section{
+
+        .testresult-ment {
+            padding-top: $padding * 3;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
+        }
+
+        .testresult-img-area {
+            border: 1px solid #000;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            height: 8rem;
-    
-            button{
-                padding: $padding;
-                margin: $margin;
-                border-radius: 0.8rem;
-                background-color: #e9ecef;
-                cursor: pointer;
-            }
-        }
-    
-        .sns_share_section{
-            height: 2rem;
-            
-            .list_title{
-                margin: $margin*4  $margin*2;
-                font-size: 1rem;
-                font-weight: 700;
-            }
-    
-            a {
-                padding: $padding;
-                font-size: 1.6rem;
-            }
+            justify-content: center;
         }
     }
 }

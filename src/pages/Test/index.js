@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Question } from '../../components';
 
 const Test = () => {
-    const [ prog, setProg ] = useState(0); 
+    const [ progress, setProgress ] = useState(0); 
     const [ result, setResult] = useState({
         soju:0, beer:0, wine:0, wiskey:0, cocktail:0
     });
@@ -157,7 +157,7 @@ const Test = () => {
     ];
 
     const toResult = () => {
-        if (prog < 10) setProg(prog+1);
+        if (progress < 10) setProgress(progress+1);
         else {
             setLoding(true);
             const test_result = Object.keys(result).find(key => (
@@ -185,20 +185,20 @@ const Test = () => {
                 <div className="test-title-area">
                     <div className="test-title-container">
                         <div className="test-title">취향 알아보기!</div>
-                        <div className="test-cnt"><span>{prog+1}</span>/11</div>
+                        <div className="test-cnt"><span>{progress+1}</span>/11</div>
                     </div>
                 </div>
                 <div className="test-progress-area">
                     <div className="test-progress">
                         <div 
                             className="test-progress-bar" 
-                            style={{width: `${(prog+1)/11*100}%`}} >
+                            style={{width: `${(progress+1)/11*100}%`}} >
                         </div>
                     </div>
                 </div>
                 <Question 
                     lists={question_lists} 
-                    progress={prog}
+                    progress={progress}
                     toResult={toResult} 
                     getResult={getResult} />
             </div>

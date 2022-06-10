@@ -1,56 +1,57 @@
 import React from "react";
 import "./TestResult.scss";
-// import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
 
 const TestResult = () => {
-    // const { state } = useLocation();
-    // const Alcohols = {
-    //     soju: {
-    //         img:'/',
-    //         name: '소주'
-    //     },
-    //     beer: {
-    //         img:'/',
-    //         name: '맥주'
-    //     },
-    //     wine: {
-    //         img:'/',
-    //         name: '와인'
-    //     },
-    //     wiskey: {
-    //         img:'/',
-    //         name: '위스키'
-    //     },
-    //     cocktail: {
-    //         img:'/',
-    //         name: '칵테일'
-    //     }
-    // }
-    
+    const { state } = useLocation();
+    const test = 'cocktail';
+    const Alcohols = {
+        soju: {
+            img:'/',
+            name: '소주',
+            color: '#51cf66',
+            ment: '멘트입니당ㅋ'
+        },
+        beer: {
+            img:'/',
+            name: '맥주',
+            color: '#fcc419',
+            ment: '멘트입니당ㅋ'
+        },
+        wine: {
+            img:'/',
+            name: '와인',
+            color: '#b21848',
+            ment: '멘트입니당ㅋ'
+        },
+        wiskey: {
+            img:'/',
+            name: '위스키',
+            color: '#495057',
+            ment: '멘트입니당ㅋ'
+        },
+        cocktail: {
+            img:'/',
+            name: '칵테일',
+            color: '#66d9e8',
+            ment: '골라먹는 재미가 있는'
+        }
+    }
+
     return (
-        <div className="test_result">
-            <div className="result_box">
-                <div className="content_section">
-                    <h2>당신의 술 취향은 <br/><span>칵테일</span> 입니다.</h2>
-                    <div className="img_section">
-                        <div className="image">
-                            <img className="cocktailImage" alt="cocktail" src="img/cocktail.png"></img>
-                        </div>
-                    </div>
+        <div className="testresult-area">
+            <div className="testresult-contents">
+                <div className="testresult-ment">{Alcohols[test].ment}</div>
+                <div className="testresult-mytype"
+                    style={{color:Alcohols[test].color}}    >
+                    {Alcohols[test].name}
                 </div>
-                <div className="button_section">
-                    <button type="sumit">다시하기</button> 
-                    <button type="sumit">추천받기</button> 
-                </div>
-                <div className="sns_share_section">
-                    <div className="list_title">내 결과 공유하기</div>
-                    <a href="/testresult"><FontAwesomeIcon icon={faInstagram} /></a> 
-                    <a href="/testresult"><FontAwesomeIcon icon={faFacebookF} /></a> 
-                    <a href="/testresult"><FontAwesomeIcon icon={faPaperclip} /></a> 
+                <div className="testresult-img-area">
+                    
                 </div>
             </div>
         </div>

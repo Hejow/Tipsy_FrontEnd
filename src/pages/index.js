@@ -7,3 +7,4 @@ export {default as Signup} from './Signup';
 export {default as Mypage} from './Mypage';
 export {default as Recommend} from './Recommend';
 export {default as Teststart } from './Teststart';
+export {default as Error } from './Error';

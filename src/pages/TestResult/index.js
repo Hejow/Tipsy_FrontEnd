@@ -51,7 +51,7 @@ const TestResult = () => {
                     {Alcohols[test].name}
                 </div>
                 <div className="testresult-img-area">
-                    
+                    <div className="testresult-img"></div>
                 </div>
             </div>
         </div>

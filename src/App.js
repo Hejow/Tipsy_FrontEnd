@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer, Header} from "./components";
-import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Teststart} from './pages';
+import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Teststart, Error} from './pages';
 import { ScrollTop } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
@@ -32,6 +32,7 @@ function App() {
         <Route path='/mypage' element={<Mypage />} />
         <Route path='/recommend' element={<Recommend />} />
         <Route path='/testguide' element={<Teststart />} />
+        <Route path='/*' element={<Error />} />
       </Routes>
       <Footer/>
     </BrowserRouter>

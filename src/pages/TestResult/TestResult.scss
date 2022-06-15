@@ -12,25 +12,32 @@
         height: 50vh;
         text-align: center;
 
-        .testresult-mytype {
-            padding-top: $padding*0.8;
-            font-weight: 700;
-            font-size: 3rem;
-            letter-spacing: 1rem;
-        }
-
+        
         .testresult-ment {
             padding-top: $padding * 3;
             font-weight: 700;
             font-size: 1.4rem;
             letter-spacing: 8px;
         }
+        
+        .testresult-mytype {
+            padding-top: $padding*0.6;
+            font-weight: 700;
+            font-size: 3rem;
+            letter-spacing: 0.8rem;
+        }
 
         .testresult-img-area {
-            border: 1px solid #000;
+            padding-top: $padding*1.2;
             display: flex;
             align-items: center;
             justify-content: center;
+
+            .testresult-img {
+                border: 1px solid #000;
+                width: 14vw;
+                height: 24vh;
+            }
         }
     }
 }

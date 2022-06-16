@@ -1,5 +1,47 @@
 @import '../../variables';
 
-.Error-area {
+.error-area {
     padding: $header-height 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .error-container {
+        padding: $padding*6 0;
+        text-align: center;
+
+        h2 {
+            padding-top: $padding*2;
+            font-size: 6rem;
+            font-weight: 700;
+            letter-spacing: 0.8rem;
+
+            span {
+                color: #4dabf7;
+            }
+        }
+    
+        .error-ment {
+            padding-top: $padding * 2;
+            font-weight: 700;
+            font-size: 1.2rem;
+
+            span {
+                font-size: 2rem;
+            }
+        }
+
+        .error-btn-area {
+            padding-top: $padding*2;
+
+            .error-btn {
+                border: none;
+                padding: $padding;
+                border-radius: 12px;
+                font-weight: 700;
+                font-size: 1.4rem;
+            }
+        }
+
+    }
 }

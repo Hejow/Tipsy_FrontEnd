@@ -21,15 +21,23 @@
             }
         }
     
-        .error-ment {
-            padding-top: $padding * 2;
-            font-weight: 700;
-            font-size: 1.2rem;
+        .error-ment-area {
+            padding-top: $padding*2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-            span {
+            .error-oops {
+                margin-right: $margin *0.8;
+                font-weight: 700;
                 font-size: 2rem;
             }
-        }
+
+            .error-ment {
+                font-weight: 700;
+                font-size: 1.2rem;
+            }
+        }    
 
         .error-btn-area {
             padding-top: $padding*2;

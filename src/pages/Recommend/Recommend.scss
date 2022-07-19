@@ -30,18 +30,35 @@
             width: 85%;
             height: 100%;
 
-            .ranking{
-                height: 25%;
+
+
+            .slider-wrap{
+                position: relative;
+                width: 100%;
+                height: 35%;
+                overflow: hidden;
+
+
+                .btn{
+                    position: absolute;
+                    width: 50px;
+                    font-size: 2.4rem;
+                    top: 50%;
+                    cursor: pointer;
+                    z-index: 5000;
+                    user-select: none;
+                    // background: rgba(0, 0, 0, 0.1);
+                }
+
+                #next{
+                    right: 0;
+                }
 
                 .rankImage{
+                    position: relative;
                     width: 100%;
                     height: 100%;
                 }
-            }
-
-            .filter{
-                height: 10%;
-                border: 1px solid black;
             }
 
             .list{

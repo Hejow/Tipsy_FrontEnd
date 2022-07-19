@@ -1,6 +1,6 @@
 import React from "react";
 import "./TestResult.scss";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,7 @@ import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
 const TestResult = () => {
     const { state } = useLocation();
-    const test = 'cocktail';
+    const navigate = useNavigate();
     const Alcohols = {
         soju: {
             img:'/',
@@ -52,21 +52,21 @@ const TestResult = () => {
             <div className="testresult-contents">
                 <h2 className="testresult-main-ment">나의 알코올 취향은?</h2>
                 <div className="testresult-mytype"
-                    style={{color:Alcohols[test].color}}    >
-                    {Alcohols[test].name}
+                    style={{color:Alcohols[state].color}}    >
+                    {Alcohols[state].name}
                 </div>
                 <div className="testresult-img-area">
                     <div className="testresult-img">어울리는 사진</div>
                 </div>
-                <div className="testresult-ment">{Alcohols[test].ment}</div>
+                <div className="testresult-ment">{Alcohols[state].ment}</div>
                 <div className="testresult-comment-area">
-                    {Alcohols[test].comments.map(comment => (
+                    {Alcohols[state].comments.map(comment => (
                         <p className="testresult-comment" key={comment.toString()}>{comment}</p>
                     ))}
                 </div>
                 <div className="testresult-btn-area">
-                    <button className="testresult-btn">다시하기</button>
-                    <button className="testresult-btn">돌아가기</button>
+                    <button className="testresult-btn pointer" onClick={() => navigate('/testguide')}>다시하기</button>
+                    <button className="testresult-btn pointer" onClick={() => navigate('/')}>돌아가기</button>
                 </div>
                 <div className="testresult-icon-area">
                     <div className="testresult-icon-box">

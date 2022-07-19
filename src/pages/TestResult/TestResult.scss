@@ -7,7 +7,7 @@
     align-items: center;
 
     .testresult-contents {
-        width: 42vw;
+        width: 20vw;
         height: 50vh;
         text-align: center;
         
@@ -35,41 +35,45 @@
         .testresult-img-area {
             padding-top: $padding*1.4;
             display: flex;
-            align-items: center;
             justify-content: center;
 
             .testresult-img {
                 border: 1px solid #000;
                 width: 18vw;
                 height: 24vh;
+                border-radius: 12px;
             }
         }
 
-        .testresult-comment-area {
+        .testresult-comment {
             padding-top: $padding;
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .testresult-btn-area {
-            padding-top: $padding;
+            padding-top: $padding * 1.4;
+            display: flex;
+            justify-content: space-evenly;
 
             .testresult-btn {
-                font-weight: 700;
-                font-size: 1rem;
+                border-radius: 8px;
+                font-size: 1.2rem;
             }
         }
 
         .testresult-icon-area {
-            padding-top: $padding * 2;
+            padding-top: $padding * 1.4;
             display: flex;
             justify-content: center;
 
             .testresult-icon-box{
                 display: flex;
                 justify-content: space-evenly;
-                width: 60%;
+                width: 80%;
 
                 .testresult-icon {
-                    font-size: 1.4rem;
+                    font-size: 1.6rem;
                 }
             }
         }

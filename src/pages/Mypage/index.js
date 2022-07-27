@@ -6,7 +6,9 @@ const Mypage = () => {
     
     return (
         <div className="mypage-area">
-            hello, mypage
+            <div className="mypage-content">
+                dis is content
+            </div>
         </div>
     )
 };

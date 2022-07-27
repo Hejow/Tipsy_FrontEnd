@@ -1,8 +1,10 @@
 @import '../../variables';
 
 .mypage-area {
-    display: flex;
-    padding: $header-height 0;
-    justify-content: center;
-    align-items: center;
+    padding: $header-height 14vw 0;
+
+    .mypage-content {
+        border: 1px solid #000;
+        
+    }
 }

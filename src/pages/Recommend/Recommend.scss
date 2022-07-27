@@ -1,91 +1,57 @@
 @import '../../variables';
 
 .recommend-area{
-    display: flex;
     padding: $header-height 0;
-    justify-content: center;
+    display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    
-    .recommend-container{
+    width: 100%;
+
+
+    .content{
         display: flex;
-        border: 0.1px solid gray;
-        width: 60rem;
-        height: 38rem;
+        flex-direction: column;
+        width: 80%;
+        height: 80vh;
+        border: 1px solid black;
+        border-radius: 15px;
         
-        .nav{
-            width: 15%;
-            height: 100%;
-
-            ul{
-                padding: $padding*16 0 $padding*4 0;
-
-                .list-row{
-                    line-height: 6rem;
-                }
-            }
+        
+        .title{
+            height: 15%;
         }
 
-        .content-container{
-            width: 85%;
-            height: 100%;
+        .filter{
+            border-top: 1px solid black;
+            height: 5%;
+        }
 
+        .item-container{
+            border-top: 1px solid black;
+            height: 80%;
 
-
-            .slider-wrap{
-                position: relative;
-                width: 100%;
-                height: 35%;
-                overflow: hidden;
-
-
-                .btn{
-                    position: absolute;
-                    width: 50px;
-                    font-size: 2.4rem;
-                    top: 50%;
-                    cursor: pointer;
-                    z-index: 5000;
-                    user-select: none;
-                    // background: rgba(0, 0, 0, 0.1);
-                }
-
-                #next{
-                    right: 0;
-                }
-
-                .rankImage{
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-
-            .list{
+            .item{
                 display: flex;
-                flex-wrap: wrap;
-                flex-direction: column;
-                height: 65%;
+                margin: 2rem;
+                border: 1px solid black;
+                border-radius: 15px;
+                height: 30%;
                 
-                .list-item{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    border: 1px solid black;
-                    width: 17rem;
-                    height: 50%;
+                .left{
+                    border-right: 1px solid black;
+                    width: 10%;
+                }
 
-                    .img-area{
-                        width: 50%;
-                    }
+                .mid{
+                    border-right: 1px solid black;
+                    width: 25%;
+                }
 
-                    .information{
-                        width: 50%;
-                    }
+                .right{
+                    width: 65%;
                 }
             }
         }
-
     }
 }

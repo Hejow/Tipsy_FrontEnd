@@ -1,10 +1,133 @@
 @import '../../variables';
 
 .mypage-area {
-    padding: $header-height 14vw 0;
+    padding: ($header-height - $padding*3) 14vw 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 90vh;
 
-    .mypage-content {
-        border: 1px solid #000;
+    .mypage-nav-area {
+        border: 1px solid gray;
+        height: 100%;
+        width: 30%;
+
+        .mypage-gnb-area {
+            padding-top: $padding * 2.4;
+
+            .mypage-gnb {
+                padding-left: $padding;
+                font-weight: 700;
+                font-size: 1.6rem;
+                letter-spacing: -2px;
+            }
+        }
+
+        .mypage-profile-area {
+            padding-top: $padding * 2;
+            width: 100%;
+
+            .mypage-img-area {
+                display: flex;
+                justify-content: center;
+
+                .mypage-img {
+                // border-radius 수정해야함
+                    width: 120px * 1.8;
+                    height: 100px * 1.8;
+                }
+
+                .mypage-img-edit {
+                    position: absolute;
+                    left: 28%;
+                    top: 35%;
+                    border: 2px solid white;
+                    border-radius: 100%;
+                    display: flex;
+                    padding: 6px;
+                    background-color: #D3D3D3;
+
+                    .mypage-icon {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+
+            .mypage-user {
+                padding-top: $padding * 2;
+                text-align: center;
+                .mypage-userid {
+                    font-weight: 700;
+                    font-size: 1.6rem;
+                }
+                .mypage-useremail {
+                    padding-top: $padding*0.2;
+                    font-size: 1rem;
+                    color: gray;
+                }
+            }
+        }   
         
+        .mypage-divider-area{
+            padding-top: $padding*2;
+            display: flex;
+            justify-content: center;
+            
+            .mypage-divider {
+                border-bottom: 1px solid rgba(gray, 0.5);
+                width: 80%;
+            }
+        }
+
+        .mypage-left-menu {
+            li {
+                padding: $padding*1.6 0 0 $padding*2;
+                font-weight: 700;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .mypage-info-area {
+        height: 100%;
+        width: 60%;
+        
+        .mypage-info {
+            padding-top: $padding*4;
+            .mypage-user-info {
+                padding: $padding;
+                border: 1px solid #000;
+                border-radius: 14px;
+                height: 15vh;
+            }
+        }
+
+        .mypage-untitle-menu {
+            padding-top: $padding*1.6;
+
+            .mypage-servie-title {
+                margin: 0 0 $margin*0.4 $margin*0.4;
+                font-weight: 700;
+                font-size: 1.2rem;
+                color: #808080;
+            }
+
+            .mypage-untitle {
+                padding: $padding;
+                border: 1px solid #000;
+                border-radius: 14px;
+                height: 10vh;
+            }
+        }
+
+        .mypage-withdraw-area {
+            display: flex;
+            .mypage-user-withdraw {
+                padding-top: $padding;
+                margin-left: $margin*0.4;
+                font-weight: 700;
+                color: #808080;
+            }
+        }
     }
 }

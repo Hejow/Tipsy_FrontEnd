@@ -10,48 +10,84 @@
 
 
     .content{
-        display: flex;
-        flex-direction: column;
         width: 80%;
-        height: 80vh;
-        border: 1px solid black;
+        height: 130vh;
         border-radius: 15px;
         
-        
-        .title{
-            height: 15%;
-        }
+        .popular-box{
+            width: 100%;
+            height: 35%;
 
-        .filter{
-            border-top: 1px solid black;
-            height: 5%;
-        }
+            h2{
+                font-size: 20px;
+                font-weight: 600;
+                color: gray;
+                margin-top: $margin*1;
+            }
 
-        .item-container{
-            border-top: 1px solid black;
-            height: 80%;
+            h1{
+                font-size: 25px;
+                font-weight: 700;
+                margin-top: $margin*1.5;
+            }
 
-            .item{
+            .popular-items{
                 display: flex;
-                margin: 2rem;
-                border: 1px solid black;
-                border-radius: 15px;
-                height: 30%;
-                
-                .left{
-                    border-right: 1px solid black;
-                    width: 10%;
-                }
+                align-items: center;
+                justify-content: space-between;
+                text-align: center;
 
-                .mid{
-                    border-right: 1px solid black;
-                    width: 25%;
-                }
 
-                .right{
-                    width: 65%;
+                .popular-item{
+                    margin-top: $margin*4;
+                    border: 1px solid #d8d8d8;
+                    width: 15%;
+                    height: 23vh;
+
+                    .num{
+                        position: relative;
+                        z-index: 1;
+                        float: left;
+                        top: 0;
+                        font-size: 28px;
+                        font-weight: 700;
+                        line-height: 1px;
+                        color: #166fcc;
+                    }
+
+                    .img-box{
+                        height: 75%;
+                        border: 1px solid #d8d8d8;
+
+                    }
+
+                    .item-name{
+                        height: 25%;
+                    }
                 }
             }
         }
+
+        .recommend-box{
+            width: 100%;
+            height: 65%;
+            border-top: 1px solid #d8d8d8;
+
+            .bar{
+                height: 5%;
+                border-bottom: 1px solid #d8d8d8;
+                
+                .total-num{
+                    text-align: left;
+                }
+            }
+            .recommend-items{
+                height: 95%;
+               display: flex;
+               justify-content: space-between;
+
+            }
+        }
+
     }
 }

@@ -12,28 +12,28 @@ const Recommend = () => {
                     <div className="popular-items">
                         <a href="/" className="popular-item">
                             <span className="num">01</span>
-                            <div className="img-box"></div>
-                            <p className="item-name"></p>
+                            <div className="img-box"><img className="img" src="img/와인1.png"></img></div>
+                            <p className="item-name">멕스 리제르바 카베르네소비뇽</p>
                         </a>
                         <a href="/" className="popular-item">
                             <span className="num">02</span>
-                            <div className="img-box"></div>
-                            <p className="item-name"></p>
+                            <div className="img-box"><img className="img" src="img/와인2.png"></img></div>
+                            <p className="item-name">글로리오소 리오하 레세르바</p>
                         </a>
                         <a href="/" className="popular-item">
                             <span className="num">03</span>
-                            <div className="img-box"></div>
-                            <p className="item-name"></p>
+                            <div className="img-box"><img className="img" src="img/와인3.png"></img></div>
+                            <p className="item-name">마틴 레이 소노마 나파 카운티</p>
                         </a>
                         <a href="/" className="popular-item">
                             <span className="num">04</span>
-                            <div className="img-box"></div>
-                            <p className="item-name"></p>
+                            <div className="img-box"><img className="img" src="img/와인4.png"></img></div>
+                            <p className="item-name">포 버튜스 버번 배럴 에이지드</p>
                         </a>
                         <a href="/" className="popular-item">
                             <span className="num">05</span>
-                            <div className="img-box"></div>
-                            <p className="item-name"></p>
+                            <div className="img-box"><img className="img" src="img/와인5.png"></img></div>
+                            <p className="item-name">헌드레드에이커 레이스</p>
                         </a>
                     </div>
                 </div>
@@ -54,9 +54,90 @@ const Recommend = () => {
                             </div>
                         </div> */}
                     </div>
-                    <div className="recommend-items">
-                        <ul className="reccommend-item">
-                            <li>
+                    <div>
+                        <ul className="recommend-items">
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img className="recommend-img" src="img/와인5.png"></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
+                                <a href="/">
+                                    <div>
+                                        <img></img>
+                                        <p></p>
+                                    </div>
+                                </a>
+                                <ul></ul>
+                            </li>
+                            <li className="recommend-item">
                                 <a href="/">
                                     <div>
                                         <img></img>
@@ -67,7 +148,6 @@ const Recommend = () => {
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>

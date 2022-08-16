@@ -1,8 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "./Recommend.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { useSearchParams } from 'react-router-dom';
 
 const Recommend = () => {
+    const [searchText, setSearchText] = useState("")
+    const [searchParams, setSearchParams] = useSearchParams();
+    const onChangeInput = (e) => {
+        setSearchText(e.target.value)
+    }
+    const OnKeyUp = (e) =>{
+        if(e.key === 'Enter' && e.target.value.trim().length >0){
+            setSearchParams({q: e.target.value})
+        }
+    }
+    
     return(
         <div className="recommend-area">
             <div className="content">
@@ -40,111 +52,125 @@ const Recommend = () => {
                 <div className="recommend-box">
                     <div className="bar">
                         <div className="total-num">전체 5,357개</div>
-                        {/* <div className="right-box">
-                            <div className="search-box">
-                                <button></button>
-                                <input type="text" placeholder="검색하세요"></input>
-                            </div>
-                            <div className="filter">
-                                <select>
-                                    <option>도수 순</option>
-                                    <option>조회 순</option>
-                                    <option>최신 순</option>
-                                </select>
-                            </div>
-                        </div> */}
+                        <div className="search-area">
+                            <input value={searchText} 
+                            type="text" 
+                            className="search-bar" 
+                            placeholder="검색어를 입력해주세요. "
+                            onChange={onChangeInput}
+                            onKeyUp={OnKeyUp}></input>   
+                        </div>
+                        <div className="filter-area"></div>
                     </div>
                     <div>
                         <ul className="recommend-items">
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img className="recommend-img" src="img/와인5.png"></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인5.png"></img>
                                 </a>
-                                <ul></ul>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">헌드레드에이커</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인1.png"></img>
                                 </a>
-                                <ul></ul>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">멕스 리제르바</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인2.png"></img>
                                 </a>
-                                <ul></ul>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">글로리오소</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인3.png"></img>
                                 </a>
-                                <ul></ul>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">마틴 레이소노마</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인4.png"></img>
                                 </a>
-                                <ul></ul>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">포 버튜스 버번</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                             <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
+                                <a className="left" href="/">
+                                    <img className="recommend-img" src="img/와인5.png"></img>
                                 </a>
-                                <ul></ul>
-                            </li>
-                            <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">헌드레드에이커</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
                                     </div>
-                                </a>
-                                <ul></ul>
-                            </li>
-                            <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
-                                </a>
-                                <ul></ul>
-                            </li>
-                            <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
-                                </a>
-                                <ul></ul>
-                            </li>
-                            <li className="recommend-item">
-                                <a href="/">
-                                    <div>
-                                        <img></img>
-                                        <p></p>
-                                    </div>
-                                </a>
-                                <ul></ul>
+                                    <ul className="item-tag">
+                                        <li><a href='/'>#달콤한 맛</a></li>
+                                        <li><a href='/'>#약한 도수</a></li>
+                                        <li><a href='/'>#값이 싼</a></li>
+                                        <li><a href='/'>#가벼운</a></li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>

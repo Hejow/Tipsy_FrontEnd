@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import "./Recommend.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { useSearchParams } from 'react-router-dom';
@@ -6,14 +6,19 @@ import { useSearchParams } from 'react-router-dom';
 const Recommend = () => {
     const [searchText, setSearchText] = useState("")
     const [searchParams, setSearchParams] = useSearchParams();
-    const onChangeInput = (e) => {
+    
+    useEffect(()=>{
+        setSearchText(searchParams.get("q")?? "")},[searchParams])
+    
+    const onChangeInput = useCallback((e) => {
         setSearchText(e.target.value)
-    }
-    const OnKeyUp = (e) =>{
+    },[])
+
+    const OnKeyUp = useCallback((e) =>{
         if(e.key === 'Enter' && e.target.value.trim().length >0){
             setSearchParams({q: e.target.value})
         }
-    }
+    },[setSearchParams])
     
     return(
         <div className="recommend-area">

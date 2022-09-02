@@ -3,21 +3,33 @@ import "./Recommend.scss";
 import { useSearchParams } from 'react-router-dom';
 
 const Recommend = () => {
-    const [searchText, setSearchText] = useState("")
-    const [searchParams, setSearchParams] = useSearchParams();
+    function SearchInput(){
+        const [searchText, setSearchText] = useState("")
+        const [searchParams, setSearchParams] = useSearchParams();
+        
+        useEffect(()=>{
+            setSearchText(searchParams.get("q")?? "")},[searchParams])
+        
+        const onChangeInput = useCallback((e) => {
+            setSearchText(e.target.value)
+        },[])
     
-    useEffect(()=>{
-        setSearchText(searchParams.get("q")?? "")},[searchParams])
-    
-    const onChangeInput = useCallback((e) => {
-        setSearchText(e.target.value)
-    },[])
+        const OnKeyUp = useCallback((e) =>{
+            if(e.key === 'Enter' && e.target.value.trim().length > 0){
+                setSearchParams({q: e.target.value})
+            }
+        },[setSearchParams])
+        
+        return(
+            <input value={searchText} 
+            type="text" 
+            className="search-bar" 
+            placeholder="검색어 입력 후 ENTER"
+            onChange={onChangeInput}
+            onKeyUp={OnKeyUp}></input>
+        )   
+    };
 
-    const OnKeyUp = useCallback((e) =>{
-        if(e.key === 'Enter' && e.target.value.trim().length > 0){
-            setSearchParams({q: e.target.value})
-        }
-    },[setSearchParams])
 
     const recommendItem = [
         {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
@@ -48,12 +60,7 @@ const Recommend = () => {
                     <div className="bar">
                         <div className="total-num">전체 {recommendItem.length}개</div>
                         <div className="search-area">
-                            <input value={searchText} 
-                            type="text" 
-                            className="search-bar" 
-                            placeholder="검색어를 입력해주세요. "
-                            onChange={onChangeInput}
-                            onKeyUp={OnKeyUp}></input>   
+                            {SearchInput()}
                         </div>
                         {/* <div className="filter-area"></div> */}
                     </div>

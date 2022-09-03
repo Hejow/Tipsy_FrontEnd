@@ -1,29 +1,30 @@
 @import '../../variables';
 
 .footer-area {
-    width: 100%;
     display: flex;    
     justify-content: center;
     align-items: center;
+    width: 100vw;
     background-color: $default-color;
     color: white;
     font-weight: 600;
 
-    .content-area {
+    transition: 0.7s;
+
+    .footer-content-area {
         margin-top: $margin*2;
         padding: $padding;
         width: 80%;
 
-        .help-area {
-            list-style-type: none;
+        .footer-help-area {
             display: flex;
-            justify-content: space-around;            
+            justify-content: space-around;
 
-            .help-box {
+            .footer-help-box {
                 margin-bottom: $margin;
             }
 
-            .help-content {
+            .footer-help-content {
                 font-size: 0.8rem;
                 margin-top: $margin;
             }
@@ -37,10 +38,9 @@
 
         .footer-icon-box {
             font-size: 1.4rem;
-            margin: $margin*2 0 $margin;
             text-align: center;
 
-            a {
+            span {
                 margin-right: $margin;
                 &:last-child {
                     margin-right: 0;
@@ -56,7 +56,6 @@
         .footer-tag-area {
             display: flex;
             justify-content: center;
-            width: 100%;
             font-size: 0.66rem;
 
             .footer-tags {
@@ -71,7 +70,7 @@
     
                 ::after {
                     content: '|';
-                    margin: $margin*0.2;
+                    margin: $margin*0.3;
                 }
     
                 :last-child::after {

@@ -9,7 +9,7 @@
     width: 100%;
 
 
-    .content{
+    .recommend-content{
         width: 80%;
         height: 150vh;
 
@@ -86,19 +86,22 @@
 
             .bar{
                 display: flex;
-                justify-items: start;
+                justify-content: space-between;
                 align-items: center;
-
                 height: 5%;
                 border-bottom: 1px solid #d8d8d8;
                 
                 .total-num{
+                    padding-right: $padding*55;
                     font-weight: 700;
-                    flex-grow: 0;
                 }
 
                 .search-area{
-                    flex-grow: 1;
+                    height: 100%;
+
+                    .search-bar{
+                        height: 100%;
+                    }
                 }
             }
             

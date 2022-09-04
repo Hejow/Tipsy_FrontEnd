@@ -40,9 +40,6 @@ const Footer = () => {
                         </div>
                     ))}
                 </div>
-                <div>
-
-                </div>
                 <div className="footer-divider"></div>
                 <div className="footer-icon-box">
                     <span className="pointer"><FontAwesomeIcon icon={faInstagram} /></span> 

@@ -3,7 +3,6 @@
 .footer-area {
     display: flex;    
     justify-content: center;
-    align-items: center;
     width: 100vw;
     background-color: $default-color;
     color: white;
@@ -18,13 +17,13 @@
 
         .footer-help-area {
             display: flex;
-            justify-content: space-around;
 
             .footer-help-box {
-                margin-bottom: $margin;
+                width: 25%;
             }
 
             .footer-help-content {
+                font-weight: 500;
                 font-size: 0.8rem;
                 margin-top: $margin;
             }
@@ -33,7 +32,6 @@
         .footer-divider {
             border-top: 1px solid white;
             margin: $margin*2 0;
-            width: 100%;
         }
 
         .footer-icon-box {

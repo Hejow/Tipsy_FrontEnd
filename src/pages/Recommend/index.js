@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import "./Recommend.scss";
 import { useSearchParams } from 'react-router-dom';
-import styled from 'styled-components';
 
 const Recommend = () => {
     function SearchInput(){
@@ -30,48 +29,103 @@ const Recommend = () => {
             onKeyUp={OnKeyUp}></input>
             )   
         };
+    
         
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
-        
-    const Modal = styled.div`
-        position: fixed;
-        left: 50%;
-        transform: translate(-50%, 50%);        
-        border-radius: 8px;
-        color: var(--text);
-        overflow: auto;
-        background-color: var(--primary);
-        border: 3px solid var(--secondary);
-        padding: 16px;
-        box-shadow: 8px 8px 12px -1px rgb(0 0 0 / 0.3);
-
-        width: 600px;
-        `;
-
-    const ModalImg = styled.div`
-        width: 100%;
-    `;
-        
-    const DetailRow = styled.div`
-        & > * {
-            margin-right: 6px;
-        };
-    `;
 
     const ImageModal = ({currentImageDetail}) => {
-        const {largeImage} = currentImageDetail;
         return(
-            <Modal>
-                <ModalImg src={largeImage}/>
+            <div className = "Modal">
+                <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
                 <p>태그, 태그, 태그</p>
-                <DetailRow>
+                <div className="DetailRow">
                     <p>123명이 좋아합니다.</p>
-                </DetailRow>
+                </div>
                 <p>12345 조회</p>
-            </Modal>
+            </div>
         );
     };
     
+    const PopularArea = () => {
+        return(
+            <div className="popular-box">
+                <h2>최근 급상승 인기 상품을 소개해드립니다.</h2>
+                <h1>와인 인기 조회 상품</h1>
+                <div className="popular-items">
+                    {recommendItem.map(item =>(
+                        <a key={item.id} href="/" className="popular-item">
+                            <span className="num">{item.id.toString()}</span>
+                            <div className="img-box"><img className="img" alt="와인이미지" src={item.img}></img></div>
+                            <p className="item-name">{item.title}</p>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
+    const BarArea = () => {
+        return(
+            <div className="bar">
+                <div className="total-num">전체 {recommendItem.length}개</div>
+                <div className="search-area">
+                    {SearchInput()}
+                </div>
+                {/* <div className="filter-area"></div> */}
+            </div>
+        );
+    };
+    
+    const RecommendMenu = () => {
+        const MenuItem = [
+            {id: 1, title: "와인"},
+            {id: 2, title: "위스키"},
+            {id: 3, title: "칵테일"},
+            {id: 4, title: "양주"},
+        ]
+        return(
+            <>
+                <div className="recommenMenu-area">
+                    <ul>
+                        {MenuItem.map(item =>(
+                            <li key={item.id}>{item.title}</li>
+                        ))}
+                    </ul>
+                </div>
+            </>
+        );
+    }
+
+    const RecommendArea = () => {
+        return(
+            <div className="recommend-box">
+                <div>
+                    <ul className="recommend-items">
+                        {currentImageDetail && (<ImageModal currentImageDetail={currentImageDetail}/>)}
+                        {recommendItem.map(item => (
+                            <li key={item.title} className="recommend-item">
+                                <div className="left" >
+                                    <img className="recommend-img" alt="와인이미지" src={item.img} onClick ={()=> setCurrentImageDetail(item.img)}></img>
+                                </div>
+                                <div className="right">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">{item.title}</p>
+                                        <p className="recommend-item-contry">국가/생산지역: 미국</p>
+                                        <p className="recommend-item-company">수입사: 신세계엘엔비</p>
+                                    </div>
+                                    <ul className="item-tag">
+                                        {item.tags.map(tag => (
+                                            <li key={tag}><a href='/'>{tag}</a></li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        );
+    };
 
     const recommendItem = [
         {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
@@ -85,52 +139,10 @@ const Recommend = () => {
     return(
         <div className="recommend-area">
             <div className="recommend-content">
-                <div className="popular-box">
-                    <h2>최근 급상승 인기 상품을 소개해드립니다.</h2>
-                    <h1>와인 인기 조회 상품</h1>
-                    <div className="popular-items">
-                        {recommendItem.map(item =>(
-                            <a key={item.id} href="/" className="popular-item">
-                                <span className="num">{item.id.toString()}</span>
-                                <div className="img-box"><img className="img" alt="와인이미지" src={item.img}></img></div>
-                                <p className="item-name">{item.title}</p>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-                <div className="recommend-box">
-                    <div className="bar">
-                        <div className="total-num">전체 {recommendItem.length}개</div>
-                        <div className="search-area">
-                            {SearchInput()}
-                        </div>
-                        {/* <div className="filter-area"></div> */}
-                    </div>
-                    <div>
-                        <ul className="recommend-items">
-                            {currentImageDetail && (<ImageModal largeImage={recommendItem.img} currentImageDetail={currentImageDetail}/>)}
-                            {recommendItem.map(item => (
-                                <li key={item.title} className="recommend-item">
-                                    <div className="left" >
-                                        <img className="recommend-img" alt="와인이미지" src={item.img} onClick ={()=> setCurrentImageDetail(item.img)}></img>
-                                    </div>
-                                    <div className="right">
-                                        <div className="explain-box">
-                                            <p className="recommend-item-name">{item.title}</p>
-                                            <p className="recommend-item-contry">국가/생산지역: 미국</p>
-                                            <p className="recommend-item-company">수입사: 신세계엘엔비</p>
-                                        </div>
-                                        <ul className="item-tag">
-                                            {item.tags.map(tag => (
-                                                <li key={tag}><a href='/'>{tag}</a></li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                <PopularArea/>
+                <BarArea/>
+                <RecommendMenu/>
+                <RecommendArea/>
             </div>
         </div>
     );

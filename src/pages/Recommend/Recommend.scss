@@ -99,20 +99,53 @@
             }
         }
 
-        .recommenMenu-area{
+        .recommendMenu-area{
             position: absolute;
-            top: 80%;
-            left: 2%;
-            width: 10%;
-            height: 28rem;
-
+            top: 90%;
+            left: 1.2%;
+            width: 12%;
+            height: 16rem;
             border: 3px solid var(--secondary);
             border-radius: 8px;
             box-shadow: 0 3px 40px 0 #ced4da;
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            
+            .recommendMenu-items{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                
+                .recommendMenu-item{
+                    cursor: pointer;
+                    width: 100%;
+                    height: 100%;
+                    padding-left: $padding*0.7;
+                    border-bottom: 1px solid #b2b2b2;
+                    
+
+                    a{  
+                        display: flex;
+                        justify-content: start;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+
+                        strong{
+                            font-size: 15px;
+                            font-weight: 700;
+                        }
+
+                        span{
+                            padding-left: $padding*0.4;
+                            color: #b2b2b2;
+                            font-size: 11px;
+                        }
+                    }
+
+
+                }
+            }
         }
 
         .recommend-box{

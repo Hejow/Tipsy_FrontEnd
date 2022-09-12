@@ -1,6 +1,8 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import "./Recommend.scss";
 import { useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Recommend = () => {
     function SearchInput(){
@@ -29,22 +31,22 @@ const Recommend = () => {
             onKeyUp={OnKeyUp}></input>
             )   
         };
-    
+        
         
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
-
+    
     const ImageModal = ({currentImageDetail}) => {
         return(
             <div className = "Modal">
-                <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
-                <p>태그, 태그, 태그</p>
-                <div className="DetailRow">
-                    <p>123명이 좋아합니다.</p>
-                </div>
-                <p>12345 조회</p>
+            <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
+            <p>태그, 태그, 태그</p>
+            <div className="DetailRow">
+                <p>123명이 좋아합니다.</p>
             </div>
-        );
-    };
+            <p>12345 조회</p>
+        </div>
+    );
+};
     
     const PopularArea = () => {
         return(
@@ -63,7 +65,7 @@ const Recommend = () => {
             </div>
         );
     };
-
+    
     const BarArea = () => {
         return(
             <div className="bar">
@@ -78,24 +80,32 @@ const Recommend = () => {
     
     const RecommendMenu = () => {
         const MenuItem = [
-            {id: 1, title: "와인"},
-            {id: 2, title: "위스키"},
-            {id: 3, title: "칵테일"},
-            {id: 4, title: "양주"},
-        ]
+            {id: 1, titleKR: "와인", titleENG: "Wine"},
+            {id: 2, titleKR: "위스키", titleENG: "Whiskey"},
+            {id: 3, titleKR: "칵테일", titleENG: "Cocktail"},
+            {id: 4, titleKR: "양주", titleENG: "Liquor"},
+        ];
+
         return(
             <>
-                <div className="recommenMenu-area">
-                    <ul>
+                <div className="recommendMenu-area">
+                    <div className="recommendMenu-items">
                         {MenuItem.map(item =>(
-                            <li key={item.id}>{item.title}</li>
-                        ))}
-                    </ul>
+                            <div className="recommendMenu-item"  key={item.id}>
+                                <a href="/">
+                                    <strong>{item.titleKR}</strong>
+                                    <span>{item.titleENG}</span>
+                                    {/*<FontAwesomeIcon className="plusButton" icon={faPlus}/> */}
+                                </a>
+                                
+                            </div>
+                            ))}
+                    </div>
                 </div>
             </>
         );
     }
-
+    
     const RecommendArea = () => {
         return(
             <div className="recommend-box">
@@ -116,7 +126,7 @@ const Recommend = () => {
                                     <ul className="item-tag">
                                         {item.tags.map(tag => (
                                             <li key={tag}><a href='/'>{tag}</a></li>
-                                        ))}
+                                            ))}
                                     </ul>
                                 </div>
                             </li>
@@ -126,7 +136,7 @@ const Recommend = () => {
             </div>
         );
     };
-
+    
     const recommendItem = [
         {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
         {id: 2, title: "리카솔리", img:"img/와인2.png", tags: ["태그1", "태그2", "태그3", "태그4"]},
@@ -134,8 +144,7 @@ const Recommend = () => {
         {id: 4, title: "라포스톨", img:"img/와인4.png", tags: ["태그9", "태그10", "태그11", "태그12"]},
         {id: 5, title: "샤또팔레 카디날", img:"img/와인5.png", tags: ["태그13", "태그14", "태그15", "태그16"]}
     ];
-    
-    
+
     return(
         <div className="recommend-area">
             <div className="recommend-content">

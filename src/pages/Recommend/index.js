@@ -2,10 +2,40 @@ import React, {useCallback, useEffect, useState} from 'react'
 import "./Recommend.scss";
 import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { firestore } from '../../firebase';
 
-const Recommend = () => {
-    function SearchInput(){
+const Recommend = () => { 
+    const [currentImageDetail, setCurrentImageDetail] = useState(null);
+    // const wineCollection = firestore.collection('wineData'); 
+
+    const ImageModal = ({currentImageDetail}) => {
+        const handleClick = () => {
+            setCurrentImageDetail(null);
+        }
+
+        return(
+            <div className = "Modal">
+                <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
+                <div className="ModalContents">
+                    <h2>상품명</h2>
+                    <div className="ModalMiddle">
+                        상품설명
+                    </div>
+                    <div className="ModalBottom">
+                        <p>태그, 태그, 태그</p>
+                        <p>123명이 좋아합니다.</p>
+                        <p>12345 조회</p>
+                    </div>
+                </div>
+                <div className="xButton" onClick={handleClick}>
+                    <FontAwesomeIcon icon={faXmark}/>
+                </div>
+            </div>
+        );
+    };
+
+    const SearchInput = () => {
         const [searchText, setSearchText] = useState("")
         const [searchParams, setSearchParams] = useSearchParams();
         
@@ -22,31 +52,15 @@ const Recommend = () => {
             }
         },[setSearchParams])
         
-        return(
-            <input value={searchText} 
-            type="text" 
-            className="search-bar" 
-            placeholder="검색어 입력 후 ENTER"
-            onChange={onChangeInput}
-            onKeyUp={OnKeyUp}></input>
-            )   
-        };
-        
-        
-    const [currentImageDetail, setCurrentImageDetail] = useState(null);
-    
-    const ImageModal = ({currentImageDetail}) => {
-        return(
-            <div className = "Modal">
-            <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
-            <p>태그, 태그, 태그</p>
-            <div className="DetailRow">
-                <p>123명이 좋아합니다.</p>
-            </div>
-            <p>12345 조회</p>
-        </div>
-    );
-};
+        return (
+        <input value={searchText} 
+        type="text" 
+        className="search-bar" 
+        placeholder="검색어 입력 후 ENTER"
+        onChange={onChangeInput}
+        onKeyUp={OnKeyUp}></input>
+        );
+    }
     
     const PopularArea = () => {
         return(
@@ -71,21 +85,21 @@ const Recommend = () => {
             <div className="bar">
                 <div className="total-num">전체 {recommendItem.length}개</div>
                 <div className="search-area">
-                    {SearchInput()}
+                    <SearchInput/>
                 </div>
                 {/* <div className="filter-area"></div> */}
             </div>
         );
     };
-    
-    const RecommendMenu = () => {
-        const MenuItem = [
-            {id: 1, titleKR: "와인", titleENG: "Wine"},
-            {id: 2, titleKR: "위스키", titleENG: "Whiskey"},
-            {id: 3, titleKR: "칵테일", titleENG: "Cocktail"},
-            {id: 4, titleKR: "양주", titleENG: "Liquor"},
-        ];
 
+    const MenuItem = [
+        {id: 1, titleKR: "와인", titleENG: "Wine"},
+        {id: 2, titleKR: "위스키", titleENG: "Whiskey"},
+        {id: 3, titleKR: "칵테일", titleENG: "Cocktail"},
+        {id: 4, titleKR: "양주", titleENG: "Liquor"},
+    ];
+
+    const RecommendMenu = () => {
         return(
             <>
                 <div className="recommendMenu-area">
@@ -95,7 +109,7 @@ const Recommend = () => {
                                 <a href="/">
                                     <strong>{item.titleKR}</strong>
                                     <span>{item.titleENG}</span>
-                                    {/*<FontAwesomeIcon className="plusButton" icon={faPlus}/> */}
+                                    <FontAwesomeIcon className="plusButton" icon={faAngleDown}/>
                                 </a>
                                 
                             </div>
@@ -147,6 +161,14 @@ const Recommend = () => {
 
     return(
         <div className="recommend-area">
+            {currentImageDetail && <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: "rgb(255, 255, 255, 0.7)"
+            }}/>}
             <div className="recommend-content">
                 <PopularArea/>
                 <BarArea/>

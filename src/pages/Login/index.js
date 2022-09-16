@@ -1,10 +1,10 @@
 import React,  { useState }  from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.scss";
-import { firestore } from '../../firebase';
+import { db } from '../../firebase';
+import { getDoc, doc } from "firebase/firestore";
 
 const Login = () => {
-    const user_info = firestore.collection('user_info');
     const naviagte = useNavigate();
     const [inputs, setInputs] = useState({
         id: '',
@@ -23,8 +23,8 @@ const Login = () => {
 
     const userLogin = (e) => {
         e.preventDefault();
-        
-        user_info.doc(inputs.id).get()
+
+        getDoc(doc(db, "user_info", inputs.id))
         .then( info => {
             if (info.exists) {
                 const data = info.data();

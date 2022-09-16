@@ -29,16 +29,16 @@ const Mypage = () => {
                     <div className="mypage-divider"></div>
                 </div>
                 <ul className="mypage-left-menu">
-                    <li>정보 수정</li>
-                    <li>이런 메뉴</li>
-                    <li>저런 메뉴</li>
+                    <li className="pointer">정보 수정</li>
+                    <li className="pointer">이런 메뉴</li>
+                    <li className="pointer">저런 메뉴</li>
                 </ul>
                 <div className="mypage-divider-area">
                     <div className="mypage-divider"></div>
                 </div>
                 <ul className="mypage-left-menu">
-                    <li>공지사항</li>
-                    <li>FAQ</li>
+                    <li className="pointer" onClick={() => navigate('/')}>공지사항</li>
+                    <li className="pointer" onClick={() => navigate('/')}>FAQ</li>
                 </ul>
             </div>
             <div className="mypage-info-area">

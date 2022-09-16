@@ -8,7 +8,7 @@ const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const menu = [ 
+    const navMenu = [ 
         { title : '알아보기', location: '/testguide' },
         { title : '추천받기', location: '/recommend' },
         { title : '찾아보기', location: '/findshop' },
@@ -44,16 +44,18 @@ const Header = () => {
             (isScroll ? 'header-area' : 'header-area style-ch') :
             'header-area'
         }>
-            <ul className="nav-menu">
-                {menu.map(({title, location}) => (
-                    <li className='pointer' key={title} onClick={() => navigate(`${location}`)}>{title}</li>
-                ))}
-            </ul>
-            <div className="header-title pointer" onClick={() => navigate('/')}>취향저격이쥬?</div>
-            <div className="my-profile">
-                <div className="login pointer" onClick={() => logOn ? navigate('/mypage') : navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
-                <div className={logOn ? "header-logout pointer" : "header-logout pointer hide"}><FontAwesomeIcon icon={faArrowRightFromBracket} onClick={logOut} /></div>
-                <div className="cart pointer"><FontAwesomeIcon icon={faCartShopping} /></div>
+            <div className="header-content-area">
+                <ul className="header-menu-area">
+                    {navMenu.map(({title, location}) => (
+                        <li className='pointer' key={title} onClick={() => navigate(`${location}`)}>{title}</li>
+                    ))}
+                </ul>
+                <div className="header-title pointer" onClick={() => navigate('/')}>취향저격이酒</div>
+                <div className="header-my-menu-area">
+                    <div className="pointer" onClick={() => logOn ? navigate('/mypage') : navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
+                    <div className={logOn ? "pointer" : "pointer hide"}  onClick={logOut}><FontAwesomeIcon icon={faArrowRightFromBracket}/></div>
+                    <div className="pointer" onClick={() => navigate('/')}><FontAwesomeIcon icon={faCartShopping} /></div>
+                </div>
             </div>
         </div>
     )

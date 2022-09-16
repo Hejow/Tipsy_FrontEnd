@@ -1,10 +1,12 @@
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Signup.scss';
-import { firestore } from '../../firebase';
+import { db } from '../../firebase';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { setDoc, getDoc, doc } from "firebase/firestore";
 
 const Signup = () => {
-    const user_info = firestore.collection('user_info');
     const years = Array.from({length: 2003-1900}, (v, i) => 2003-i);
     const months = Array.from({length: 12}, (v, i) => i+1);
     const days = [
@@ -12,6 +14,7 @@ const Signup = () => {
         Array.from({length:30}, (v,i) => i+1),
         Array.from({length:28}, (v,i) => i+1)        
     ];
+    
     const [errmsg, setErrmsg] = useState(false);
     const [inputs, setInputs] = useState({
         id: '',
@@ -51,17 +54,27 @@ const Signup = () => {
                 info[key] = e.target[key].value;
             }
     
-            user_info.doc(info.id).set( { ...info, type: 'null' });
-            window.alert("회원가입이 완료되었습니다!!\n로그인 페이지로 이동합니다.");
-            navigate('/login');
+            // userCollection.doc(info.id).set( { ...info, type: 'null', role: 'null', profile_img: 'null' });
+            try {
+                setDoc(doc(db, "user_info", info.id), {
+                    ...info,
+                    type: 'null',
+                    role: 'normal'
+                }).then(doc => doc.exists())
+
+                window.alert("회원가입이 완료되었습니다!!\n로그인 페이지로 이동합니다.");
+                navigate('/login');
+            } catch(e) {
+                window.alert("Error가 발생하였습니다");
+            }
         } else {
             setErrmsg(true);
         }
     };
 
     const isAvailable_id = () => {
-        user_info.doc(inputs.id).get().then(doc => {
-            if (doc.exists) {
+        getDoc(doc(db, "user_info", inputs.id)).then(doc => {
+            if (doc.exists()) {
                 setIsOk({
                     ...isOk,
                     id: false,
@@ -127,7 +140,7 @@ const Signup = () => {
                                 className={isOk.id_check ? "signup-id-check-ok pointer" : "signup-id-check pointer"}
                                 onClick={isAvailable_id}
                             >
-                                {isOk.id_check ? '확인완료!' : '중복확인'}
+                                <FontAwesomeIcon icon={faCheck} className="" />
                             </span>
                         </div>
                         <p className={ isOk.id ? 'hide err-msg' : 'err-msg'}>

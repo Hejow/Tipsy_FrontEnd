@@ -2,41 +2,51 @@
 
 .header-area {
     position: fixed;
-    display: flex;
     top: 0;
     left: 0;
-    padding: $padding*2 0;
-    width: 100vw;
-    justify-content: space-between;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    transition: 0.7s;
+    padding: $padding * 2;
     background-color: $default-color;
     color: white;
-    font-size: 1rem;
-    font-weight: 600;
     z-index: 10000;
 
-    .nav-menu {
-        display: flex;
-        margin-left: 10%;
-        li {
-            margin-right: $margin*3;
-        }
-    }
+    transition: 0.7s;
 
-    .header-title {
-        position:absolute;
-        left: 45%;
-        font-size: 1.8rem;
-        font-weight: 700;
-    }
-
-    .my-profile {
-        width: 15%;
+    .header-content-area {
+        width: 80%;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        justify-content: space-evenly;
-        margin-right: 5%;
+
+        .header-menu-area {
+            display: flex;
+            
+            li {
+                margin-right: $margin * 3;
+                font-weight: 600;
+            }
+
+            :last-child {
+                margin-right: -$margin * 11;
+            }
+        }
+    
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+    
+        .header-my-menu-area {
+            display: flex;
+            font-size: 1.2rem;
+
+            div {
+                margin-left: $margin * 3;
+            }
+        }
     }
 }
 

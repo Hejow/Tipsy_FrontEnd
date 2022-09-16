@@ -23,31 +23,28 @@ const Footer = () => {
         '통신판매업신고번호 : 제2022-경기화성-0540호',
         '개인정보취급방침 및 이용약관',
         '개인정보관리책임자: 문희조'
-    ]
+    ];
 
     return (
         <div className="footer-area">
-            <div className="content-area">
-                <div className="help-area">
+            <div className="footer-content-area">
+                <div className="footer-help-area">
                     {Menus.map(menu => (
-                        <div key={menu.id}className="help-box">
-                            <div key={menu.title}className="help-title">{menu.title}</div>
+                        <div key={menu.id} className="footer-help-box">
+                            <div key={menu.title} className="footer-help-title">{menu.title}</div>
                             <ul>
                                 {menu.contents.map(content=> (
-                                    <li key={content} className="help-content">{content}</li>
+                                    <li key={content} className="footer-help-content">{content}</li>
                                 ))}
                             </ul>
                         </div>
                     ))}
                 </div>
-                <div>
-
-                </div>
                 <div className="footer-divider"></div>
                 <div className="footer-icon-box">
-                    <a href="/"><FontAwesomeIcon icon={faInstagram} /></a> 
-                    <a href="/"><FontAwesomeIcon icon={faFacebookF} /></a> 
-                    <a href="/"><FontAwesomeIcon icon={faPencil} /></a> 
+                    <span className="pointer"><FontAwesomeIcon icon={faInstagram} /></span> 
+                    <span className="pointer"><FontAwesomeIcon icon={faFacebookF} /></span> 
+                    <span className="pointer"><FontAwesomeIcon icon={faPencil} /></span> 
                 </div>
                 <div className="footer-goal">Try Something New!!</div>
                 <div className="footer-txt">주식회사 희조컴퍼니</div>

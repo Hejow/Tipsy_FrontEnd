@@ -3,11 +3,9 @@ import "./Recommend.scss";
 import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { firestore } from '../../firebase';
 
 const Recommend = () => { 
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
-    // const wineCollection = firestore.collection('wineData'); 
 
     const ImageModal = ({currentImageDetail}) => {
         const handleClick = () => {

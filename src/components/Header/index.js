@@ -15,7 +15,7 @@ const Header = () => {
     ];
 
     const [isScroll, setIsScroll] = useState(false);
-    const [logOn, setLogon] = useState(false);
+    const [login, setLogin] = useState(false);
 
     useEffect(() => {
         window.addEventListener('scroll', () => {
@@ -25,12 +25,12 @@ const Header = () => {
     }, [isScroll]);
 
     useEffect(() => {
-        window.localStorage.length !== 0 ? 
-        setLogon(true) : setLogon(false);
+        window.sessionStorage.length !== 0 ? 
+        setLogin(true) : setLogin(false);
     }, [location]);
 
     const logOut = () => {
-        localStorage.clear();
+        sessionStorage.clear();
         if (location.pathname !== '/') {
             navigate('/');
         } else {
@@ -52,8 +52,8 @@ const Header = () => {
                 </ul>
                 <div className="header-title pointer" onClick={() => navigate('/')}>취향저격이酒</div>
                 <div className="header-my-menu-area">
-                    <div className="pointer" onClick={() => logOn ? navigate('/mypage') : navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
-                    <div className={logOn ? "pointer" : "pointer hide"}  onClick={logOut}><FontAwesomeIcon icon={faArrowRightFromBracket}/></div>
+                    <div className="pointer" onClick={() => login ? navigate('/mypage') : navigate('/login')}><FontAwesomeIcon icon={faUser} /></div>
+                    <div className={login ? "pointer" : "pointer hide"}  onClick={logOut}><FontAwesomeIcon icon={faArrowRightFromBracket}/></div>
                     <div className="pointer" onClick={() => navigate('/')}><FontAwesomeIcon icon={faCartShopping} /></div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer, Header} from "./components";
 import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Teststart, Error} from './pages';
-import { ScrollTop } from './hooks'
+import { ScrollTop, LoginStatus } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
@@ -21,6 +21,7 @@ function App() {
     <BrowserRouter>
       <GlobalStyle/>
       <ScrollTop />
+      <LoginStatus />
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />

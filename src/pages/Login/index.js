@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import { db } from '../../firebase';
 import { getDoc, doc } from "firebase/firestore";
+import CryptoJS from 'crypto-js';
 
 const Login = () => {
     const naviagte = useNavigate();
@@ -27,14 +28,11 @@ const Login = () => {
         getDoc(doc(db, "user_info", inputs.id))
         .then( info => {
             if (info.exists) {
-                const data = info.data();
-                if( inputs.id === data.id && inputs.password === data.password) {
+                const dbData = info.data();
+                if( inputs.id === dbData.id && inputs.password === dbData.password) {
+                    const token = CryptoJS.AES.encrypt(JSON.stringify(dbData), process.env.REACT_APP_SECRET_KEY).toString();
+                    window.sessionStorage.setItem('FMTtoken', token);
                     naviagte('/');
-                    const now_year = new Date().getFullYear();
-                    localStorage.setItem('FMT_user_id', data.id);
-                    localStorage.setItem('FMT_user_birth', now_year - data.year + 1);
-                    localStorage.setItem('FMT_user_type', data.type);
-                    localStorage.setItem('FMT_user_sex', data.sex);
                 } else {
                     window.alert('아이디 또는 비밀번호를 확인하세요!!');
                 }

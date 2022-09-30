@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.2.1",
+    "crypto-js": "^4.1.1",
     "firebase": "^9.9.3",
     "node-sass": "^7.0.1",
     "open-color": "^1.9.1",

@@ -1,0 +1,126 @@
+@import '../../variables';
+
+.finduser-area {
+    padding: $header-height 0;
+    display: flex;
+    justify-content: center;
+
+    .finduser-container {
+        width: 40vw;
+
+        .finduser-tab-area {
+            display: flex;
+            justify-content: center;
+
+            .finduser-tab {
+                margin: 6px 0;
+                padding: $padding * 0.4 0;
+                font-size: 1rem;
+
+                &:first-child {
+                    margin: 6px 14px 6px 10px;
+                }
+            }
+        }
+
+        .finduser-content-area {
+            padding: $padding*2.4 0;
+
+            .finduser-title {
+                margin-bottom: $margin*1.4;
+                text-align: center;
+                font-size: 1.8rem;
+                font-weight: 700;
+            }
+
+            .finduser-guide {
+                margin-bottom: $margin * 2;
+                text-align: center;
+                font-size: 0.9rem;
+            }
+            
+            .finduser-input-area {
+                padding: 0 $padding * 9;
+            }
+
+            .finduser-result-area {
+                text-align: center;
+                padding: 0 $padding * 9;
+
+                .finduser-userid {
+                    padding: $padding * 2 0;
+                    font-weight: 800;
+                    font-size: 1.2rem;
+                    color: blue;
+                }
+
+                .finduser-result-btn {
+                    text-align: center;
+
+                    button {
+                        margin: $margin 0;
+                        width: 100%;
+                        height: 2.6rem;
+                        background-color: $default-color;
+                        font-size: 1rem;
+                        font-weight: 700;
+                        color: #fff;
+                        cursor: pointer;
+                        border-radius: 0.5rem;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        font-weight: 700;
+                    }
+                }
+            }
+
+            .finduser-button-area {
+                text-align: center;
+
+                button{
+                    margin-top: $margin;
+                    width: 100%;
+                    height: 2.6rem;
+                    background-color: $default-color;
+                    font-size: 1rem;
+                    color: #fff;
+                    cursor: pointer;
+                    border-radius: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.tab-selected {
+    border-bottom: 2px solid #000;
+    font-weight: 700;
+}
+
+.finduser-row {
+    margin: $margin*2.4 0;
+    height: 3rem;
+    
+    .finduser-type {
+        font-weight: 700;
+        font-size: 0.8rem;
+    }
+
+    .finduser-input-box {
+        margin: $margin 0;
+        padding: $padding*0.2;
+        height: 2rem;
+        border: 1px solid #adb5bd;
+        border-radius: 0.5rem;
+
+        .finduser-input {
+            height: 100%;
+            width: 100%;
+            border: none;
+            padding: $padding * 0.8 $padding * 0.4;
+            font-size: 0.7rem;
+        }
+    }
+}

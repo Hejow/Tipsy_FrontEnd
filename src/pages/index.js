@@ -7,4 +7,6 @@ export {default as Signup} from './Signup';
 export {default as Mypage} from './Mypage';
 export {default as Recommend} from './Recommend';
 export {default as Teststart } from './Teststart';
-export {default as Error } from './Error';
+export {default as Notfound } from './Notfound';
+export {default as FindUser } from './FindUser';
+export {default as FindPassword } from './FindPassword';

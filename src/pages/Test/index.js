@@ -164,7 +164,7 @@ const Test = () => {
                 result[key] === Math.max(...Object.values(result))
             ));
             setTimeout(() => {
-               navigate('/testresult', {state : test_result}) 
+                navigate('/testresult', {state : test_result}) 
             }, 1000);
         }
     };

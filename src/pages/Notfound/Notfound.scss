@@ -1,12 +1,12 @@
 @import '../../variables';
 
-.error-area {
+.notfound-area {
     padding: $header-height 0;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    .error-container {
+    .notfound-container {
         padding: $padding*6 0;
         text-align: center;
 
@@ -21,28 +21,28 @@
             }
         }
     
-        .error-ment-area {
+        .notfound-ment-area {
             padding-top: $padding*2;
             display: flex;
             justify-content: center;
             align-items: center;
 
-            .error-oops {
+            .notfound-oops {
                 margin-right: $margin *0.8;
                 font-weight: 700;
                 font-size: 2rem;
             }
 
-            .error-ment {
+            .notfound-ment {
                 font-weight: 700;
                 font-size: 1.2rem;
             }
         }    
 
-        .error-btn-area {
+        .notfound-btn-area {
             padding-top: $padding*2;
 
-            .error-btn {
+            .notfound-btn {
                 border: none;
                 padding: $padding;
                 border-radius: 12px;

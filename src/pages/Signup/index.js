@@ -20,6 +20,7 @@ const Signup = () => {
         password: '',
         re_password: '',
         name: '',
+        phoneNumber: '',
         year: '',
         month: '',
         day: '',
@@ -29,10 +30,11 @@ const Signup = () => {
         id: true,
         password: true,
         re_password: true,
+        phoneNumber: true,
         id_check: false,
     });
 
-    const { id, password, re_password, name, year, month, day } = inputs;
+    const { id, password, re_password, name, phoneNumber, year, month, day } = inputs;
 
     const navigate= useNavigate();
 
@@ -42,13 +44,14 @@ const Signup = () => {
             id: '', 
             password: '', 
             name: '', 
+            phoneNumber: '',
             year: '', 
             month: '', 
             day: '', 
             sex: ''
         };
 
-        if ( isPropsOk.id_check && isPropsOk.id && isPropsOk.password && inputs.id !== '' && inputs.password !== '' && inputs.re_password !== '' && inputs.name !== '' && inputs.year !== '' && inputs.month !== '' && inputs.day !== '' && inputs.sex !== '') {
+        if ( isPropsOk.id_check && isPropsOk.id && isPropsOk.password && isPropsOk.phoneNumber && inputs.name !== '' && inputs.year !== '' && inputs.month !== '' && inputs.day !== '' && inputs.sex !== '') {
             for (let key of Object.keys(user_data)) {
                 user_data[key] = e.target[key].value;
             }
@@ -178,7 +181,7 @@ const Signup = () => {
                                 type="password" />
                         </div>
                         <p className={ inputs.password === '' ? 'hide' : 
-                            (isPropsOk.password ? ('hide') : 'signup-err-msg')
+                            (isPropsOk.password ? 'hide' : 'signup-err-msg')
                         }>
                             8~32자리의 비밀번호를 입력해주세요!                                
                         </p>
@@ -187,7 +190,7 @@ const Signup = () => {
                         <div className="signup-type">비밀번호 재확인</div>
                         <div className={
                             inputs.re_password === '' ? 'signup-input-area' : 
-                            (isPropsOk.re_password ? ('signup-input-area') : 'signup-input-err')
+                            (isPropsOk.re_password ? 'signup-input-area' : 'signup-input-err')
                         }>
                             <input 
                                 name="re_password" 
@@ -214,7 +217,7 @@ const Signup = () => {
                                 type="password" />
                         </div>
                         <p className={ inputs.re_password === '' ? 'hide' : 
-                            (isPropsOk.re_password ? ('hide') : 'signup-err-msg')
+                            (isPropsOk.re_password ? 'hide' : 'signup-err-msg')
                         }>
                             비밀번호가 일치하지 않습니다!
                         </p>
@@ -233,6 +236,43 @@ const Signup = () => {
                                 type="text"
                             />
                         </div>
+                    </div>
+                    <div className="signup-row">
+                        <div className="signup-type">연락처</div>
+                        <div className={
+                            inputs.phoneNumber === '' ? 'signup-input-area' : 
+                            (isPropsOk.phoneNumber ? 'signup-input-area' : 'signup-input-err')
+                        }>
+                            <input 
+                                name="phoneNumber" 
+                                value={phoneNumber} 
+                                onChange={onChange} 
+                                onFocus={(e) => e.target.placeholder=''}
+                                onBlur={(e) => {
+                                    if (e.target.value === '') {
+                                        e.target.placeholder="연락처 (\"-\" 빼고 입력)";
+                                    } else if ( e.target.value.length !== 11 ) {
+                                        setisPropsOk({
+                                            ...isPropsOk,
+                                            [e.target.name]: false
+                                        });
+                                    } else {
+                                        setisPropsOk({
+                                            ...isPropsOk,
+                                            [e.target.name]: true
+                                        });
+                                    };
+                                }}
+                                placeholder= "연락처 (&quot;-&quot; 빼고 입력)"
+                                className="signup-input" 
+                                type="number"
+                            />
+                        </div>
+                        <p className={ inputs.phoneNumber === '' ? 'hide' : 
+                            (isPropsOk.phoneNumber ? 'hide' : 'signup-err-msg')
+                        }>
+                            올바른 번호가 아닙니다!
+                        </p>
                     </div>
                     <div className="signup-row">
                         <div className="signup-type">생일</div>

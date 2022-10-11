@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Footer, Header} from "./components";
-import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Teststart, Error} from './pages';
+import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Teststart, Notfound, FindUser, FindPassword} from './pages';
 import { ScrollTop, LoginStatus } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
@@ -13,6 +13,11 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
     outline: none;
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;
 
@@ -33,7 +38,9 @@ function App() {
         <Route path='/mypage' element={<Mypage />} />
         <Route path='/recommend' element={<Recommend />} />
         <Route path='/testguide' element={<Teststart />} />
-        <Route path='/*' element={<Error />} />
+        <Route path='/finduser' element={<FindUser />} />
+        <Route path='/findpassword' element={<FindPassword />} />
+        <Route path='/*' element={<Notfound />} />
       </Routes>
       <Footer/>
     </BrowserRouter>

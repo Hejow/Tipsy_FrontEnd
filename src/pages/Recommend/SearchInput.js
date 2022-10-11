@@ -22,7 +22,7 @@ const SearchInput = () => {
         <input value={searchText} 
         type="text" 
         className="search-bar" 
-        placeholder="검색어를 입력하세요"
+        placeholder="검색"
         onChange={onChangeInput}
         onKeyUp={OnKeyUp}></input>
     );

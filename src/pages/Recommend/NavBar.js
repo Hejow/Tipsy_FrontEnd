@@ -9,12 +9,10 @@ const NavBar = (props) => {
 
     const handleArrowClick = (i) => {
         if (isOpen === i){
-            return setIsOpen(null)
+            return setIsOpen(false)
         }
 
         setIsOpen(i)
-        console.log(i);
-        console.log(isOpen);
         }
 
     const data = [

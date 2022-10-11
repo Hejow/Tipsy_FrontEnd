@@ -1,11 +1,17 @@
 import React from "react";
 import Slider from "./ImageSlider";
+import SearchInput from './SearchInput';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const PopularArea = ({recommendItem}) => {
     return(
         <div className="popular-box">
-            <h2>최근 급상승 인기 상품을 소개해드립니다.</h2>
-            <h1>와인 인기 조회 상품</h1>
+            <div className="search-area">
+                <FontAwesomeIcon className="search-button" icon={faMagnifyingGlass}/>
+                <SearchInput/>
+            </div>
+            <h2>Top 10</h2>
             <Slider item={recommendItem}/>            
         </div>
     );

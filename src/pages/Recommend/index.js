@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useRef, useCallback} from 'react'
 import "./Recommend.scss";
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,6 +7,8 @@ import BarArea from './BarArea';
 import RecommendArea from './RecommendArea';
 import NavBar from './NavBar';
 import RePagination from './RePagination';
+import CommentInput from './CommentInput';
+import Comment from './Comment';
 
 const recommendItem = [
     {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
@@ -25,23 +27,48 @@ const recommendItem = [
 const Recommend = () => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     const [currentItems, setCurentItems] = useState([]) // 전체 데이터를 잘라서 currentItems에 넣음
+    const [comments, setComments] = useState([]);
+
+    const nextId = useRef(1);
+
+    const onInsert = useCallback((name, content)=>{
+        const comment = {
+            id: nextId.current,
+            name,
+            content,
+        };
+        setComments(comments => comments.concat(comment));
+        nextId.current += 1;
+    }, [])
 
     const ImageModal = ({currentImageDetail}) => {
         const handleClick = () => {
             setCurrentImageDetail(null);
         }
         return(
-            <div className = "Modal">
-                <img className="ModalImg" src={currentImageDetail} alt="자세히보기창"/>
-                <div className="ModalContents">
-                    <h2>상품명</h2>
-                    <div className="ModalMiddle">
+            <div className = "modal">
+                <img className="modalImg" src={currentImageDetail} alt="자세히보기창"/>
+                <div className="modalContents">
+                    <div className="modal-header">
+                        <div className='modal-itemName'>상품명</div>
+                        <div className='modal-itemScore'>평점</div>
+                    </div>
+                    <div className="modal-middle">
                         상품설명
                     </div>
-                    <div className="ModalBottom">
-                        <p>태그, 태그, 태그</p>
-                        <p>123명이 좋아합니다.</p>
-                        <p>12345 조회</p>
+                    <div className="modal-bottom">
+                        <CommentInput onInsert={onInsert}/>
+                        <div className='comment'>
+                            {comments.map(comment=>(
+                                    <Comment
+                                        key={comment.id}
+                                        id={comment.id}
+                                        name={comment.name}
+                                        content={comment.content}
+                                    />
+                                    )
+                                )}
+                        </div>
                     </div>
                 </div>
                 <div className="xButton" onClick={handleClick}>
@@ -59,6 +86,8 @@ const Recommend = () => {
                     left: 0,
                     bottom: 0,
                     right: 0,
+                    width: "100%",
+                    height: "100vh",
                     backgroundColor: "rgb(255, 255, 255, 0.7)"
             }}/>}
             <div className='recommend-left'>

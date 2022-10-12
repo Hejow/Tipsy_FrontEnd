@@ -1,67 +1,52 @@
 @import '../../variables';
+@import '../../font.css';
 
-.bg {
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    opacity: 0.8;
-}
-
-.main-section {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    color: white; 
-    align-items: center;
+.home-area {
+    padding: $padding * 6 $padding * 6 0;
     z-index: 5000;
 
-    .main-ment {
-        position: absolute;
-        margin-left: 18%;
-        font-size: 3rem;
-        font-weight: 700;
-        line-height: 4rem;
-    }
+    .home-content-area {
+        display: flex;
+        margin: 2rem 0;
+        width: 100%;
+        height: 65vh;
+        
+        .home-ment-area {
+            padding: 4rem 4rem;
+            width: 50%;
 
-    .btn-scroll-down {
-        position:absolute;
-        left: 50%;
-        bottom: 4%;
-        font-size: 2.4rem;
-    }
-}
+            .home-title {
+                padding-bottom: 2rem;
+                width: 50%;
+            }
 
-.section {
-    padding: $padding*12 $padding*16;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #000;
-
-    .section-ment {
-        font-size: 1.4rem;
-        line-height: 2rem;
-    }
-
-    .section-nav-btn {
-        padding-top: $padding*5;
-        display: block;
-        text-align: center;
-
-        .section-to-test {
-            padding: $padding 0;
-            width: 40%;
-            border-radius: 14px;
-            font-size: 1.2rem;
-            font-weight: 700;
+            .home-title-ment {
+                font-family: '';
+                font-size: 1.2rem;
+            }
         }
+
+        .home-img-area {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+
+            .home-img {
+                width: 50%;
+                margin-right: 15%;
+            }
+        }
+    }
+
+    .home-divider {
+        position:relative;
+        bottom: 20vh;
     }
 }
 
 .ani-mv {
     animation: ani-mv 1s;
-}
-
-.ani-bounce {
-    animation: ani-bounce 1.3s infinite;
 }
 
 @keyframes ani-mv {
@@ -70,10 +55,4 @@
         opacity: 0;
     }
     100% { transform: translateY(0); }
-}
-
-@keyframes ani-bounce {
-    0% { transform: translateY(0px);}
-    50% { transform: translateY(-12px);}
-    100% {transform: translateY(0px);}
 }

@@ -1,51 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 import './Teststart.scss';
-import { db } from '../../firebase';
-import { getDoc, doc, updateDoc } from "firebase/firestore";
 
 const Teststart = () => {
-    const [tested, setTested] = useState(null);
     const navigate = useNavigate();
-    
-    const getTestUserCount = async () => {
-        try {
-            const dbData = await getDoc(doc(db, 'appData', 'testUserCount'));
-            setTested(dbData.data().count);
-        } catch(e) {
-            window.alert('Error : 서버에 문제가 발생했습니다. 다시 시도해주세요.');
-        }
-    };
-
-    const testedUserIncrease = async () => {
-        try {
-            const docRef = doc(db, 'appData', 'testUserCount');
-            await updateDoc(docRef, {
-                count: tested + 1
-            });
-        } catch (e) {
-            window.alert('Error : 서버에 문제가 발생했습니다. 다시 시도해주세요.');
-        }
-    };
-
-    useEffect(() => {
-        getTestUserCount();
-    }, [])
 
     return (
         <div className="teststart-area">
             <div className="teststart-container">
-                <div className="teststart-ment">
-                    테스트로<br/>
-                    알아보는<br/>
-                    술 취향!
+                <h2 className="teststart-main-title">테스트로 알아보는<br/>술 취향</h2>
+                <p className="teststart-sub-title">절대적인 기준은 아니지만 추천에는<br/>도움이 될 거에요</p>
+                <dir className="teststart-img-area">
+                    <img className="teststart-img" src="./img/Tipsy_teststart_img.png" alt="glasses_img" />
+                </dir>
+                <div className="teststart-btn-area">
+                    <button className="teststart-btn pointer" onClick={() => navigate('/test')}>시작</button>
                 </div>
-                <div className="teststart-tested">지금까지 <span>{tested}</span> 명이 자기 취향을 알아봤어요</div>
-                <button className="teststart-start-btn pointer" onClick={() => {
-                    testedUserIncrease();
-                    navigate('/test');
-                }}>시 작</button>
-                <div className="teststart-notice">&#8251; 절대적인 기준은 아니지만 추천에는 도움이 될거에요. &#8251;</div>
             </div>
         </div>
     )

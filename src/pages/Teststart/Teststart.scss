@@ -1,59 +1,52 @@
 @import '../../variables';
 
 .teststart-area {
-    padding: $header-height 0 $header-height*0.6;
+    padding: 9rem 0 5rem;
     display: flex;
     justify-content: center;
     align-items: center;
 
     .teststart-container {
-        padding: $padding*5.6 0;
-        text-align: center;
-        width: 36vw;
-        height: 66vh;
-        background-color: #ffec99;
-        border-radius: 14px;
+        padding: $padding * 2 $padding * 3;
+        border: 1.4px solid #000;
+        border-radius: 62px;
+        width: 31vw;
+        height: 62vh;
 
-        .teststart-ment {
+        .teststart-main-title {
+            padding-bottom: 1.4rem;
             font-weight: 700;
-            font-size: 3rem;
-            line-height: 62px;
-            color: #6f4f28;
+            font-size: 2.4rem;
+            line-height: 2.8rem;
         }
 
-        .teststart-tested {
-            padding: $padding*4 0 $padding*1.4;
-            font-size: 0.8rem;
-            font-weight: 700;
+        .teststart-sub-title {
+            padding-bottom: 7.8rem;
+            line-height: 1.4rem;
+        }
 
-            span {
-                color: #74c0fc;
+        .teststart-img-area {
+            display: flex;
+            justify-content: flex-end;
+
+            .teststart-img {
+                width: 55%;
+            }
+        }
+
+        .teststart-btn-area {
+            text-align: center;
+
+            .teststart-btn {
+                border: 1px solid #000;
+                border-radius: 32px;
+                background-color: black;
+                width: 100%;
+                height: 6vh;
                 font-weight: 700;
-                font-size: 0.9rem;
+                font-size: 1.4rem;
+                color: white;
             }
-        }
-
-        .teststart-start-btn {
-            width: 28%;
-            height: 12%;
-            font-weight: 700;
-            font-size: 1.6rem;
-            border: 0.4px solid #000;
-            border-radius: 14px;
-            background-color: red;
-            color: white;
-
-            &:hover {
-                background-color: rgba(#f1f3f5, 0.8);
-                color: black;
-                transition: 0.3s;
-            }
-        }
-
-        .teststart-notice {
-            padding-top: $padding*1.4;
-            color: rgba(gray, 0.8);
-            font-size: 0.8rem;
         }
     }
 }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.scss";
 import { db } from '../../firebase';
 import { getDoc, doc } from "firebase/firestore";
-// import CryptoJS from "crypto-js";
+import CryptoJS from "crypto-js";
 
 const Login = () => {
     const naviagte = useNavigate();
@@ -30,8 +30,8 @@ const Login = () => {
             if (info.exists) {
                 const dbData = info.data();
                 if( inputs.id === dbData.id && inputs.password === dbData.password) {
-                    // const token = CryptoJS.AES.encrypt(JSON.stringify(dbData), process.env.REACT_APP_SECRET_KEY).toString();
-                    // window.sessionStorage.setItem('FMTtoken', token);
+                    const token = CryptoJS.AES.encrypt(JSON.stringify(dbData), process.env.REACT_APP_SECRET_KEY).toString();
+                    window.sessionStorage.setItem('TIPSY', token);
                     naviagte('/');
                 } else {
                     window.alert('아이디 또는 비밀번호를 확인하세요!!');

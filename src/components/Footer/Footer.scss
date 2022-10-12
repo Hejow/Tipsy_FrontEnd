@@ -1,37 +1,48 @@
 @import '../../variables';
 
 .footer-area {
+    border-top: 1px solid #000;
     display: flex;    
     justify-content: center;
     width: 100%;
-    background-color: $default-color;
-    color: white;
+    background-color: white;
     font-weight: 600;
-
-    transition: 0.7s;
 
     .footer-content-area {
         margin-top: $margin*2;
         padding: $padding;
-        width: 80%;
+        width: 95%;
 
-        .footer-help-area {
+        .footer-main-area {
             display: flex;
+            
+            .footer-logo-area {
+                width: 50%;
 
-            .footer-help-box {
-                width: 25%;
+                .footer-logo {
+                    width: 20%;
+                }
             }
-
-            .footer-help-content {
-                font-weight: 500;
-                font-size: 0.8rem;
-                margin-top: $margin;
+    
+            .footer-help-area {
+                display: flex;
+                width: 50%;
+    
+                .footer-help-box {
+                    width: 25%;
+                }
+    
+                .footer-help-content {
+                    font-weight: 500;
+                    font-size: 0.8rem;
+                    margin-top: $margin;
+                }
             }
         }
 
         .footer-divider {
-            border-top: 1px solid white;
-            margin: $margin*2 0;
+            border-top: 1px solid black;
+            margin: $margin*4 0;
         }
 
         .footer-icon-box {
@@ -39,7 +50,7 @@
             text-align: center;
 
             span {
-                margin-right: $margin;
+                margin-right: 1rem;
                 &:last-child {
                     margin-right: 0;
                 }

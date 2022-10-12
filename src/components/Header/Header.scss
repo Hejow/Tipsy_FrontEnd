@@ -1,6 +1,7 @@
 @import '../../variables';
 
 .header-area {
+    border-bottom: 1px solid #000;
     position: fixed;
     top: 0;
     left: 0;
@@ -8,50 +9,51 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $padding * 2;
-    background-color: $default-color;
-    color: white;
+    padding: $padding;
+    background-color: white;
     z-index: 10000;
 
-    transition: 0.7s;
-
     .header-content-area {
-        width: 80%;
+        width: 95%;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+
+        .header-logo-area {
+            display: flex;
+            align-items: center;
+            width: 33.333%;
+
+            .header-logo {
+                width: 25%;
+            }
+        }
 
         .header-menu-area {
             display: flex;
+            justify-content: center;
+            width: 33.333%;
             
             li {
-                margin-right: $margin * 3;
+                margin: 0 0.6rem;
+                padding: 0.6rem 1.4rem;
+                background-color: white;
+                border: 1px solid #000;
+                border-radius: 16px;
                 font-weight: 600;
+                color: black;
             }
-
-            :last-child {
-                margin-right: -$margin * 11;
-            }
-        }
-    
-        .header-title {
-            font-size: 1.8rem;
-            font-weight: 700;
         }
     
         .header-my-menu-area {
             display: flex;
-            font-size: 1.2rem;
+            justify-content: flex-end;
+            width: 33.333%;
+            font-size: 1.4rem;
 
             div {
-                margin-left: $margin * 3;
+                margin: 0 $margin * 1.2;
             }
         }
     }
-}
-
-.style-ch {
-    background-color: rgba(0,0,0,0);
-    color: white;
-    transition: 0.7s;
 }

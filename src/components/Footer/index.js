@@ -6,9 +6,9 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 
 const Footer = () => {
     const Menus = [
-        {id: 1, title: "고객센터", contents: ["이메일|gmlwh124@naver.com"]},
+        {id: 1, title: "고객센터", contents: ["gmlwh124@naver.com"]},
         {id: 2, title: "문의", contents : ["공지사항", "FAQ", "1:1문의"]},
-        {id: 3, title: "혜택", contents : ["혜택내용1", "혜택내용2"]},
+        {id: 3, title: "혜택", contents : ["멤버쉽", "온라인 판매"]},
         {id: 4, title: "우리의 가치관", contents: ["Find Your Type", "Try Something NEW"]}
     ];
 
@@ -28,17 +28,25 @@ const Footer = () => {
     return (
         <div className="footer-area">
             <div className="footer-content-area">
-                <div className="footer-help-area">
-                    {Menus.map(menu => (
-                        <div key={menu.id} className="footer-help-box">
-                            <div key={menu.title} className="footer-help-title">{menu.title}</div>
-                            <ul>
-                                {menu.contents.map(content=> (
-                                    <li key={content} className="footer-help-content">{content}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                <div className="footer-main-area">
+                    <div className="footer-logo-area">
+                        <img className="footer-logo pointer"
+                            src="img/Tipsy_Logo.png"
+                            alt="Logo"
+                            />
+                    </div>
+                    <div className="footer-help-area">
+                        {Menus.map(menu => (
+                            <div key={menu.id} className="footer-help-box">
+                                <div key={menu.title} className="footer-help-title">{menu.title}</div>
+                                <ul>
+                                    {menu.contents.map(content=> (
+                                        <li key={content} className="footer-help-content pointer">{content}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="footer-divider"></div>
                 <div className="footer-icon-box">

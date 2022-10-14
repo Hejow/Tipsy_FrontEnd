@@ -1,0 +1,67 @@
+@import '../../variables';
+
+.shop-container {
+    border: 1px solid #000;
+    margin-bottom: 1rem;
+    border-radius: 28px;
+    width: 42%;
+    height: 40vh;
+
+    .shop-img-area {
+        border-bottom: 1px solid #000;
+        height: 60%;
+
+        // 이미지 태그 관리
+    }
+
+    .shop-detail-area {
+        padding: 0.8rem 1rem 0;
+
+        .shop-title-area {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 0.4rem;
+
+            .shop-name {
+                font-weight: 700;
+                font-size: 1.4rem;
+            }
+            
+            .shop-city {
+                line-height: 180%;
+                font-size: 14px;
+            }
+        }
+
+        .shop-description {
+            padding-bottom: 1rem;
+            font-size: 15px;
+        }
+
+        .shop-review-area {
+            display: flex;
+            padding-bottom: 0.4rem;
+
+            .shop-review {
+                font-weight: 800;
+                font-size: 1.2rem;
+                margin-right: 0.4rem;
+            }
+
+            .shop-review-count {
+                color: gray;
+            }
+        }
+
+        .shop-tag-area {
+            display: flex;
+
+            .shop-tag {
+                border: 1px solid #000;
+                border-radius: 24px;
+                margin-right: 0.3rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+    }
+}

@@ -27,7 +27,7 @@ const Login = () => {
 
         getDoc(doc(db, "user_info", inputs.id))
         .then( info => {
-            if (info.exists) {
+            if (info.exists()) {
                 const dbData = info.data();
                 if( inputs.id === dbData.id && inputs.password === dbData.password) {
                     const token = CryptoJS.AES.encrypt(JSON.stringify(dbData), process.env.REACT_APP_SECRET_KEY).toString();

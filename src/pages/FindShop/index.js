@@ -1,22 +1,27 @@
 import React, {useState, useEffect} from "react";
+import { Shop } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./FindShop.scss";
+import { db } from '../../firebase';
+import { getDoc, updateDoc, doc, setDoc, serverTimestamp, arrayUnion } from "firebase/firestore";
 
 
 const FindShop = () => {
-    const [filterOption, setFilterOption] = useState("ranking");
+    const [filterOption, setFilterOption] = useState("rank");
     const alchohols = ["와인", "위스키", "칵테일"];
     const cities = ["서울특별시", "부산", "인천광역시", "수원", "대전", "대구", "광주"];
+
+    const tmp = {
+        img: "이미지",
+        name: "가게이름",
+        description: "가게 특징/한줄평",
+        city: "지역",
+        reviews: 5.0,
+        tags: ["와인", "칵테일", "위스키"]
+    }
     
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setInput({
-            ...input,
-            [name] : value
-        });
-    };
 
     return(
         <div className="findshop-area">
@@ -57,9 +62,15 @@ const FindShop = () => {
                     </div>
                 </div> 
                 <div className="findshop-shop-filter">
-                    <span className={filterOption === "ranking" ? "pointer font-selected" : "pointer"}>추천순</span>
+                    <span className={filterOption === "rank" ? "pointer font-selected" : "pointer"}>추천순</span>
                     <span> | </span>
                     <span className={filterOption === "distance" ? "pointer font-selected" : "pointer"}>거리순</span>
+                </div>
+                <div className="findshop-shop-area">
+                    <Shop props={tmp}></Shop>
+                    <Shop props={tmp}></Shop>
+                    <Shop props={tmp}></Shop>
+                    <Shop props={tmp}></Shop>
                 </div>
             </div>
         </div>

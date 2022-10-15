@@ -3,8 +3,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
-
 const ImageSlider = (props) => {
     const setting = {
         infinity: true,
@@ -17,16 +15,14 @@ const ImageSlider = (props) => {
         arrow: false,
     };
     
-
-
     return(
         <div>
             <Slider className="popular-items" {...setting}>
                 {props.item.map(item =>(
                     <div key={item.id} className="popular-item">
                         <div className="popularItemHead">
-                            <span className="num">{item.id.toString()}</span>
-                            <p className="item-name">{item.title}</p>
+                            {/* <span className="num">{}</span> */}
+                            <p className="item-name">{item.id}</p>
                         </div>
                         <div href="/" className="img-box"><img className="img" alt="와인이미지" src={item.img}></img></div>
                     </div>

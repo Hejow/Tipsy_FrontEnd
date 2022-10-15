@@ -8,22 +8,21 @@ const RePagination = ({recommendItem, setCurentItems}) => {
     
     useEffect(()=>{
       const endOffset = itemOffset + itemsPerPage;
-      // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
       setCurentItems(recommendItem.slice(itemOffset, endOffset))
-      setPageCount(Math.ceil((recommendItem.length ?? 0 / itemsPerPage)))
+      setPageCount(Math.ceil((recommendItem.length / itemsPerPage)))
     },[itemOffset, itemsPerPage, setCurentItems, recommendItem])
   
     const handlePageClick = (e)=>{
       setItemOffset(e.selected * itemsPerPage % recommendItem.length)
     }
-  
+    
     return(
           <>
             <ReactPaginate className="rePagination"
               // breakLabel="..."
               nextLabel=">"
               previousLabel="<"
-              pageRangeDisplayed={10}
+              pageRangeDisplayed={6}
               renderOnZeroPageCount={null}
               onPageChange={handlePageClick}
               pageCount={pageCount}

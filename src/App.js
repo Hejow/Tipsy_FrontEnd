@@ -4,16 +4,16 @@ import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Tes
 import { ScrollTop, LoginStatus } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-
+import React from 'react'
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
-  * {
-    box-sizing: border-box;
-    text-decoration: none;
-    color: inherit;
-    outline: none;
-  }
+${reset}
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
 `;
 
 function App() {

@@ -6,7 +6,7 @@
 
     .recommend-content{
         width: 900px;
-        height: 1300px;
+        height: 1550px;
         padding: $header-height*0.6 0;
         text-align: center;
 
@@ -24,7 +24,7 @@
     
         .popular-box{
             width: 900px;
-            height: 350px;
+            height: 450px;
             background-image: linear-gradient(to right, #ced4da 33%,
             rgba(255,255,255,0) 0%);
             background-position: bottom; 
@@ -57,11 +57,12 @@
                 color: black;
             }
 
+            
             .popular-items{
                 display: flex;
                 text-align: center;
                 width: 900px;
-
+                
                 .popular-item{
                     margin: $margin*1.6 $margin*0.8 0 $margin*0.8;
                     width: 160px !important;
@@ -71,7 +72,7 @@
                     .popularItemHead{
                         display: flex;
                         height: 10%;
-                        justify-content: start;
+                        justify-content: flex-start;
                         align-items: center;
                         
                         .num{
@@ -254,7 +255,6 @@
 
     .recommend-left{
         width: 17%;
-        // margin-top: $header-height*5 0;
         padding-top: $padding*7;
         
         .accordion{
@@ -268,7 +268,7 @@
 
                 .item-box{
                     display: flex;
-                    justify-content: start;
+                    justify-content: flex-start;
                     align-items: center;
                     height: 50px;
                     cursor: pointer;
@@ -328,7 +328,7 @@
     
     .recommend-box{
         width: 100%;
-        height: 70%;      
+        height: 65%;      
         
         
         .recommend-items{
@@ -342,7 +342,6 @@
                 flex-direction: column;
                 margin-top: $margin*2;
                 width: 30%;
-                height: 37vh;
                 border-radius: 20px;
                 border: 1.3px solid #343a40;
                 
@@ -373,16 +372,16 @@
     
                         .recommend-item-name{
                             display: flex;
-                            justify-content: start;
+                            justify-content: flex-start;
                             align-items: center;
                             font-weight: 700;
-                            font-size: 1.3rem;
+                            font-size: 12px;
                             padding-bottom: $padding;
                         }
     
                         .recommend-item-contry{
                             display: flex;
-                            justify-content: start;
+                            justify-content: flex-start;
                             align-items: center;
                             padding-bottom: $padding;
                             font-weight: 500;

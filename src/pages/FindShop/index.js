@@ -4,9 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./FindShop.scss";
-import { db } from '../../firebase';
-import { getDoc, updateDoc, doc, setDoc, serverTimestamp, arrayUnion } from "firebase/firestore";
-
 
 const FindShop = () => {
     const [filterOption, setFilterOption] = useState("rank");
@@ -21,7 +18,6 @@ const FindShop = () => {
         reviews: 5.0,
         tags: ["와인", "칵테일", "위스키"]
     }
-    
 
     return(
         <div className="findshop-area">

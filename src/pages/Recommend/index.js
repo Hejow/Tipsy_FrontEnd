@@ -1,7 +1,8 @@
-import React, {useState, useRef, useCallback} from 'react'
+import React, {useState, useRef, useCallback, useEffect} from 'react'
 import "./Recommend.scss";
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {PopularArea, BarArea, RecommendArea, NavBar, RePagination, CommentInput, Comment} from './';
 import PopularArea from './PopularArea';
 import BarArea from './BarArea';
 import RecommendArea from './RecommendArea';
@@ -9,6 +10,8 @@ import NavBar from './NavBar';
 import RePagination from './RePagination';
 import CommentInput from './CommentInput';
 import Comment from './Comment';
+import { db } from '../../firebase';
+import { getDocs, doc, getDoc, collectionGroup, query, where, collection } from "firebase/firestore";
 
 const recommendItem = [
     {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
@@ -23,12 +26,17 @@ const recommendItem = [
     {id: 10, title: "어준지", img:"img/와인1.png", tags: ["태그33", "태그34", "태그35", "태그36"]},
 ];
 
-
 const Recommend = () => {
     const [currentImageDetail, setCurrentImageDetail] = useState(null);
     const [currentItems, setCurentItems] = useState([]) // 전체 데이터를 잘라서 currentItems에 넣음
+    // DB에서 가져온 전체 추천 데이터
+    const [recommends, setRecommends] = useState([]); 
+    // 모달이 열릴 때마다 DB에서 가져온 댓글 데이터
     const [comments, setComments] = useState([]);
-
+    // 모달이 열릴 때 keyRef 설정
+    const [keyRef, setKeyRef] = useState(null);
+    // keyRef가 설정되면 PK 설정
+    const [commentPK, setCommentPK] = useState(0)
     const nextId = useRef(1);
 
     const onInsert = useCallback((name, content)=>{
@@ -41,10 +49,46 @@ const Recommend = () => {
         nextId.current += 1;
     }, [])
 
+    // docRef 가져오기
+    const getKeyRef = () => { setKeyRef(doc(db, "appData", "commentPK")); };
+
+    // docRef로 PK 가져오기
+    const getPK = (ref) => (
+        getDoc(ref)
+            .then(PK => setCommentPK(PK))
+            .catch(e => console.log(e.message))
+    );
+
+    // page load시 firebase에서 cocktailData를 가져온다
+    useEffect(() => {
+        getDocs(collectionGroup(db, "cocktailData")).then(snapShot => {
+            const alcoholData = snapShot.docChanges().map(change => ({
+                    name: change.doc.id,
+                    img: change.doc.data().img,
+                    tags: change.doc.data().tags,
+                    clicked: change.doc.data().clicked
+                }
+            ));
+            setRecommends(alcoholData);
+        }).catch(e => console.log(e.message));
+    }, [])
+
+    // 모달 클릭 시 firebase에서 comments를 가져온다 (임시)
+    useState(() => {
+        getDocs(query(collection(db, "comment"), where("alcohol", "==", "마티니")))
+        .then(snapShot => {
+            const commentData = snapShot.docs.map(doc => ({
+                writer: doc.data().writer,
+                content: doc.data().content,
+                time: doc.data().updated_at
+            }));
+            setComments(commentData);
+        }).catch(e => console.log(e.message));
+    }, [])
+
     const ImageModal = ({currentImageDetail}) => {
-        const handleClick = () => {
-            setCurrentImageDetail(null);
-        }
+        const handleClick = () => { setCurrentImageDetail(null); }
+
         return(
             <div className = "modal">
                 <img className="modalImg" src={currentImageDetail} alt="자세히보기창"/>
@@ -97,7 +141,10 @@ const Recommend = () => {
                 {currentImageDetail && (<ImageModal currentImageDetail={currentImageDetail}/>)}
                 <PopularArea recommendItem={recommendItem}/>
                 <BarArea recommendItem={recommendItem}/>
-                <RecommendArea currentImageDetail={currentImageDetail} setCurrentImageDetail={setCurrentImageDetail}  currentItems={currentItems} recommendItem={recommendItem}/>
+                <RecommendArea currentImageDetail={currentImageDetail}
+                    setCurrentImageDetail={setCurrentImageDetail}  
+                    currentItems={currentItems} 
+                    recommendItem={recommendItem}/>
                 <RePagination recommendItem={recommendItem} currentItems={currentItems} setCurentItems={setCurentItems}/>
             </div>
             <div className='recommend-right'>

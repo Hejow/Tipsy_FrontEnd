@@ -7,7 +7,7 @@ const LoginStatus = () => {
     const navigate = useNavigate();
 
     // 다른 쪽에서 쓸 예정
-    // const userToken = sessionStorage.getItem('FMTtoken');
+    // const userToken = sessionStorage.getItem('Tipsy');
 
     useEffect(() => {
         window.sessionStorage.length !== 0 ? 

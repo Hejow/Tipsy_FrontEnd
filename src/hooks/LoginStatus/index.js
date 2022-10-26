@@ -20,15 +20,10 @@ const LoginStatus = () => {
                 window.sessionStorage.clear();
                 setLogin(false);
                 window.alert('토큰이 만료되었습니다.\n홈으로 이동합니다.');
-                if (location.pathname !== '/') {
-                    navigate('/');
-                } else {
-                    window.location.reload();
-                }
+                if (location.pathname !== '/') navigate('/');
+                else window.location.reload();
             }, 1800000);
-            return () => {
-                clearInterval(interval);
-            };
+            return () => { clearInterval(interval); };
         };
     }, [login, navigate, location.pathname]);
 };

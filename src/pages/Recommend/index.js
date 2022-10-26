@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import "./Recommend.scss";
 import PopularArea from './PopularArea';
 import RecommendArea from './RecommendArea';
@@ -7,7 +7,7 @@ import Modal from './Modal';
 import RePagination from './RePagination';
 import { db } from '../../firebase';
 import { getDocs, doc, collectionGroup } from "firebase/firestore";
-import { useCallback } from 'react';
+import CryptoJS from "crypto-js";
 
 const Recommend = () => {
     const [selectedAlcohol, setSelectedAlcohol] = useState(null); // 선택된 주종 이름 설정
@@ -15,9 +15,21 @@ const Recommend = () => {
     const [recommends, setRecommends] = useState([]); // DB에서 가져온 전체 추천 데이터 
     const [alcohol, setAlcohol] = useState("cocktail"); // 페이지 선택에 따라 변경
     const [keyRef, setKeyRef] = useState(null); // 댓글의 key Reference
+    const [userId, setUserId] = useState(null);
+
+    // 로그인 상태 처리
+    const getUserId = () => {
+        const userToken = window.sessionStorage.getItem("TIPSY");
+        if (userToken !== null) {
+            const bytes = CryptoJS.AES.decrypt(userToken, process.env.REACT_APP_SECRET_KEY);
+            setUserId(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id);
+        } else return;
+    };
 
     // docRef(키 주소) 가져오기
-    const getKeyRef = useCallback(() => { setKeyRef(doc(db, "appData", "commentPK")); }, []);
+    const getKeyRef = useCallback(() => {
+        setKeyRef(doc(db, "appData", "commentPK"));
+    }, []);
 
     // type(String : "cocktail", "wiskey", "wine")에 해당되는 주류 데이터 가져오기
     const getAlcoholsByType = useCallback(() => {
@@ -35,8 +47,10 @@ const Recommend = () => {
     }, [alcohol]);
 
     useEffect(() => {
+        console.log("Recommend effected");
         getAlcoholsByType();
         getKeyRef();
+        getUserId();
     }, [getAlcoholsByType, getKeyRef])
 
     return(
@@ -52,11 +66,12 @@ const Recommend = () => {
                     backgroundColor: "rgb(255, 255, 255, 0.7)"
             }}/>}
             <div className='recommend-left'>
-                <NavBar/>
+                <NavBar setAlcohol={setAlcohol}/>
             </div>
             <div className="recommend-content">
                 {selectedAlcohol && 
                     (<Modal 
+                        userId={userId}
                         alcohol={alcohol}
                         keyRef={keyRef}
                         selectedAlcohol={selectedAlcohol}
@@ -69,10 +84,12 @@ const Recommend = () => {
                 <RecommendArea 
                     setSelectedAlcohol={setSelectedAlcohol}  
                     currentItems={currentItems} />
-                <RePagination recommends={recommends} currentItems={currentItems} setCurentItems={setCurentItems}/>
+                <RePagination 
+                    recommends={recommends}
+                    currentItems={currentItems}
+                    setCurentItems={setCurentItems}/>
             </div>
-            <div className='recommend-right'>
-            </div>
+            <div className='recommend-right'></div>
         </div>
     );
 }

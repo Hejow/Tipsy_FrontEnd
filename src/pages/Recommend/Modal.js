@@ -1,23 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../../firebase';
-import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment } from "firebase/firestore";
-import CryptoJS from "crypto-js";
-import { useCallback } from "react";
+import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
 
-const Modal = ({ alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
-    const [selectedDetail, setSelectedDetail] = useState(null); // 선택된 주종에 따른 디테일 정보
-    const [comments, setComments] = useState([]); // 모달이 열릴 때마다 DB에서 가져온 댓글 데이터 
-    const [input, setInput] = useState("");
+const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
+    const [selectedDetail, setSelectedDetail] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [updateMode, setUpdateMode] = useState(false);
+    const [inputs, setInputs] = useState({
+        comment: "",
+        updateComment: ""
+    });
 
-    const setUserId = (token) => {
-        if (token === null) return null;
-        else {
-            const bytes = CryptoJS.AES.decrypt(token, process.env.REACT_APP_SECRET_KEY);
-            return JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id;
-        }
-    }
+    const onChange = (e) => {
+        const { name, value } = e.target;
+        setInputs({
+            ...inputs,
+            [name] : value
+        });
+    };
 
     const convertDate = (sec) => {
         const currentTime = new Date();
@@ -35,45 +37,71 @@ const Modal = ({ alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
             return (currentTime.getMinutes() - commentTime.getMinutes()) + "분전";
     }
 
-    const userToken = window.sessionStorage.getItem("TIPSY");
-    const userId = setUserId(userToken);
+    // 조회수 올리기
+    // const increaseClickCount = () => {
+    //     const alcoholType = alcohol + "Data";
+    //     updateDoc(doc(db, alcoholType, selectedAlcohol.name), {
+    //         clicked: increment(1)
+    //     });
+    // };
 
-    // promise 성공 시 PK increase
-    const incPK = (keyRef) => {
+    const increasePK = (keyRef) => {
         updateDoc(keyRef, {
             id: increment(1)
         }).catch(e => console.log(e.message));
     }
 
-    // 댓글달기 (단순 추가)
     const postComment = (e) => {
         e.preventDefault();
 
         getDoc(keyRef).then(commentPK => {
             setDoc(doc(db, "comment", commentPK.data().id.toString()), {
                 writer: userId,
-                content: input,
+                content: inputs.comment,
                 alcohol: selectedAlcohol.name,
                 created_at: serverTimestamp(),
                 updated_at: serverTimestamp(),
             }).then(() => {
-                incPK(keyRef)
-                setInput("");
+                increasePK(keyRef)
+                setInputs({
+                    comment: "",
+                    updateComment: ""
+                });
                 getCommentsByAlcohol();
-            })
+            }).catch(e => console.log(e.message));
         });
     };
 
-    // 주종과 이름으로 디테일 정보 가져오기
+    const updateComment = (e) => {
+        updateDoc(doc(db, "comment", e.target.id), {
+            content: inputs.updateComment,
+            updated_at: serverTimestamp()
+        }).then(() => {
+            console.log("comment updated");
+            setInputs({
+                comment: "",
+                updateComment: ""
+            });
+            setUpdateMode(false);
+            getCommentsByAlcohol();
+        }).catch(e => console.log(e.message));
+    };
+
+    const deleteComment = (e) => {
+        if (window.confirm("댓글을 삭제하시겠습니까?")) {
+            deleteDoc(doc(db, "comment", e.target.id))
+                .then(() => getCommentsByAlcohol())
+                .catch(e => console.log(e.message));
+        } else return;
+    };
+
     const getSelectedDetailByName = useCallback(() => {
         const alcoholType = alcohol + "Data";
-        
         getDoc(doc(db, alcoholType, selectedAlcohol.name)).then(doc => {
             setSelectedDetail(doc.data())
-        }).catch(e => console.log(e.message))
+        }).catch(e => console.log(e.message));
     }, [alcohol, selectedAlcohol.name]);
 
-    // 모달 클릭 시 DB에서 comments 가져오기
     const getCommentsByAlcohol = useCallback(() => {
         getDocs(query(collection(db, "comment"), where("alcohol", "==", selectedAlcohol.name)))
             .then(snapShot => {
@@ -88,17 +116,15 @@ const Modal = ({ alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
     }, [selectedAlcohol.name]);
 
     useEffect(() => {
+        console.log("Modal effected");
+        // increaseClickCount();
         getSelectedDetailByName();
         getCommentsByAlcohol();
     }, [getSelectedDetailByName, getCommentsByAlcohol])
-
-    console.log(selectedDetail);
-    console.log(comments);
     
     return(
         <div className = "modal">
-            <img className="modalImg" alt="자세히보기창" 
-                src={selectedAlcohol.img} />
+            <img className="modalImg" src={selectedAlcohol.img} alt="주종 이미지"/>
             <div className="modalContents">
                 <div className="modal-header">
                     <div className='modal-itemName'>{selectedAlcohol.name}</div>
@@ -112,22 +138,43 @@ const Modal = ({ alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
                         <p className="inputNames">{userId}</p>
                         <input className='inputContents' 
                             type="text"
-                            name="input"
+                            name="comment"
                             placeholder="댓글을 남겨보세요."
-                            value={input}
-                            onChange={e => setInput(e.target.value)} />
-                        <button className="input-submit pointer" type='submit'>
-                            send
-                        </button>
+                            value={inputs.comment}
+                            onChange={onChange} />
+                        <button className="input-submit pointer" type='submit'>send</button>
                     </form>
                     <div className='comment'>
                         {comments.map(comment => (
-                            <div className="comment-row">
-                                <p className="comment-writer">{comment.writer}</p>
-                                <p className="comment-content">{comment.content}</p>
-                                <p className="comment-time">{comment.time}</p>
-                                <button className={comment.writer === userId ? "" : "hide"}>수정</button>
-                                <button className={comment.writer === userId ? "" : "hide"}>삭제</button>
+                            <div key={comment.id}>
+                                <div className={updateMode ? "hide" : "comment-row"}>
+                                    <p className="comment-writer">{comment.writer}</p>
+                                    <p className="comment-content">{comment.content}</p>
+                                    <p className="comment-time">{comment.time}</p>
+                                    <button className={comment.writer === userId ? "pointer" : "hide"}
+                                        onClick={() => setUpdateMode(true)}>수정</button>
+                                    <button className={comment.writer === userId ? "pointer" : "hide"}
+                                        id={comment.id} onClick={(e) => deleteComment(e)} >삭제</button>
+                                </div>
+                                <div className={updateMode ? "comment-row" : "hide"} id={comment.id}>
+                                    <p className="comment-writer">{comment.writer}</p>
+                                    <input className="comment-update"
+                                        type="text"
+                                        name="updateComment"
+                                        value={inputs.updateComment}
+                                        placeholder={comment.content}
+                                        onChange={onChange} />
+                                    <button className="pointer" id={comment.id}
+                                        onClick={(e) => updateComment(e)}>수정</button>
+                                    <button className="pointer"
+                                        onClick={() => {
+                                            setUpdateMode(false);
+                                            setInputs({
+                                                ...inputs,
+                                                updateComment: ""
+                                            });
+                                        }}>취소</button>
+                                </div>
                             </div>
                         ))}
                     </div>

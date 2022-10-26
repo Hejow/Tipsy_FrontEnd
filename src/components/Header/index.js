@@ -22,12 +22,11 @@ const Header = () => {
     }, [location]);
 
     const logOut = () => {
-        sessionStorage.clear();
-        if (location.pathname !== '/') {
-            navigate('/');
-        } else {
-            window.location.reload();
-        }
+        if (window.confirm("로그아웃 하시겠습니까?")) {
+            sessionStorage.clear();
+            if (location.pathname !== '/') navigate('/');
+            else window.location.reload();
+        } else return;
     };
     
     return (

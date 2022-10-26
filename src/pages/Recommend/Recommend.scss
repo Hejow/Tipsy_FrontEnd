@@ -133,7 +133,7 @@
         box-shadow: 0 3px 40px 0 #ced4da;
         background-color: white;
         transform: translate(-50%, -50%);    
-        z-index: 99;
+        z-index: 10000;
     
         .modalImg{
             width: 50%;
@@ -192,20 +192,25 @@
                 flex-direction: column;
 
                 .CommentInsert{
-                    height: 100%;
-                    margin-bottom: $margin;
                     border: 1px solid gray;
+                    margin-bottom: $margin;
                     width: 90%;
                     height: 30%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
 
                     .inputNames{
-                        width: 20%;
-                        height: 100%;
+                        border: 1px solid #000;
                     }
 
                     .inputContents{
-                        width: 70%;
-                        height: 100%;
+                        border: 1px solid #000;
+                    }
+
+                    .input-submit {
+                        border: 1px solid #000;
+                        height: 50%;
                     }
                 }
 
@@ -217,20 +222,25 @@
                     border: 1px solid gray;
                     overflow-y: scroll;
 
-                    .commentBox{
+                    .comment-row {
                         display: flex;
                         justify-content: space-evenly;
-                        width: 100%;
-                        
-                        .commentName{
-                            width: 20%;
-                            margin: $margin;
-                            
+                        align-items: center;
+                        font-weight: 800;
+
+                        .comment-writer {
                         }
 
-                        .commentContent{
-                            width: 80%;
-                            margin: $margin;
+                        .comment-content {
+                        }
+
+                        .comment-time {
+                            color: gray;
+                            font-size: 0.8rem;
+                        }
+
+                        button {
+                            border: 1px solid #000;
                         }
                     }
                 }

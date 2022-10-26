@@ -1,17 +1,20 @@
 import React from 'react';
 
-const RecommendArea = (props) => {
+const RecommendArea = ({ setSelectedAlcohol, currentItems }) => {
 
     return (
     <div className="recommend-box">
         <div>
             <ul className="recommend-items">
-                {props.currentItems && props.currentItems.map(item => (
+                {currentItems && currentItems.map(item => (
                     <li key={item.name} className="recommend-item">
                         <img className="recommend-img" 
                             alt="주종이미지" 
                             src={item.img} 
-                            onClick ={()=> props.setSelectedAlcohol(item.name)}/>
+                            onClick ={()=> setSelectedAlcohol({
+                                    name: item.name,
+                                    img: item.img
+                                })}/>
                         <div className="recommend-itemExplain">
                             <div className="explain-box">
                                 <p className="recommend-item-name">{item.name}</p>

@@ -1,30 +1,24 @@
 import React from 'react';
-import { getDownloadURL, ref } from "firebase/storage";
 
-const RecommendArea = (props) => {
+const RecommendArea = ({recommends, setSelectedAlcohol}) => {
 
     return (
     <div className="recommend-box">
         <div>
             <ul className="recommend-items">
-                {props.currentItems && props.currentItems.map(item => (
-                    <li key={item.title} className="recommend-item">
-                        { // item의 이미지 경로로 storage에서 이미지 url을 가져와서 img 태그 생성
-                        /* {getDownloadURL(item.img).then(url => {
-                            <img className="recommend-img" src={url} alt={item.name}
-                                onClick ={()=> props.setCurrentImageDetail(item.img)}/>
-                        }).catch(e => console.log(e.message))} */}
+                {recommends && recommends.map(item => (
+                    <li key={item.name} className="recommend-item">
                         <img className="recommend-img" 
-                            alt="와인이미지" 
+                            alt="주종이미지" 
                             src={item.img} 
-                            onClick ={()=> props.setCurrentImageDetail(item.img)}></img>
+                            onClick ={()=> setSelectedAlcohol(item.name)}/>
                         <div className="recommend-itemExplain">
                             <div className="explain-box">
-                                <p className="recommend-item-name">{item.title}</p>
+                                <p className="recommend-item-name">{item.name}</p>
                                 <p className="recommend-item-contry">국가/생산지역: 미국</p>
                                 <ul className="item-tag">
                                     {item.tags.map(tag => (
-                                        <li key={tag}><a href='/'>{tag}</a></li>
+                                        <li key={tag}>{tag}</li>
                                     ))}
                                 </ul>
                             </div>

@@ -1,81 +1,75 @@
-import React, {useState, useRef, useCallback, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import "./Recommend.scss";
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faArrowTurnDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import {PopularArea, BarArea, RecommendArea, NavBar, RePagination, CommentInput, Comment} from './';
 import PopularArea from './PopularArea';
-import BarArea from './BarArea';
 import RecommendArea from './RecommendArea';
 import NavBar from './NavBar';
-import RePagination from './RePagination';
-import CommentInput from './CommentInput';
-import Comment from './Comment';
+import Pagination from '../../components/Pagination';
 import { db } from '../../firebase';
 import { getDocs, doc, getDoc, collectionGroup, query, where, collection } from "firebase/firestore";
 
-const recommendItem = [
-    {id: 1, title: "헌드레드 에이커", img:"img/와인1.png", tags: ["#달콤한 맛", "#약한 도수", "#값이 싼", "#가벼운"]},
-    {id: 2, title: "리카솔리", img:"img/와인2.png", tags: ["태그1", "태그2", "태그3", "태그4"]},
-    {id: 3, title: "볼게리 로쏘", img:"img/와인3.png", tags: ["태그5", "태그6", "태그7", "태그8"]},
-    {id: 4, title: "라포스톨", img:"img/와인4.png", tags: ["태그9", "태그10", "태그11", "태그12"]},
-    {id: 5, title: "샤또팔레 카디날", img:"img/와인5.png", tags: ["태그13", "태그14", "태그15", "태그16"]},
-    {id: 6, title: "어준혁", img:"img/와인1.png", tags: ["태그17", "태그18", "태그19", "태그20"]},
-    {id: 7, title: "어준카", img:"img/와인1.png", tags: ["태그21", "태그22", "태그23", "태그24"]},
-    {id: 8, title: "어준오", img:"img/와인1.png", tags: ["태그25", "태그26", "태그27", "태그28"]},
-    {id: 9, title: "어준미", img:"img/와인1.png", tags: ["태그29", "태그30", "태그31", "태그32"]},
-    {id: 10, title: "어준지", img:"img/와인1.png", tags: ["태그33", "태그34", "태그35", "태그36"]},
-];
-
 const Recommend = () => {
-    const [currentImageDetail, setCurrentImageDetail] = useState(null);
-    const [currentItems, setCurentItems] = useState([]) // 전체 데이터를 잘라서 currentItems에 넣음
-    // DB에서 가져온 전체 추천 데이터
-    const [recommends, setRecommends] = useState([]); 
-    // 모달이 열릴 때마다 DB에서 가져온 댓글 데이터
-    const [comments, setComments] = useState([]);
-    // 모달이 열릴 때 keyRef 설정
+    const [selectedAlcohol, setSelectedAlcohol] = useState(null); // 선택된 주종 이름 설정
+    const [selectedDetail, setSelectedDetail] = useState(null); // 선택된 주종에 따른 디테일 정보
+    const [recommends, setRecommends] = useState([]); // DB에서 가져온 전체 추천 데이터 
+    const [comments, setComments] = useState([]); // 모달이 열릴 때마다 DB에서 가져온 댓글 데이터 
     const [keyRef, setKeyRef] = useState(null);
-    // keyRef가 설정되면 PK 설정
-    const [commentPK, setCommentPK] = useState(0)
-    const nextId = useRef(1);
+    const [commentPK, setCommentPK] = useState(0) // 기본키(PK) - 추가, 수정, 삭제
+    const [input, setInput] = useState("");
 
-    const onInsert = useCallback((name, content)=>{
-        const comment = {
-            id: nextId.current,
-            name,
-            content,
-        };
-        setComments(comments => comments.concat(comment));
-        nextId.current += 1;
-    }, [])
+    // submit 시 데이터 DB에 저장 (임시)
+    // const postComment = (e) => {
+    //     e.preventDefault();
 
-    // docRef 가져오기
+    //     setDoc(doc(db, "comment", commentPK), {
+    //         writer: "gmlwh124",
+    //         content: "test2",
+    //         alcohol: "마티니",
+    //         created_at: serverTimestamp(),
+    //         updated_at: serverTimestamp(),
+    //     }).then(updateDoc(keyRef, {
+    //         id: increment(1)
+    //     })).catch(e => console.log(e.message));
+    // };
+
+    // docRef(키 주소) 가져오기
     const getKeyRef = () => { setKeyRef(doc(db, "appData", "commentPK")); };
 
-    // docRef로 PK 가져오기
+    // docRef로 기본키(PK) 가져오기 (댓글 추가)
     const getPK = (ref) => (
         getDoc(ref)
             .then(PK => setCommentPK(PK))
             .catch(e => console.log(e.message))
     );
 
-    // page load시 firebase에서 cocktailData를 가져온다
-    useEffect(() => {
-        getDocs(collectionGroup(db, "cocktailData")).then(snapShot => {
-            const alcoholData = snapShot.docChanges().map(change => ({
+    // type(String : "cocktail", "wiskey", "wine")에 해당되는 주류 데이터 가져오기
+    const getAlcoholsByType = (type) => {
+        const alcoholType = type + "Data";
+        getDocs(collectionGroup(db, alcoholType)).then(snapShot => {
+            const alcoholList = snapShot.docChanges().map(change => ({
                     name: change.doc.id,
-                    img: change.doc.data().img,
+                    img:  "https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + change.doc.data().img + "?alt=media",
                     tags: change.doc.data().tags,
                     clicked: change.doc.data().clicked
                 }
             ));
-            setRecommends(alcoholData);
+            setRecommends(alcoholList);
         }).catch(e => console.log(e.message));
-    }, [])
+    };
 
-    // 모달 클릭 시 firebase에서 comments를 가져온다 (임시)
-    useState(() => {
-        getDocs(query(collection(db, "comment"), where("alcohol", "==", "마티니")))
+    // 주종과 이름으로 디테일 정보 가져오기
+    const getSelectedDetailByName = (type, alcohol) => {
+        const alcoholType = type + "Data";
+        
+        getDoc(doc(db, alcoholType, alcohol)).then(doc => {
+            setSelectedDetail(doc.data())
+        }).catch(e => console.log(e.message))
+    };
+
+    // 모달 클릭 시 DB에서 comments 가져오기
+    const getCommentsByAlcohol = (alcohol) => {
+        getDocs(query(collection(db, "comment"), where("alcohol", "==", alcohol)))
         .then(snapShot => {
             const commentData = snapShot.docs.map(doc => ({
                 writer: doc.data().writer,
@@ -84,14 +78,17 @@ const Recommend = () => {
             }));
             setComments(commentData);
         }).catch(e => console.log(e.message));
+    }
+
+    useEffect(() => {
+        getAlcoholsByType("cocktail");
+        getKeyRef();
     }, [])
 
-    const ImageModal = ({currentImageDetail}) => {
-        const handleClick = () => { setCurrentImageDetail(null); }
-
+    const ImageModal = ({selectedAlcohol}) => {
         return(
             <div className = "modal">
-                <img className="modalImg" src={currentImageDetail} alt="자세히보기창"/>
+                <img className="modalImg" src="" alt="자세히보기창"/>
                 <div className="modalContents">
                     <div className="modal-header">
                         <div className='modal-itemName'>상품명</div>
@@ -101,21 +98,38 @@ const Recommend = () => {
                         상품설명
                     </div>
                     <div className="modal-bottom">
-                        <CommentInput onInsert={onInsert}/>
+                        <form className="CommentInsert" >
+                            <p className="inputNames">아이디</p>
+                            <input className='inputContents' 
+                                type="text"
+                                name="comment"
+                                placeholder="댓글을 남겨보세요."
+                                value={input}
+                                onChange={e => setInput(e.target.value)} />
+                            <button type='submit'>
+                                <FontAwesomeIcon icon={faArrowTurnDown} />
+                            </button>
+                        </form>
                         <div className='comment'>
-                            {comments.map(comment=>(
-                                    <Comment
-                                        key={comment.id}
-                                        id={comment.id}
-                                        name={comment.name}
-                                        content={comment.content}
-                                    />
-                                    )
-                                )}
+                            {comments.map(comment => (
+                                <>
+                                    <div className='commentBox'>
+                                        <div className='commentName'>{comment.name}</div>
+                                        <div className='commentContent'>{comment.content}</div>
+                                    </div>
+                                    <div className='btnBox'>
+                                        <button>수정하기</button>
+                                        <button>삭제하기</button>
+                                    </div>
+                                </>
+                            ))}
                         </div>
                     </div>
                 </div>
-                <div className="xButton" onClick={handleClick}>
+                <div className="xButton" onClick={() => {
+                    setSelectedAlcohol(null);
+                    setSelectedDetail(null);
+                }}>
                     <FontAwesomeIcon icon={faXmark}/>
                 </div>
             </div>
@@ -124,7 +138,7 @@ const Recommend = () => {
 
     return(
         <div className="recommend-area">
-            {currentImageDetail && <div style={{
+            {selectedAlcohol && <div style={{
                     position: "fixed",
                     top: 0,
                     left: 0,
@@ -138,14 +152,18 @@ const Recommend = () => {
                 <NavBar/>
             </div>
             <div className="recommend-content">
-                {currentImageDetail && (<ImageModal currentImageDetail={currentImageDetail}/>)}
-                <PopularArea recommendItem={recommendItem}/>
-                <BarArea recommendItem={recommendItem}/>
-                <RecommendArea currentImageDetail={currentImageDetail}
-                    setCurrentImageDetail={setCurrentImageDetail}  
-                    currentItems={currentItems} 
-                    recommendItem={recommendItem}/>
-                <RePagination recommendItem={recommendItem} currentItems={currentItems} setCurentItems={setCurentItems}/>
+                {selectedAlcohol && 
+                    (<ImageModal 
+                        selectedAlcohol={selectedAlcohol}/>)}
+                <PopularArea recommends={recommends}/>
+                <div className="bar">
+                    <div className="total-num">전체 {recommends.length}개</div>
+                </div>
+                <RecommendArea 
+                    selectedAlcohol={selectedAlcohol}
+                    setSelectedAlcohol={setSelectedAlcohol}  
+                    recommends={recommends}/>
+                <Pagination recommends={recommends}/>
             </div>
             <div className='recommend-right'>
             </div>

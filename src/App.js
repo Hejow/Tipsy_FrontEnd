@@ -4,7 +4,6 @@ import { Home, Login, Signup, Test, TestResult, Mypage, FindShop, Recommend, Tes
 import { ScrollTop, LoginStatus } from './hooks'
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import './font.css';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -18,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
       -webkit-appearance: none;
       margin: 0;
     }
+    font-family:NanumSquareNeo-Variable;
+  }
+  
+  body{
+    font-family:NanumSquareNeo-Variable; 
   }
 `;
 

@@ -2,9 +2,7 @@ import React,{useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-
-
-const NavBar = (props) => {    
+const NavBar = () => {    
     const [isOpen, setIsOpen] = useState(false);
 
     const handleArrowClick = (i) => {

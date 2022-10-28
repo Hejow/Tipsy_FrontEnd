@@ -1,2 +1,32 @@
 @charset "utf-8";
 
+@font-face {
+    font-family: "NanumSquareNeo-Variable";
+    src: url(./assets/fonts/NanumSquareNeo-Variable.woff);
+}
+
+@font-face {
+    font-family: "NanumSquareNeoTTFaLt";
+    src: url(./assets/fonts/NanumSquareNeoTTF-aLt.woff);
+}
+
+@font-face {
+    font-family: "NanumSquareNeoTTFcbd";
+    src: url(./assets/fonts/NanumSquareNeoTTF-cBd.woff);
+}
+
+@font-face {
+    font-family: "NanumSquareNeoTTFbRg";
+    src: url(./assets/fonts/NanumSquareNeoTTF-bRg.woff);
+}
+
+@font-face {
+    font-family: "NanumSquareNeoTTFdeB";
+    src: url(./assets/fonts/NanumSquareNeoTTF-dEb.woff);
+}
+
+@font-face {
+    font-family: "NanumSquareNeoTTFeHv";
+    src: url(./assets/fonts/NanumSquareNeoTTF-eHv.woff);
+}
+

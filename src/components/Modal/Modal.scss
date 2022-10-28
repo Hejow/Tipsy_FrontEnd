@@ -1,0 +1,150 @@
+@import '../../variables';
+
+
+.modal-shop-area{
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
+    background-color: white;
+    border: 3px solid var(--secondary);
+    padding: 16px 9px 16px 16px;
+    border-radius: 8px;
+    box-shadow: 0 3px 40px 0 #ced4da;
+    width: 600px;
+    height: 85vh;
+    z-index: 9999;
+    
+    display: flex;
+
+    .modal-shop-box{
+        display: flex;
+        flex-direction: column;
+
+
+
+        width: 100%;
+        height: 100%;
+
+        .modal-shop-img{
+            width: 100%;
+            height: 30%;
+        }
+
+        .modal-shop-content{
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+
+            .modal-shop-header{
+                display: flex;
+                width: 100%;
+                height: 10%;
+
+                .modal-shop-itemName{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                }
+
+                .modal-shop-itemScore{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 30%;
+
+                    .shop-score{
+                        color: red;
+                    }
+                }
+
+            }
+
+            .modal-shop-middle{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 50%;
+                margin: $margin 0 $margin 0;
+
+                .modal-shop-explain{
+                    display: flex;
+                    align-items: center;
+                    height: 30%;
+                    
+                    svg{
+                        margin-right: $margin*0.6;
+                    }
+
+                }
+            }
+
+
+
+            .modal-shop-bottom{
+                width: 100%;    
+                height: 40%;
+                // border: 1px solid gray;
+                display: flex;
+                flex-direction: column;
+
+                .modal-shop-CommentInsert{
+                    height: 100%;
+                    margin-bottom: $margin;
+                    // border: 1px solid gray;
+                    width: 100%;
+                    height: 10%;
+
+                    .modal-shop-inputNames{
+                        width: 20%;
+                        height: 100%;
+                    }
+
+                    .modal-shop-inputContents{
+                        width: 70%;
+                        height: 100%;
+                    }
+                }
+
+
+
+                .maodal-shop-comment{
+                    width: 100%;
+                    height: 60%;
+                    border: 1px solid gray;
+                    border-radius: 20px;
+
+                    .modal-shop-commentBox{
+                        display: flex;
+                        justify-content: space-evenly;
+                        width: 100%;
+                        
+                        .modal-shop-commentName{
+                            width: 20%;
+                            margin: $margin;
+                            
+                        }
+
+                        .modal-shop-commentContent{
+                            width: 80%;
+                            margin: $margin;
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+    .xButton{
+        cursor: pointer;
+        font-size: 1.5rem;
+        width: 2%;
+        display: inline;
+    }
+}

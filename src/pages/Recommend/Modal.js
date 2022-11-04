@@ -5,9 +5,12 @@ import { db } from '../../firebase';
 import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
 
 const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
-    const [selectedDetail, setSelectedDetail] = useState(null);
+    const [alcoholDetail, setAlcoholDetail] = useState(null);
     const [comments, setComments] = useState([]);
-    const [updateMode, setUpdateMode] = useState(false);
+    const [updateMode, setUpdateMode] = useState({
+        status:false,
+        id:null
+    });
     const [inputs, setInputs] = useState({
         comment: "",
         updateComment: ""
@@ -73,18 +76,24 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
     };
 
     const updateComment = (e) => {
-        updateDoc(doc(db, "comment", e.target.id), {
-            content: inputs.updateComment,
-            updated_at: serverTimestamp()
-        }).then(() => {
-            console.log("comment updated");
-            setInputs({
-                comment: "",
-                updateComment: ""
-            });
-            setUpdateMode(false);
-            getCommentsByAlcohol();
-        }).catch(e => console.log(e.message));
+        if (inputs.updateComment === "") {
+            window.alert("빈 칸은 입력할 수 없습니다.");
+        } else {
+            updateDoc(doc(db, "comment", e.target.id), {
+                content: inputs.updateComment,
+                updated_at: serverTimestamp()
+            }).then(() => {
+                setInputs({
+                    comment: "",
+                    updateComment: ""
+                });
+                setUpdateMode({
+                    status:false,
+                    id:null
+                });
+                getCommentsByAlcohol();
+            }).catch(e => console.log(e.message));
+        };
     };
 
     const deleteComment = (e) => {
@@ -95,10 +104,10 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
         } else return;
     };
 
-    const getSelectedDetailByName = useCallback(() => {
+    const getAlcoholDetailByName = useCallback(() => {
         const alcoholType = alcohol + "Data";
         getDoc(doc(db, alcoholType, selectedAlcohol.name)).then(doc => {
-            setSelectedDetail(doc.data())
+            setAlcoholDetail(doc.data())
         }).catch(e => console.log(e.message));
     }, [alcohol, selectedAlcohol.name]);
 
@@ -118,9 +127,9 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
     useEffect(() => {
         console.log("Modal effected");
         // increaseClickCount();
-        getSelectedDetailByName();
+        getAlcoholDetailByName();
         getCommentsByAlcohol();
-    }, [getSelectedDetailByName, getCommentsByAlcohol])
+    }, [getAlcoholDetailByName, getCommentsByAlcohol])
     
     return(
         <div className = "modal">
@@ -142,21 +151,24 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
                             placeholder="댓글을 남겨보세요."
                             value={inputs.comment}
                             onChange={onChange} />
-                        <button className="input-submit pointer" type='submit'>send</button>
+                        <button className="input-submit pointer" type='submit'>댓글 남기기</button>
                     </form>
                     <div className='comment'>
                         {comments.map(comment => (
-                            <div key={comment.id}>
-                                <div className={updateMode ? "hide" : "comment-row"}>
+                            <div key={comment.id} >
+                                <div className={updateMode.status && updateMode.id === comment.id ? "hide" : "comment-row"}>
                                     <p className="comment-writer">{comment.writer}</p>
                                     <p className="comment-content">{comment.content}</p>
                                     <p className="comment-time">{comment.time}</p>
                                     <button className={comment.writer === userId ? "pointer" : "hide"}
-                                        onClick={() => setUpdateMode(true)}>수정</button>
+                                        onClick={(e) => setUpdateMode({
+                                            status:true,
+                                            id:comment.id
+                                        })}>수정</button>
                                     <button className={comment.writer === userId ? "pointer" : "hide"}
                                         id={comment.id} onClick={(e) => deleteComment(e)} >삭제</button>
                                 </div>
-                                <div className={updateMode ? "comment-row" : "hide"} id={comment.id}>
+                                <div className={ updateMode.status && updateMode.id === comment.id ? "comment-row" : "hide" } >
                                     <p className="comment-writer">{comment.writer}</p>
                                     <input className="comment-update"
                                         type="text"
@@ -168,9 +180,12 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
                                         onClick={(e) => updateComment(e)}>수정</button>
                                     <button className="pointer"
                                         onClick={() => {
-                                            setUpdateMode(false);
+                                            setUpdateMode({
+                                                status:false,
+                                                id:null
+                                            });
                                             setInputs({
-                                                ...inputs,
+                                                comment: "",
                                                 updateComment: ""
                                             });
                                         }}>취소</button>
@@ -182,7 +197,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
             </div>
             <div className="xButton" onClick={() => {
                 setSelectedAlcohol(null);
-                setSelectedDetail(null);
+                setAlcoholDetail(null);
             }}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>

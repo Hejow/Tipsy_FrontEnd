@@ -6,9 +6,6 @@ const LoginStatus = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // 다른 쪽에서 쓸 예정
-    // const userToken = sessionStorage.getItem('Tipsy');
-
     useEffect(() => {
         window.sessionStorage.length !== 0 ? 
         setLogin(true) : setLogin(false);
@@ -22,7 +19,7 @@ const LoginStatus = () => {
                 window.alert('토큰이 만료되었습니다.\n홈으로 이동합니다.');
                 if (location.pathname !== '/') navigate('/');
                 else window.location.reload();
-            }, 1800000);
+            }, 1800000 * 3);
             return () => { clearInterval(interval); };
         };
     }, [login, navigate, location.pathname]);

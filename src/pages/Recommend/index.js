@@ -1,21 +1,37 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import "./Recommend.scss";
-import PopularArea from './PopularArea';
+import Modal from "./Modal";
+import NavBar from "./NavBar";
+import Pagination from "./Pagination";
+import PopularArea from "./PopularArea"
 import RecommendArea from './RecommendArea';
-import NavBar from './NavBar';
-import Modal from './Modal';
-import { Pagination } from '../../components';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { db } from '../../firebase';
 import { getDocs, doc, collectionGroup } from "firebase/firestore";
 import CryptoJS from "crypto-js";
 
 const Recommend = () => {
+    const [alcohol, setAlcohol] = useState("cocktail");
+    const [defaultRecommends, setDefaultRecommends] = useState([]);
+    const [recommends, setRecommends] = useState([]);
     const [selectedAlcohol, setSelectedAlcohol] = useState(null);
     const [currentItems, setCurentItems] = useState([]);
-    const [recommends, setRecommends] = useState([]);
-    const [alcohol, setAlcohol] = useState("cocktail");
     const [keyRef, setKeyRef] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [input, setInput] = useState("");
+
+    const onKeyUp = (e) => {
+        if(e.key === 'Enter') {
+            if (e.target.value.trim().length > 0) searchAlcohols();
+            else setRecommends(defaultRecommends);
+        }        
+    };
+
+    const searchAlcohols = () => {
+        const filterdAlcoholList = recommends.filter(item => item.name.includes(input));
+        setRecommends(filterdAlcoholList);
+    }
 
     const getUserId = () => {
         const userToken = window.sessionStorage.getItem("TIPSY");
@@ -40,6 +56,7 @@ const Recommend = () => {
                 }
             ));
             setRecommends(alcoholList);
+            setDefaultRecommends(alcoholList);
         }).catch(e => console.log(e.message));
     }, [alcohol]);
 
@@ -74,6 +91,18 @@ const Recommend = () => {
                         selectedAlcohol={selectedAlcohol}
                         setSelectedAlcohol={setSelectedAlcohol}
                         />)}
+                <div className="search-area">
+                    <FontAwesomeIcon 
+                        className="search-button"
+                        onClick={searchAlcohols}
+                        icon={faMagnifyingGlass} />
+                    <input className="search-bar" 
+                        type="text" 
+                        value={input} 
+                        placeholder="검색"
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyUp={onKeyUp}/>
+                </div>
                 <PopularArea recommends={recommends}/>
                 <div className="bar">
                     <div className="total-num">전체 {recommends.length}개</div>
@@ -82,8 +111,10 @@ const Recommend = () => {
                     setSelectedAlcohol={setSelectedAlcohol}  
                     currentItems={currentItems} />
                 <Pagination 
+                    itemsPerPage={6}
                     items={recommends}
-                    itemsPerPage={6}/>
+                    setCurentItems={setCurentItems}
+                    />
             </div>
             <div className='recommend-right'></div>
         </div>

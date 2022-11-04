@@ -80,7 +80,6 @@
                     svg{
                         margin-right: $margin*0.6;
                     }
-
                 }
             }
 
@@ -124,15 +123,26 @@
                         justify-content: space-evenly;
                         width: 100%;
                         
-                        .modal-shop-commentName{
-                            width: 20%;
-                            margin: $margin;
-                            
-                        }
-
-                        .modal-shop-commentContent{
-                            width: 80%;
-                            margin: $margin;
+                        .comment-row {
+                            display: flex;
+                            justify-content: space-evenly;
+                            align-items: center;
+                            font-weight: 800;
+    
+                            .comment-writer {
+                            }
+    
+                            .comment-content {
+                            }
+    
+                            .comment-time {
+                                color: gray;
+                                font-size: 0.8rem;
+                            }
+    
+                            button {
+                                border: 1px solid #000;
+                            }
                         }
                     }
                 }

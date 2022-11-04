@@ -43,7 +43,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://findyourtype.netlify.app/",
+  "homepage": "https://Tipsy.netlify.app/",
   "browserslist": {
     "production": [
       ">0.2%",

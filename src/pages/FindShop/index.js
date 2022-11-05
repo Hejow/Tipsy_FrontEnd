@@ -24,7 +24,7 @@ const FindShop = () => {
         } else return;
     };
 
-    const getKeyRef = useCallback(() => {
+    const getReviewKeyRef = useCallback(() => {
         setKeyRef(doc(db, "appData", "reviewPK"));
     }, []);
 
@@ -44,10 +44,9 @@ const FindShop = () => {
 
     useEffect(() => {
         console.log("FindShop Effected");
-        getKeyRef();
+        getReviewKeyRef();
         getUserId();
-        setShops([tmpData, tmpData, tmpData, tmpData, tmpData, tmpData]);
-    }, [getKeyRef])
+    }, [getReviewKeyRef])
 
     return(
         <div className="findshop-area">            

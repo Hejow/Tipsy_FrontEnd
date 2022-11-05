@@ -4,7 +4,6 @@ import Modal from "./Modal";
 import NavBar from "./NavBar";
 import Pagination from "./Pagination";
 import PopularArea from "./PopularArea"
-import RecommendArea from './RecommendArea';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { db } from '../../firebase';
@@ -12,11 +11,11 @@ import { getDocs, doc, collectionGroup } from "firebase/firestore";
 import CryptoJS from "crypto-js";
 
 const Recommend = () => {
-    const [alcohol, setAlcohol] = useState("cocktail");
+    const [alcohol, setAlcohol] = useState("whiskey");
     const [defaultRecommends, setDefaultRecommends] = useState([]);
     const [recommends, setRecommends] = useState([]);
     const [selectedAlcohol, setSelectedAlcohol] = useState(null);
-    const [currentItems, setCurentItems] = useState([]);
+    const [displayItems, setDisplayItems] = useState([]);
     const [keyRef, setKeyRef] = useState(null);
     const [userId, setUserId] = useState(null);
     const [input, setInput] = useState("");
@@ -25,7 +24,7 @@ const Recommend = () => {
         if(e.key === 'Enter') {
             if (e.target.value.trim().length > 0) searchAlcohols();
             else setRecommends(defaultRecommends);
-        }        
+        }
     };
 
     const searchAlcohols = () => {
@@ -41,20 +40,21 @@ const Recommend = () => {
         } else return;
     };
 
-    const getKeyRef = useCallback(() => {
+    const getCommentKeyRef = useCallback(() => {
         setKeyRef(doc(db, "appData", "commentPK"));
     }, []);
 
-    const getAlcoholsByType = useCallback(() => {
-        const alcoholType = alcohol + "Data";
-        getDocs(collectionGroup(db, alcoholType)).then(snapShot => {
-            const alcoholList = snapShot.docChanges().map(change => ({
-                    name: change.doc.id,
-                    img:  "https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + change.doc.data().img + "?alt=media",
-                    tags: change.doc.data().tags,
-                    clicked: change.doc.data().clicked
-                }
-            ));
+    const getAlcoholListByType = useCallback(() => {
+        getDocs(collectionGroup(db, alcohol + "Data")).then(snapShot => {
+            const alcoholList = snapShot.docChanges().map(item => ({
+                name: item.doc.id,
+                img:  "https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + item.doc.data().img + "?alt=media",
+                tags: item.doc.data().tags,
+                from: item.doc.data().from,
+                clicked: item.doc.data().clicked,
+                description: item.doc.data().description.split('/'),
+                volume: item.doc.data().level
+            }));
             setRecommends(alcoholList);
             setDefaultRecommends(alcoholList);
         }).catch(e => console.log(e.message));
@@ -62,10 +62,10 @@ const Recommend = () => {
 
     useEffect(() => {
         console.log("Recommend effected");
-        getAlcoholsByType();
-        getKeyRef();
+        getAlcoholListByType();
+        getCommentKeyRef();
         getUserId();
-    }, [getAlcoholsByType, getKeyRef])
+    }, [getAlcoholListByType, getCommentKeyRef])
 
     return(
         <div className="recommend-area">
@@ -107,13 +107,33 @@ const Recommend = () => {
                 <div className="bar">
                     <div className="total-num">전체 {recommends.length}개</div>
                 </div>
-                <RecommendArea 
-                    setSelectedAlcohol={setSelectedAlcohol}  
-                    currentItems={currentItems} />
+                <div className="recommend-box">
+                    <ul className="recommend-items">
+                        {displayItems && displayItems.map(item => (
+                            <li key={item.name} className="recommend-item">
+                                <img className="recommend-img" 
+                                    alt="주종이미지" 
+                                    src={item.img} 
+                                    onClick ={()=> setSelectedAlcohol(item)}/>
+                                <div className="recommend-itemExplain">
+                                    <div className="explain-box">
+                                        <p className="recommend-item-name">{item.name}</p>
+                                        <p className="recommend-item-contry">국가/생산지역: {item.from}</p>
+                                        <ul className="item-tag">
+                                            {item.tags.map(tag => (
+                                                <li key={tag}>{tag}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
                 <Pagination 
                     itemsPerPage={6}
                     items={recommends}
-                    setCurentItems={setCurentItems}
+                    setDisplayItems={setDisplayItems}
                     />
             </div>
             <div className='recommend-right'></div>

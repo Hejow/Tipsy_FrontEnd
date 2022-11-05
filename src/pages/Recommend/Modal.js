@@ -4,12 +4,11 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../../firebase';
 import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
 
-const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
-    const [alcoholDetail, setAlcoholDetail] = useState(null);
+const Modal = ({ userId, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
     const [comments, setComments] = useState([]);
     const [updateMode, setUpdateMode] = useState({
-        status:false,
-        id:null
+        status: false,
+        id: null
     });
     const [inputs, setInputs] = useState({
         comment: "",
@@ -42,8 +41,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
 
     // 조회수 올리기
     // const increaseClickCount = () => {
-    //     const alcoholType = alcohol + "Data";
-    //     updateDoc(doc(db, alcoholType, selectedAlcohol.name), {
+    //     updateDoc(doc(db, alcohol + "Data", selectedAlcohol.name), {
     //         clicked: increment(1)
     //     });
     // };
@@ -104,13 +102,6 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
         } else return;
     };
 
-    const getAlcoholDetailByName = useCallback(() => {
-        const alcoholType = alcohol + "Data";
-        getDoc(doc(db, alcoholType, selectedAlcohol.name)).then(doc => {
-            setAlcoholDetail(doc.data())
-        }).catch(e => console.log(e.message));
-    }, [alcohol, selectedAlcohol.name]);
-
     const getCommentsByAlcohol = useCallback(() => {
         getDocs(query(collection(db, "comment"), where("alcohol", "==", selectedAlcohol.name)))
             .then(snapShot => {
@@ -127,9 +118,8 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
     useEffect(() => {
         console.log("Modal effected");
         // increaseClickCount();
-        getAlcoholDetailByName();
         getCommentsByAlcohol();
-    }, [getAlcoholDetailByName, getCommentsByAlcohol])
+    }, [getCommentsByAlcohol])
     
     return(
         <div className = "modal">
@@ -137,9 +127,13 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
             <div className="modalContents">
                 <div className="modal-header">
                     <div className='modal-itemName'>{selectedAlcohol.name}</div>
-                    <div className='modal-itemScore'>평점</div>
+                    <div className='modal-itemScore'>{selectedAlcohol.volume ?? "도수"}</div>
                 </div>
-                <div className="modal-middle">상품설명</div>
+                <div className="modal-middle">
+                    {selectedAlcohol.description.map(desc => 
+                        <p key={desc}>{desc}</p>
+                    )}
+                </div>
                 <div className="modal-bottom">
                     <div className={userId === null ? "CommentInsert" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
                     <form className={userId === null ? "hide" : "CommentInsert"}
@@ -195,10 +189,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
                     </div>
                 </div>
             </div>
-            <div className="xButton" onClick={() => {
-                setSelectedAlcohol(null);
-                setAlcoholDetail(null);
-            }}>
+            <div className="xButton" onClick={() => setSelectedAlcohol(null)}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>
         </div>

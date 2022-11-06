@@ -52,8 +52,9 @@ const Recommend = () => {
                 tags: item.doc.data().tags,
                 from: item.doc.data().from,
                 clicked: item.doc.data().clicked,
-                description: item.doc.data().description.split('/'),
-                volume: item.doc.data().level
+                description: item.doc.data().description?.split('/'),
+                volume: item.doc.data().level,
+                // ingredients: item.doc.data().ingredients ?? null,
             }));
             setRecommends(alcoholList);
             setDefaultRecommends(alcoholList);

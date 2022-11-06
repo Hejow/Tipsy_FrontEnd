@@ -54,6 +54,48 @@
         padding: 1rem 0;
         width: 55%;
         
+        .findshop-pagination{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            li{
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                border: 1px solid #e2e2e2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1rem;
+                transition: background-color 0.2s;
+                cursor: pointer;
+                
+            }
+        
+            li:hover{
+                background-color: #3b5bdb;
+                color: white;
+            }
+
+            li:focus{
+                background: #3b5bdb;
+                color: white;
+            }
+        
+            
+            // li:first-child{
+            //     border-radius: 5px;
+            //     width: 40px;
+            //     margin-right: $margin;
+            // }
+        
+            // li:last-child{
+            //     border-radius: 0 5px 5px 0;
+            //     width: 40px;
+            //     margin-left: $margin;
+            // }
+        }
 
 
         .findshop-search-area {
@@ -105,8 +147,123 @@
         .findshop-shop-area {
             display: flex;
             justify-content: space-evenly;
-            flex-wrap: wrap;
             width: 100%;
+            flex-wrap: wrap;
+            
+            .findshop-area{
+                border: 1px solid #000;
+                padding: 6rem 6rem 3rem;
+                display: flex;
+                justify-content: flex;
+            
+            
+                .findshop-map-area {
+                    padding: 1rem 0 1rem 6rem;
+                    width: 40%;
+            
+                    .findshop-map {
+                        border: 1px solid #000;
+                        border-radius: 24px;
+                        width: 100%;
+                        height: 60vh;
+            
+                        #container{
+                            border-radius: 24px;
+                            width: 100%;
+                            height: 100%;
+
+                            svg{
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    }
+            
+                    .findshop-filter-row {
+                        padding: 1rem 1rem 0 1rem;
+            
+                        .findshop-filter-title {
+                            padding-bottom: 0.6rem;
+                            font-weight: 700;
+                        }
+                        
+                        .findshop-filter-tags {
+                            display: flex;
+                            flex-wrap: wrap;
+                            width: 80%;
+                            
+                            .findshop-filter-tag {
+                                border: 1px solid #000;
+                                border-radius: 18px;
+                                margin: 0 0.6rem 0.6rem 0;
+                                padding: 0.5rem 1rem;
+                                font-weight: 700;
+                                white-space: nowrap;
+                                
+                            }
+                        }
+                    }
+                }
+            
+                .findshop-detail-area {
+                    padding: 1rem 0;
+                    width: 55%;
+            
+            
+                    .findshop-search-area {
+                        display: flex;
+                        justify-content: center;
+                        padding-bottom: 0.6rem;
+            
+                        .findshop-search-option {
+                            border: 1px solid #000;
+                            border-radius: 24px;
+                            padding: 0.5rem;
+                            margin-right: 0.6rem;
+                            width: 20%;
+                            
+                        }
+            
+                        .findshop-search-input {
+                            border: 1px solid #000;
+                            border-radius: 24px;
+                            padding: 0.5rem;
+                            width: 60%;
+            
+                            .findshop-icon {
+                                padding: 0 0.6rem;
+                            }
+            
+                            .findshop-input-box {
+                                padding: 0.2rem;
+                                font-size: 0.8rem;
+                            }
+                        }
+                    }
+            
+                    .findshop-shop-filter {
+                        display: flex;
+                        justify-content: flex-end;
+                        padding-bottom: 0.8rem;
+                        font-size: 14px;
+                        width: 90%;
+                        span {
+                            margin-right: 0.4rem;
+            
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+            
+                    .findshop-shop-area {
+                        display: flex;
+                        justify-content: space-evenly;
+                        flex-wrap: wrap;
+                        width: 100%;
+                    }
+                }
+            }
         }
     }
 }

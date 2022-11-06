@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Shop, KakaoMap, Modal } from "../../components";
+import { Shop, KakaoMap, Modal, ShopPagination } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./FindShop.scss";
-import KakaoMap from "../../components/KakaoMap";
-import Modal from "../../components/Modal";
-import ShopPagination from "../../components/ShopPagination";
 import { db } from '../../firebase';
 import { getDoc, updateDoc, doc, setDoc, serverTimestamp, arrayUnion } from "firebase/firestore";
 import CryptoJS from "crypto-js";
@@ -44,7 +41,6 @@ const FindShop = () => {
         reviews: 5.0,
         tags: ["와인", "칵테일", "위스키"]
     }
-    const [filterOption, /* setFilterOption*/] = useState("rank");
     const alchohols = ["와인", "위스키", "칵테일"];
     const cities = ["서울", "부산", "인천", "수원", "대전", "대구", "광주", "제주"];
     const citiesCoordinateArr = [
@@ -53,7 +49,6 @@ const FindShop = () => {
         {latitude: 35.16567, longitude: 126.91042}, {latitude: 33.49939, longitude: 126.53074}];
     
     const [modal, setModal] = useState(false);
-    const [keyword, setKeyword] = useState("와인");
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [shopData, setShopData] = useState({
         data: [],

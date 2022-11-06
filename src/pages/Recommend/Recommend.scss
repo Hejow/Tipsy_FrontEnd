@@ -122,11 +122,11 @@
 
     .modal{
         position: fixed;
-        top: 55%;
+        top: 52%;
         left: 50%;
         display: flex;
         width: 1200px;
-        height: 70vh;
+        height: 85vh;
         border: 3px solid var(--secondary);
         border-radius: 8px;
         padding: 16px;
@@ -161,7 +161,7 @@
                     margin-right: $margin;
                 }
 
-                .modal-itemScore{
+                .modal-itemVolume{
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -176,8 +176,45 @@
                 margin: $margin 0 $margin 0;
                 width: 100%;
                 height: 50%;
-                font-weight: 800;
-                font-size: 1.2rem;
+
+                .modal-description-area {
+                    border: 1px solid #000;
+                    border-radius: 18px;
+                    font-size: 1.2rem;
+                }
+
+                .modal-ingredient-area {
+                    
+                    .modal-ingredient {
+                        font-weight: 800;
+                        font-size: 1.2rem;
+                    }
+                    .modal-ingredient-box {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 100%;
+                        height: 100%;
+    
+                        .modal-ingredient-card {
+                            border: 1px solid #000;
+                            text-align: center;
+                            width: 20%;
+    
+                            .modal-ingredient-img {
+                                border: 1px solid #000;
+                                border-radius: 100%;
+                                background-color: pink;
+                                width: 55px;
+                                height: 55px;
+                            }
+    
+                            .modal-ingredient-name {
+                                font-size: 12px;
+                            } 
+                        }
+                    }
+                }
             }
     
             .modal-bottom{

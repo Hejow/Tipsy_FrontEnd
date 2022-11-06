@@ -4,7 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../../firebase';
 import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
 
-const Modal = ({ userId, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
+const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
     const [comments, setComments] = useState([]);
     const [updateMode, setUpdateMode] = useState({
         status: false,
@@ -127,12 +127,26 @@ const Modal = ({ userId, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
             <div className="modalContents">
                 <div className="modal-header">
                     <div className='modal-itemName'>{selectedAlcohol.name}</div>
-                    <div className='modal-itemScore'>{selectedAlcohol.volume ?? "도수"}</div>
+                    <div className='modal-itemVolume'>{selectedAlcohol.volume ?? "도수"}</div>
                 </div>
                 <div className="modal-middle">
-                    {selectedAlcohol.description.map(desc => 
-                        <p key={desc}>{desc}</p>
-                    )}
+                    <div className="modal-description-area">
+                        {selectedAlcohol.description.map(desc => 
+                            <p key={desc}>{desc}</p>
+                        )}
+                    </div>
+                    <div className="modal-ingredient-area">
+                        <p className="modal-ingredient">재료 정보</p>
+                        <div className={alcohol !== "cocktail" ? "hide" : "modal-ingredient-box"}>
+                            {selectedAlcohol.ingredients?.map(item => 
+                                <div key={item.name} className="modal-ingredient-card">
+                                    <img className="modal-ingredient-img" alt="재료 이미지"
+                                        src={"https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + item.img + "?alt=media"} />
+                                    <p className="modal-ingredient-name">{item.name}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
                 <div className="modal-bottom">
                     <div className={userId === null ? "CommentInsert" : "hide"}>로그인 후 댓글을 남겨보세요.</div>

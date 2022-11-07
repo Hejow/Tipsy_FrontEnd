@@ -4,51 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./FindShop.scss";
 import { db } from '../../firebase';
-import { getDoc, updateDoc, doc, setDoc, serverTimestamp, arrayUnion } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import CryptoJS from "crypto-js";
 
 const FindShop = () => {
-    const [filterOption, setFilterOption] = useState("rank");
+    // const [filterOption, setFilterOption] = useState("rank");
     const [selectedShop, setSelectedShop] = useState(null);
-    const [currentItems, setCurentItems] = useState([]);
-    const [shops, setShops] = useState([]);
     const [keyword, setKeyword] = useState("와인");
     const [keyRef, setKeyRef] = useState(null);
     const [userId, setUserId] = useState(null);
-
-    const getUserId = () => {
-        const userToken = window.sessionStorage.getItem("TIPSY");
-        if (userToken !== null) {
-            const bytes = CryptoJS.AES.decrypt(userToken, process.env.REACT_APP_SECRET_KEY);
-            setUserId(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id);
-        } else return;
-    };
-
-    const getReviewKeyRef = useCallback(() => {
-        setKeyRef(doc(db, "appData", "reviewPK"));
-    }, []);
-
-    const filters = {
-        alchohols: ["와인", "위스키", "칵테일"],
-        cities: ["서울", "부산", "인천", "수원", "대전", "대구", "광주"]
-    }
-
-    const tmpData = {
-        img: "이미지",
-        name: "가게이름",
-        description: "가게 특징/한줄평",
-        city: "지역",
-        reviews: 5.0,
-        tags: ["와인", "칵테일", "위스키"]
-    }
-    const alchohols = ["와인", "위스키", "칵테일"];
-    const cities = ["서울", "부산", "인천", "수원", "대전", "대구", "광주", "제주"];
-    const citiesCoordinateArr = [
-        {latitude: 37.55323, longitude: 126.97271}, {latitude: 35.11557, longitude: 129.04292}, {latitude: 37.45539, longitude: 126.70508},
-        {latitude: 37.26547, longitude: 126.99946}, {latitude: 36.33161, longitude:127.43470}, {latitude: 35.87594, longitude: 128.59690},
-        {latitude: 35.16567, longitude: 126.91042}, {latitude: 33.49939, longitude: 126.53074}];
-    
-    const [modal, setModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [shopData, setShopData] = useState({
         data: [],
@@ -60,6 +24,36 @@ const FindShop = () => {
         longitude: null,
     });
 
+    const filters = {
+        alchohols: ["와인", "위스키", "칵테일"],
+        cities: ["서울", "부산", "인천", "수원", "대전", "대구", "광주", "제주"]
+    }
+
+    const citiesCoordinateArr = [
+        {latitude: 37.55323, longitude: 126.97271}, {latitude: 35.11557, longitude: 129.04292}, {latitude: 37.45539, longitude: 126.70508},
+        {latitude: 37.26547, longitude: 126.99946}, {latitude: 36.33161, longitude:127.43470}, {latitude: 35.87594, longitude: 128.59690},
+        {latitude: 35.16567, longitude: 126.91042}, {latitude: 33.49939, longitude: 126.53074}];
+    
+    const getUserId = () => {
+        const userToken = window.sessionStorage.getItem("TIPSY");
+        if (userToken !== null) {
+            const bytes = CryptoJS.AES.decrypt(userToken, process.env.REACT_APP_SECRET_KEY);
+            setUserId(JSON.parse(bytes.toString(CryptoJS.enc.Utf8)).id);
+        } else return;
+    };
+
+    // const onKeyUp = (e) => {
+    //     if(e.key === 'Enter') {
+    //         if (e.target.value.trim().length > 0) searchAlcohols();
+    //         else setRecommends(defaultRecommends);
+    //     }
+    // };
+
+    // const searchShops = () => { }
+
+    const getReviewKeyRef = useCallback(() => {
+        setKeyRef(doc(db, "appData", "reviewPK"));
+    }, []);
 
     useEffect(() => {
         console.log("FindShop Effected");
@@ -82,32 +76,33 @@ const FindShop = () => {
             <div className="findshop-map-area">
                 <div className="findshop-map">
                     <KakaoMap keyword={keyword} 
-                    shopHasPage={shopHasPage}
-                    setShopHasPage={setShopHasPage}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    shopData={shopData}
-                    setShopData={setShopData}
-                    myLocation={myLocation}
-                    setMyLocation={setMyLocation}
-                    />
+                        shopHasPage={shopHasPage}
+                        setShopHasPage={setShopHasPage}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        shopData={shopData}
+                        setShopData={setShopData}
+                        myLocation={myLocation}
+                        setMyLocation={setMyLocation}/>
                 </div>
-
                 <div className="findshop-filter-row">
-                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/>주종</p>
+                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/> 주종</p>
                     <div className="findshop-filter-tags">
                         {filters.alchohols.map(a => 
-                            <ul key={a.toString()} className="findshop-filter-tag pointer" onClick={()=>setKeyword(a + "바")}>{a}</ul>
+                            <ul key={a.toString()} className="findshop-filter-tag pointer"
+                                onClick={() => setKeyword(a + "바")}>{a}</ul>
                         )}
                     </div>
                 </div>
                 <div className="findshop-filter-row">
-                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/>지역</p>
+                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/> 지역</p>
                     <div className="findshop-filter-tags">
                         {filters.cities.map((c,index) => 
-                            <ul key={c.toString()} className="findshop-filter-tag pointer" onClick={()=>{
-                                setMyLocation(citiesCoordinateArr[index])
-                            setCurrentPage(1)}}>{c}</ul>
+                            <ul key={c.toString()} className="findshop-filter-tag pointer"
+                                onClick={() => {
+                                    setMyLocation(citiesCoordinateArr[index])
+                                    setCurrentPage(1)
+                            }}>{c}</ul>
                         )}
                     </div>
                 </div>
@@ -132,16 +127,14 @@ const FindShop = () => {
                     </div>
                 </div> 
                 <div className="findshop-shop-filter">
-                    <span className={filterOption === "rank" ? "pointer font-selected" : "pointer"}>추천순</span>
+                    <span className="pointer font-selected">추천순</span>
                     <span> | </span>
-                    <span className={filterOption === "distance" ? "pointer font-selected" : "pointer"}>거리순</span>
+                    <span className="pointer">거리순</span>
                 </div>
                 <div className="findshop-shop-area">
                     {shopData && shopData.data.map((item) => (        
-                    <div className='shop-container pointer' key={item.id} onClick={()=>setModal(true)}>
-                        <div className='shop-img-area'>
-                            {item.img}
-                        </div>
+                    <div className='shop-container pointer' key={item.id} onClick={()=>setSelectedShop(item)}>
+                        <div className='shop-img-area'>{item.img}</div>
                         <div className='shop-detail-area'>
                             <div className='shop-title-area'>
                                 <p className='shop-name'>{item.place_name}</p>
@@ -162,8 +155,8 @@ const FindShop = () => {
                 </div>
             <ShopPagination shopData={shopData}
                     shopHasPage={shopHasPage}
-                    setShopHasPage={setShopHasPage}
                     currentPage={currentPage}
+                    setShopHasPage={setShopHasPage}
                     setCurrentPage={setCurrentPage}/>
             </div>
         </div>

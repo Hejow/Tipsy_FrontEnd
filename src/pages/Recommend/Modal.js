@@ -109,7 +109,8 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
                     id: doc.id,
                     writer: doc.data().writer,
                     content: doc.data().content,
-                    time: convertDate(((doc.data().updated_at).seconds) * 1000)
+                    time: convertDate(((doc.data().updated_at).seconds) * 1000),
+                    isUpdated: doc.data().updated_at === doc.data().created_at ? false : true
                 }));
                 setComments(commentData);
             }).catch(e => console.log(e.message));

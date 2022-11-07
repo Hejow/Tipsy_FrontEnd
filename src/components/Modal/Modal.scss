@@ -1,160 +1,250 @@
 @import '../../variables';
 
 
-.modal-shop-area{
+.modal-shop-area {
     position: fixed;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);    
-    background-color: white;
-    border: 3px solid var(--secondary);
-    padding: 16px 9px 16px 16px;
-    border-radius: 8px;
-    box-shadow: 0 3px 40px 0 #ced4da;
-    width: 600px;
-    height: 85vh;
-    z-index: 9999;
-    
     display: flex;
+    top: 52%;
+    left: 50%;
+    width: 650px;
+    height: 85vh;
+    border: 3px solid var(--secondary);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 3px 40px 0 #ced4da;
+    background-color: white;
+    transform: translate(-50%, -50%);    
+    z-index: 9999;
 
-    .modal-shop-box{
-        display: flex;
-        flex-direction: column;
-
-
-
+    .modal-shop-box {
         width: 100%;
         height: 100%;
 
-        .modal-shop-img{
-            width: 100%;
+        .modal-img-area {
+            border: 1px solid #000;
+            border-radius: 16px;
             height: 30%;
+            text-align: center;
+
+            .modal-shop-img {
+            }
         }
 
-        .modal-shop-content{
-            width: 100%;
-            height: 100%;
-            flex-direction: column;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            
+        .modal-shop-header {
+            border: 1px solid #000;
+            position: fixed;
+            top: 23.5%;
+            left: 20%;
+            padding-top: $padding * 1.5;
+            text-align: center;
+            width: 60%;
+            height: 10%;
+            background-color: white;
 
-            .modal-shop-header{
-                display: flex;
-                width: 100%;
-                height: 10%;
-
-                .modal-shop-itemName{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-                }
-
-                .modal-shop-itemScore{
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 30%;
-
-                    .shop-score{
-                        color: red;
-                    }
-                }
-
+            .modal-shop-itemName {
+                margin-bottom: 4px;
+                font-weight: 800;
+                font-size: 1.5rem;
             }
 
-            .modal-shop-middle{
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 50%;
-                margin: $margin 0 $margin 0;
+            .modal-shop-itemScore {
+                font-size: 0.8rem;
 
-                .modal-shop-explain{
+                .shop-rate {
+                    color: red;
+                }
+            }
+        }
+        .modal-shop-content {
+            border: 1px solid #000;
+            border-radius: 16px;
+            margin-top: 2rem;
+            padding: 1rem 1rem 0.4rem;
+            height: 65%;
+
+            .modal-desc {
+                padding-top: 4px;
+            }
+
+            .modal-detail-area {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.8rem 0 1rem;
+    
+                .shop-detail-card {
+                    border: 1px solid #000;
+                    border-radius: 16px;
+                    margin: 0 1rem;
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
-                    height: 30%;
-                    
-                    svg{
-                        margin-right: $margin*0.6;
+                    text-align: center;
+                    width: 33%;
+                    height: 14vh;
+    
+                    .shop-icon-area {
+                        padding-top: $padding * 0.8;
+    
+                        .shop-icon {
+                            color: blue;
+                            font-size: 1.6rem;
+                        }
+                    }
+    
+                    .shop-detail-info {
+                        border-bottom: 1px solid #000;
+                        width: 80%;
+                        padding: $padding * 0.4 0;
+                    }
+    
+                    .shop-detail-value {
+                        padding: $padding * 0.6 10px 0;
+                        font-size: 12px;
+                    }
+    
+                    .shop-option {
+                        position: fixed;
+                        top: 53.5%;
+                        padding-top: 12px;
+                        color: gray;
+                        font-size: 10px;
+                        text-decoration: underline;
                     }
                 }
             }
 
-
-
-            .modal-shop-bottom{
-                width: 100%;    
-                height: 40%;
-                // border: 1px solid gray;
-                display: flex;
-                flex-direction: column;
-
+            .modal-input-area {
+                padding: 0.6rem 0.8rem;
+                height: 12%;
+    
+                .modal-login-inNeed {
+                    text-align: center;
+                    font-weight: 800;
+                }
+    
                 .modal-shop-CommentInsert{
-                    height: 100%;
-                    margin-bottom: $margin;
-                    // border: 1px solid gray;
-                    width: 100%;
-                    height: 10%;
-
-                    .modal-shop-inputNames{
-                        width: 20%;
-                        height: 100%;
-                    }
-
-                    .modal-shop-inputContents{
-                        width: 70%;
-                        height: 100%;
-                    }
-                }
-
-
-
-                .maodal-shop-comment{
-                    width: 100%;
-                    height: 60%;
-                    border: 1px solid gray;
-                    border-radius: 20px;
-
-                    .modal-shop-commentBox{
+    
+                    .input-id-rating {
                         display: flex;
-                        justify-content: space-evenly;
-                        width: 100%;
-                        
-                        .comment-row {
-                            display: flex;
-                            justify-content: space-evenly;
-                            align-items: center;
+                        align-items: center;
+    
+                        .modal-shop-userName{
+                            margin-right: 1rem;
                             font-weight: 800;
+                            font-size: 14px;
+                        }
+                    }
+                    
+                    .modal-input-box {
+                        display: flex;
+                        align-items: center;
+                        margin-top: 0.6rem;
     
-                            .comment-writer {
-                            }
+                        .modal-input {
+                            border: 1px solid #000;
+                            border-radius: 8px;
+                            padding: 0.2rem;
+                            margin-right: 1rem;
+                            width: 88.3%;
     
-                            .comment-content {
-                            }
-    
-                            .comment-time {
-                                color: gray;
+                            .modal-shop-input{
+                                width: 100%;
                                 font-size: 0.8rem;
-                            }
-    
-                            button {
-                                border: 1px solid #000;
                             }
                         }
                     }
                 }
-
             }
 
+            .modal-divider {
+                border-bottom: 1px solid #000;
+                padding-top: 1rem;
+            }
+
+            .maodal-review-area{
+                padding: 0.4rem 0.8rem;
+                height: 40%;
+                font-size: 0.8rem;
+
+                .modal-review-box{
+                    height: 90%;
+                    overflow:auto;
+                    margin-top: 0.4rem;
+
+                    .review-row {
+                        padding-bottom: 0.4rem;
+                        margin-bottom: 0.4rem;
+                        border-bottom: 1px solid rgba(gray, 0.3);
+
+                        .review-info-area {
+                            display: flex;
+                            justify-content: space-between;
+
+                            .review-id-rating {
+                                display: flex;
+                                align-items: center;
+
+                                .review-writer {
+                                    margin-right: 1rem;
+                                    font-weight: 800;
+                                }
+    
+                                .rating-area {
+                                    margin-right: 5rem;
+                                }
+                            }
+
+                            .review-time-updated {
+                                display: flex;
+                                align-items: center;
+
+                                .review-time, .review-updated {
+                                    color: gray;
+                                    font-size: 0.5rem;
+                                }
+                            }
+                        }
+
+                        .review-content-btn {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 0.3rem;
+
+                            .review-content-area {
+                                border: 1px solid #000;
+                                border-radius: 8px;
+                                padding: 0.2rem;
+                                margin-right: 12px;
+                                width: 88%;
+
+                                .review-content {
+                                    width: 100%;
+                                    font-size: 0.8rem;
+                                }
+                            }
+
+                            .review-option{
+                                margin-right: 5px;
+                                color: gray;
+                                text-decoration: underline;
+                                font-size: 11px;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
+    
     .xButton{
         cursor: pointer;
         font-size: 1.5rem;
         width: 2%;
         display: inline;
     }
+}
+
+.rating-area {
+    font-size: 0.4rem;
 }

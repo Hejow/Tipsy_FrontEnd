@@ -1,29 +1,33 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faComment, faStar, faHouse, faLocationDot, faClock, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faRoute , faStar, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { Rating } from "react-simple-star-rating";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import './Modal.scss';
 import { db } from '../../firebase';
-import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
+import { getDocs, doc, getDoc, setDoc, query, collection, where, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
 
 const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
-    const [shopDetail, setShopDetail] = useState(null);
+    const [changeAddress, setChangeAddress] = useState(false);
     const [reviews, setReviews] = useState([]);
+    const [currentReviews, setCurrentReviews] = useState(Array.from({length:1}))
+    const [meanRate, setMeanRate] = useState(0);
     const [updateMode, setUpdateMode] = useState({
         status:false,
         id:null
     });
     const [inputs, setInputs] = useState({
         comment: "",
-        updateComment: ""
+        rate: 0,
+        updateComment: "",
+        updateRate: 0
     });
 
-    const shopInfo = [
-        {id: 1, icon:faLocationDot, content: "주소:"},
-        {id: 2, icon:faClock, content: "영업시간:"},
-        {id: 3, icon:faPhone, content: "전화번호:"},
-        {id: 4, icon:faHouse, content: "홈페이지:"},
-        {id: 5, icon:faComment, content: "방문자 리뷰"},
-    ]
+    const fetchReview = () => {
+        setTimeout(() => {
+            setCurrentReviews(Array.from({length:2}));
+        }, 1500);
+    };
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -49,138 +53,217 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
             return (currentTime.getMinutes() - commentTime.getMinutes()) + "분전";
     }
 
-    // const increasePK = (keyRef) => {
-    //     updateDoc(keyRef, {
-    //         id: increment(1)
-    //     }).catch(e => console.log(e.message));
-    // }
+    const increasePK = (keyRef) => {
+        updateDoc(keyRef, {
+            id: increment(1)
+        }).catch(e => console.log(e.message));
+    }
     
-    // const postReview = (e) => {
-    //     e.preventDefault();
+    const postReview = (e) => {
+        e.preventDefault();
 
-    //     getDoc(keyRef).then(reviewPK => {
-    //         getDoc(doc(db, "review", reviewPK.data().id.toString()), {
-    //             writer: userId,
-    //             content: inputs.comment,
-    //             shop: selectedShop.name,
-    //             created_at: serverTimestamp(),
-    //             updated_at: serverTimestamp(),
-    //         }).then(() => {
-    //             increasePK(keyRef);
-    //             setInputs({
-    //                 comment: "",
-    //                 updateComment: ""
-    //             });
-    //             getReviewsByShop();
-    //         }).catch(e => console.log(e.message));
-    //     });
-    // };
+        getDoc(keyRef).then(reviewPK => {
+            setDoc(doc(db, "review", reviewPK.data().id.toString()), {
+                writer: userId,
+                shop: selectedShop.place_name,
+                content: inputs.comment,
+                rate: inputs.rate,
+                created_at: serverTimestamp(),
+                updated_at: serverTimestamp(),
+            }).then(() => {
+                increasePK(keyRef);
+                setInputs({
+                    comment: "",
+                    rate: 0,
+                    updateComment: "",
+                    updateRate: 0
+                });
+                getReviewsByShop();
+            }).catch(e => console.log(e.message));
+        });
+    };
 
-    // const updateReview = (e) => {
-    //     if (inputs.updateComment === "") {
-    //         window.alert("빈 칸은 입력할 수 없습니다.");
-    //     } else {
-    //         updateDoc(doc(db, "review", e.target.id), {
-    //             content: inputs.updateComment,
-    //             updated_at: serverTimestamp()
-    //         }).then(() => {
-    //             setInputs({
-    //                 comment: "",
-    //                 updateComment: ""
-    //             });
-    //             setUpdateMode({
-    //                 status:false,
-    //                 id:null
-    //             });
-    //             getReviewsByShop();
-    //         }).catch(e => console.log(e.message));
-    //     };
-    // };
+    const updateReview = (e) => {
+        if (inputs.updateComment === "") {
+            window.alert("빈 칸은 입력할 수 없습니다.");
+        } else {
+            updateDoc(doc(db, "review", e.target.id), {
+                content: inputs.updateComment,
+                rate: inputs.updateRate,
+                updated_at: serverTimestamp()
+            }).then(() => {
+                setInputs({
+                    comment: "",
+                    rate: 0,
+                    updateComment: "",
+                    updateRate: 0
+                });
+                setUpdateMode({
+                    status:false,
+                    id:null
+                });
+                getReviewsByShop();
+            }).catch(e => console.log(e.message));
+        };
+    };
 
-    // const deleteReview = (e) => {
-    //     if (window.confirm("리뷰를 삭제하시겠습니까?")) {
-    //         deleteDoc(doc(db, "review", e.target.id))
-    //             .then(() => getReviewsByShop())
-    //             .catch(e => console.log(e.message));
-    //     } else return;
-    // };
+    const deleteReview = (e) => {
+        if (window.confirm("리뷰를 삭제하시겠습니까?")) {
+            deleteDoc(doc(db, "review", e.target.id))
+                .then(() => getReviewsByShop())
+                .catch(e => console.log(e.message));
+        } else return;
+    };
 
-    // const getShopDetailByName = useCallback(() => {
-    //     getDoc(doc(db, "shop", selectedShop)).then(doc => {
-    //         setShopDetail(doc.data())
-    //     }).catch(e => console.log(e.message));
-    // }, [selectedShop]);
+    const calcurateRate = useMemo(() => {
+        let sumRate = 0;
+        reviews.forEach(review => sumRate += review.rate);
+        setMeanRate(Math.round(sumRate) / reviews.length);
+    }, [reviews])
 
-    // const getReviewsByShop = useCallback(() => {
-    //     getDocs(query(db, "review", where("shop", "==", selectedShop)))
-    //         .then(snapShot => {
-    //             const reviewData = snapShot.docs.map(doc => ({
-    //                 id: doc.id,
-    //                 writer: doc.data().writer,
-    //                 content: doc.data().content,
-    //                 time: convertDate(((doc.data().updated_at).seconds) * 1000)
-    //             }));
-    //             setReviews(reviewData);
-    //         }).catch(e => console.log(e.message));
-    // }, [selectedShop]);
+    const getReviewsByShop = useCallback(() => {
+        getDocs(query(collection(db, "review"), where("shop", "==", selectedShop.place_name)))
+            .then(snapShot => {
+                const reviewData = snapShot.docs.map(doc => ({
+                    id: doc.id,
+                    writer: doc.data().writer,
+                    content: doc.data().content,
+                    rate: doc.data().rate,
+                    time: convertDate(((doc.data().updated_at).seconds) * 1000),
+                    isUpdated: (doc.data().updated_at === doc.data().created_at) ? false : true
+                }));
+                setReviews(reviewData);
+            }).then(() => calcurateRate)
+            .catch(e => console.log(e.message));
+    }, [selectedShop.place_name, calcurateRate]);
 
-    // useEffect(() => {
-    //     console.log("Modal effected");
-    //     getShopDetailByName();
-    //     getReviewsByShop();
-    // }, [getShopDetailByName, getReviewsByShop])
+    useEffect(() => {
+        console.log("Modal effected");
+        getReviewsByShop();
+    }, [getReviewsByShop])
 
     return(
         <div className = "modal-shop-area">
             <div className="modal-shop-box">
-                <img className="modal-shop-img" alt="자세히보기창"/>
+                <div className='modal-img-area'>
+                    <img className="modal-shop-img" alt="가게 이미지"/>
+                </div>
+                <div className="modal-shop-header">
+                    <div className='modal-shop-itemName'>{selectedShop.place_name}</div>
+                    <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-rate" icon={faStar}/> {meanRate}/5</div>
+                </div>
                 <div className="modal-shop-content">
-                    <div className="modal-shop-header">
-                        <div className='modal-shop-itemName'>가게이름</div>
-                        <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-score" icon={faStar}/>4.97/5</div>
+                    <p className='modal-desc'>상세정보</p>
+                    <div className="modal-detail-area">
+                        <div className='shop-detail-card'>
+                            <div className='shop-icon-area'><FontAwesomeIcon className='shop-icon' icon={faRoute}/></div>
+                            <p className='shop-detail-info'>거리</p>
+                            <p className='shop-detail-value'>내 위치로부터 <span style={{color:'blue'}}>{selectedShop.distance}</span>m</p>
+                            <a className='shop-option pointer' href={selectedShop.place_url}
+                                target="_blank" rel="noreferrer" >자세한 정보 보기</a>
+                        </div>
+                        <div className='shop-detail-card'>
+                            <div className='shop-icon-area'><FontAwesomeIcon className='shop-icon' icon={faLocationDot}/></div>
+                            <p className='shop-detail-info'>주소</p>
+                            <p className='shop-detail-value'>{changeAddress ? selectedShop.address_name : selectedShop.road_address_name}</p>
+                            <p className='shop-option pointer' onClick={() => setChangeAddress(!changeAddress)}>
+                                {changeAddress ? "도로명 보기" : "지번 보기"}
+                            </p>
+                        </div>
+                        <div className='shop-detail-card'>
+                            <div className='shop-icon-area'><FontAwesomeIcon className='shop-icon' icon={faPhone}/></div>
+                            <p className='shop-detail-info'>연락처</p>
+                            <p className='shop-detail-value'>{selectedShop.phone}</p>
+                        </div>
                     </div>
-                    <div className="modal-shop-middle">
-                        {shopInfo.map((item)=>(
-                            <div className="modal-shop-explain" key={item.id}><FontAwesomeIcon icon={item.icon}></FontAwesomeIcon>{item.content}</div>
-                        ))}
-                    </div>
-                    <div className="modal-shop-bottom">
-                        <div className={userId === null ? "modal-shop-CommentInsert" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
-                        <form className={userId === null ? "hide" : "modal-shop-CommentInsert"}>
-                            <p className="modal-shop-inputNames">{userId}</p>
-                            <input className='modal-shop-inputContents' 
-                                type="text"
-                                name="comment"
-                                placeholder="댓글을 남겨보세요."
-                                value={inputs.comment}
-                                onChange={onChange} />
-                            <button type='submit'><FontAwesomeIcon icon={faComment}/></button>
+                    <p className='modal-desc'>댓글 <span style={{color:'blue', fontWeight:800}}>{reviews.length}</span>개</p>
+                    <div className='modal-input-area'>
+                        <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
+                        <form className={userId === null ? "hide" : "modal-shop-CommentInsert"}
+                            onSubmit={postReview} >
+                            <div className='input-id-rating'>
+                                <p className="modal-shop-userName">{userId}</p>
+                                <div className="rating-area">
+                                    <Rating className="star" size={15}
+                                        initialValue={inputs.rate}
+                                        allowFraction={true}
+                                        onClick={(rate) => setInputs({...inputs, rate: rate})} />
+                                    &nbsp;{inputs.rate + "점"}
+                                </div>
+                            </div>
+                            <div className='modal-input-box'>
+                                <div className='modal-input'>
+                                    <input className='modal-shop-input' 
+                                        type="text"
+                                        name="comment"
+                                        placeholder="리뷰를 남겨보세요."
+                                        value={inputs.comment}
+                                        onChange={onChange} />
+                                </div>
+                                <button className='pointer' type='submit'>작성</button>
+                            </div>
                         </form>
-                        <div className='maodal-shop-comment'>
-                            <div className='modal-shop-commentBox'>
+                    </div>
+                    <div className='modal-divider'></div>
+                    <div className='maodal-review-area'>
+                        <div className='modal-review-box'>
+                            {/* <InfiniteScroll 
+                                dataLength={reviews.length}
+                                next={fetchReview}
+                                hasMore={true}
+                                loader={<p>가져오는 중...</p>}> */}
                                 {reviews.map(review => (
                                     <div key={review.id} >
-                                        <div className={updateMode.status && updateMode.id === review.id ? "hide" : "comment-row"}>
-                                            <p className="comment-writer">{review.writer}</p>
-                                            <p className="comment-content">{review.content}</p>
-                                            <p className="comment-time">{review.time}</p>
-                                            <button className={review.writer === userId ? "pointer" : "hide"}
-                                                onClick={(e) => setUpdateMode({
-                                                    status:true,
-                                                    id:review.id
-                                                })}>수정</button>
-                                            <button className={review.writer === userId ? "pointer" : "hide"} id={review.id}>삭제</button>
+                                        <div className={updateMode.status && updateMode.id === review.id ? "hide" : "review-row"}>
+                                            <div className='review-info-area'>
+                                                <div className='review-id-rating'>
+                                                    <p className="review-writer">{review.writer}</p>
+                                                    <div className="rating-area">
+                                                        <Rating className="star" size={15}
+                                                            initialValue={review.rate}
+                                                            allowFraction={true}
+                                                            readonly={true}/>
+                                                        &nbsp;{review.rate + "점"}
+                                                    </div>
+                                                </div>
+                                                <div className='review-time-updated'>
+                                                    <p className="review-time">{review.time}</p>
+                                                    <p className={review.isUpdated ? "review-updated" : "hide"}>&nbsp;수정됨</p>
+                                                </div>
+                                            </div>
+                                            <div className='review-content-btn'>
+                                                <div className='review-content-area'
+                                                    style={userId !== review.writer ? {width: "100%"} : {} }>
+                                                    <p className="review-content">{review.content}</p>
+                                                </div>
+                                                <p className={review.writer === userId ? "review-option pointer" : "hide"}
+                                                    onClick={() => setUpdateMode({
+                                                        status:true,
+                                                        id:review.id
+                                                    })}>수정</p>
+                                                <p className={review.writer === userId ? "review-option pointer" : "hide"}
+                                                    id={review.id} onClick={(e) => deleteReview(e)}>삭제</p>
+                                            </div>
                                         </div>
-                                        <div className={ updateMode.status && updateMode.id === review.id ? "comment-row" : "hide" } >
-                                            <p className="comment-writer">{review.writer}</p>
-                                            <input className="comment-update"
+                                        {/* 리뷰 수정하기 */}
+                                        <div className={ updateMode.status && updateMode.id === review.id ? "" : "hide" } >
+                                            <p className="review-writer">{review.writer}</p>
+                                            <div className="rating-area">
+                                                <Rating className="star" size={15}
+                                                    initialValue={inputs.updateRate}
+                                                    allowFraction={true}
+                                                    onClick={(rate) => setInputs({...inputs, updateRate: rate})} />
+                                                &nbsp;{ (inputs.rate ?? "0") + "점"}
+                                            </div>
+                                            <input className="review-update"
                                                 type="text"
                                                 name="updateComment"
                                                 value={inputs.updateComment}
                                                 placeholder={review.content}
                                                 onChange={onChange} />
-                                            <button className="pointer" id={review.id}>수정</button>
-                                            <button className="pointer"
+                                            <p className="review pointer" id={review.id}
+                                                onClick={(e) => updateReview(e)}>수정</p>
+                                            <p className="review pointer"
                                                 onClick={() => {
                                                     setUpdateMode({
                                                         status:false,
@@ -190,19 +273,16 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                                                         comment: "",
                                                         updateComment: ""
                                                     });
-                                                }}>취소</button>
+                                                }}>취소</p>
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            {/* </InfiniteScroll> */}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="xButton" onClick={() => {
-                setSelectedShop(null);
-                setShopDetail(null);
-            }}>
+            <div className="xButton" onClick={() => { setSelectedShop(null); }}>
                 <FontAwesomeIcon icon={faXmark}/>
             </div>
         </div>

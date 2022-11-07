@@ -18,6 +18,10 @@ const GlobalStyle = createGlobalStyle`
       margin: 0;
     }
     font-family:NanumSquareNeo-Variable;
+    -ms-overflow-style: none;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
   
   body{

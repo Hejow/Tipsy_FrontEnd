@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Shop, KakaoMap, Modal, ShopPagination } from "../../components";
+import { KakaoMap, Modal, ShopPagination } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Rating } from "react-simple-star-rating";
 import "./FindShop.scss";
 import { db } from '../../firebase';
 import { doc } from "firebase/firestore";
 import CryptoJS from "crypto-js";
 
 const FindShop = () => {
-    // const [filterOption, setFilterOption] = useState("rank");
+    const [filterOption, setFilterOption] = useState("accuracy");
     const [selectedShop, setSelectedShop] = useState(null);
     const [keyword, setKeyword] = useState("와인");
     const [keyRef, setKeyRef] = useState(null);
@@ -83,7 +84,8 @@ const FindShop = () => {
                         shopData={shopData}
                         setShopData={setShopData}
                         myLocation={myLocation}
-                        setMyLocation={setMyLocation}/>
+                        setMyLocation={setMyLocation}
+                        filterOption={filterOption}/>
                 </div>
                 <div className="findshop-filter-row">
                     <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/> 주종</p>
@@ -113,7 +115,7 @@ const FindShop = () => {
                     keyRef={keyRef}
                     selectedShop={selectedShop}
                     setSelectedShop={setSelectedShop}/>}
-                <div className="findshop-search-area">
+                {/* <div className="findshop-search-area">
                     <div className="findshop-search-option">
                         <select name="search" id="search">
                             <option value="city">지역</option>
@@ -125,11 +127,13 @@ const FindShop = () => {
                             type="text"
                             placeholder="검색"/>
                     </div>
-                </div> 
-                <div className="findshop-shop-filter">
-                    <span className="pointer font-selected">추천순</span>
-                    <span> | </span>
-                    <span className="pointer">거리순</span>
+                </div>  */}
+                <div className="findshop-shop-filter"> 
+                    <span className={filterOption === "accuracy" ? "pointer font-selected" : "pointer" }
+                        onClick={() => setFilterOption("accuracy")}>정확도순</span>
+                    <span> | </span> 
+                    <span className={filterOption !== "accuracy" ? "pointer font-selected" : "pointer" }
+                        onClick={() => setFilterOption("distance")}>거리순</span>
                 </div>
                 <div className="findshop-shop-area">
                     {shopData && shopData.data.map((item) => (        
@@ -140,10 +144,13 @@ const FindShop = () => {
                                 <p className='shop-name'>{item.place_name}</p>
                                 <p className='shop-city'>{item.road_address_name.substr(0, 6)}</p>
                             </div>
-                            <p className='shop-description'>{item.description}</p>
+                            <p className='shop-description'>{item.category_name}</p>
                             <div className='shop-review-area'>
-                                <p className='shop-review'>☆☆☆☆☆ {item.reviews}</p>
-                                <span className='shop-review-count'>00개</span>
+                                <Rating className="shop-review" size={25}
+                                    initialValue={item.reviews}
+                                    allowFraction={true}
+                                    readonly={true}/>
+                                <span className='shop-review-count'>{item.reviews}</span>
                             </div>
                             <div className='shop-tag-area'>
                                 {/* {item.tags.map(tag => (
@@ -154,10 +161,10 @@ const FindShop = () => {
                     </div>))}
                 </div>
             <ShopPagination shopData={shopData}
-                    shopHasPage={shopHasPage}
-                    currentPage={currentPage}
-                    setShopHasPage={setShopHasPage}
-                    setCurrentPage={setCurrentPage}/>
+                shopHasPage={shopHasPage}
+                currentPage={currentPage}
+                setShopHasPage={setShopHasPage}
+                setCurrentPage={setCurrentPage}/>
             </div>
         </div>
     )

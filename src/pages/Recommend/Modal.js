@@ -109,10 +109,11 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
                     id: doc.id,
                     writer: doc.data().writer,
                     content: doc.data().content,
+                    created: doc.data().created_at,
                     time: convertDate(((doc.data().updated_at).seconds) * 1000),
-                    isUpdated: doc.data().updated_at === doc.data().created_at ? false : true
+                    isUpdated: (doc.data().updated_at.seconds === doc.data().created_at.seconds) ? false : true
                 }));
-                setComments(commentData);
+                setComments(commentData.sort((a,b) => a.created - b.created));
             }).catch(e => console.log(e.message));
     }, [selectedAlcohol.name]);
 

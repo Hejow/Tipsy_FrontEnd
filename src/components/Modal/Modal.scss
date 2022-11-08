@@ -115,43 +115,43 @@
             }
 
             .modal-input-area {
+                border: 1px solid #000;
                 padding: 0.6rem 0.8rem;
-                height: 12%;
+                height: 40%;
     
                 .modal-login-inNeed {
+                    padding-top: 1rem;
                     text-align: center;
                     font-weight: 800;
+                    font-size: 0.9rem;
                 }
     
-                .modal-shop-CommentInsert{
-    
-                    .input-id-rating {
-                        display: flex;
-                        align-items: center;
-    
-                        .modal-shop-userName{
-                            margin-right: 1rem;
-                            font-weight: 800;
-                            font-size: 14px;
-                        }
+                .input-id-rating {
+                    display: flex;
+                    align-items: center;
+
+                    .modal-shop-userName{
+                        margin-right: 1rem;
+                        font-weight: 800;
+                        font-size: 14px;
                     }
-                    
-                    .modal-input-box {
-                        display: flex;
-                        align-items: center;
-                        margin-top: 0.6rem;
-    
-                        .modal-input {
-                            border: 1px solid #000;
-                            border-radius: 8px;
-                            padding: 0.2rem;
-                            margin-right: 1rem;
-                            width: 88.3%;
-    
-                            .modal-shop-input{
-                                width: 100%;
-                                font-size: 0.8rem;
-                            }
+                }
+                
+                .modal-input-box {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 0.6rem;
+
+                    .modal-input {
+                        border: 1px solid #000;
+                        border-radius: 8px;
+                        padding: 0.2rem;
+                        margin-right: 1rem;
+                        width: 88.3%;
+
+                        .modal-shop-input{
+                            width: 100%;
+                            font-size: 0.8rem;
                         }
                     }
                 }
@@ -159,13 +159,19 @@
 
             .modal-divider {
                 border-bottom: 1px solid #000;
-                padding-top: 1rem;
+                margin: 10px 0;
             }
 
             .maodal-review-area{
                 padding: 0.4rem 0.8rem;
                 height: 40%;
                 font-size: 0.8rem;
+
+                .modal-review-inNeed {
+                    padding-top: 4rem;
+                    height: 90%;
+                    text-align: center;
+                }
 
                 .modal-review-box{
                     height: 90%;
@@ -191,7 +197,12 @@
                                 }
     
                                 .rating-area {
-                                    margin-right: 5rem;
+                                    margin-right: 1rem;
+                                }
+
+                                .review-updated {
+                                    color: rgba(gray, 0.5);
+                                    font-size: 0.5rem;
                                 }
                             }
 
@@ -199,7 +210,7 @@
                                 display: flex;
                                 align-items: center;
 
-                                .review-time, .review-updated {
+                                .review-time {
                                     color: gray;
                                     font-size: 0.5rem;
                                 }
@@ -215,20 +226,50 @@
                                 border: 1px solid #000;
                                 border-radius: 8px;
                                 padding: 0.2rem;
-                                margin-right: 12px;
-                                width: 88%;
+                                margin-right: 6px;
+                                width: 89%;
 
                                 .review-content {
                                     width: 100%;
                                     font-size: 0.8rem;
                                 }
                             }
+                        }
+                    }
 
-                            .review-option{
-                                margin-right: 5px;
-                                color: gray;
-                                text-decoration: underline;
-                                font-size: 11px;
+                    .review-update-row {
+                        margin-bottom: 6px;
+                        padding: 1rem 0.8rem;
+                        border-radius: 12px;
+                        background-color: rgba(gray, 0.1);
+
+                        .input-id-rating {
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .review-writer {
+                            margin-right: 1rem;
+                            font-weight: 800;
+                        }
+
+                        .review-content-btn {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 0.3rem;
+
+                            .review-update-input {
+                                border: 1px solid #000;
+                                border-radius: 12px;
+                                padding: 0.3rem;
+                                margin-right: 12px;
+                                width: 86%;
+
+                                .review-update {
+                                    width: 100%;
+                                    font-size: 0.8rem;
+                                    background-color: rgba(gray, 0.015);
+                                }
                             }
                         }
                     }
@@ -247,4 +288,11 @@
 
 .rating-area {
     font-size: 0.4rem;
+}
+
+.review-option{
+    margin-left: 5px;
+    color: gray;
+    text-decoration: underline;
+    font-size: 11px;
 }

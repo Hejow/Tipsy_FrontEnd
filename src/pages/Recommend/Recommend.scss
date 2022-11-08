@@ -3,8 +3,8 @@
 .recommend-area{
     display: flex;
     justify-content: center;
+    padding: $header-height*0.2 0;
     
-
     .recommend-content{
         width: 900px;
         padding: $header-height*0.6 0;

@@ -84,8 +84,9 @@ const FindShop = () => {
                         setMyLocation={setMyLocation}
                         filterOption={filterOption}/>
                 </div>
+
                 <div className="findshop-filter-row">
-                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/> 주종</p>
+                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/>주종</p>
                     <div className="findshop-filter-tags">
                         {filters.alchohols.map(a => 
                             <ul key={a.toString()} className="findshop-filter-tag pointer"
@@ -94,7 +95,7 @@ const FindShop = () => {
                     </div>
                 </div>
                 <div className="findshop-filter-row">
-                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/> 지역</p>
+                    <p className="findshop-filter-title"><FontAwesomeIcon icon={faAngleDown}/>지역</p>
                     <div className="findshop-filter-tags">
                         {filters.cities.map((c,index) => 
                             <ul key={c.toString()} className="findshop-filter-tag pointer"

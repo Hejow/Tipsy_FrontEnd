@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect, useCallback, useRef} from 'react'
 import "./Recommend.scss";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
@@ -85,7 +85,7 @@ const Recommend = () => {
             </div>
             <div className="recommend-content">
                 {selectedAlcohol && 
-                    (<Modal 
+                    (<Modal
                         userId={userId}
                         alcohol={alcohol}
                         keyRef={keyRef}
@@ -138,6 +138,7 @@ const Recommend = () => {
                     />
             </div>
             <div className='recommend-right'></div>
+
         </div>
     );
 }

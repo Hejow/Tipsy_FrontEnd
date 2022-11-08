@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .question-area {
-    padding-top: $padding*4.4;
+    padding-top: $padding*3;
     
     .question-title {
         font-weight: 700;
@@ -14,9 +14,14 @@
         justify-content: center;
 
         .question-img {
-            border: 1px solid #000;
-            width: 30%;
-            height: 240px;
+            width: 60%;
+            height: 360px;
+
+            .question-img-box{
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+            }
         }
     }
 
@@ -31,7 +36,7 @@
             .question-options {
                 padding: $padding*1.6 0;
                 border: 1px solid #000;
-                border-radius: 8px;
+                border-radius: 12px;
                 font-weight: 700;
                 font-size: 1.2rem;
                 

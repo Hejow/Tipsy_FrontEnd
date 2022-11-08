@@ -30,7 +30,7 @@ const PopularArea = ({recommends}) => {
                         <div className="popularItemHead">
                             <div className="popularItemHead-num-name">
                                 <div className="num">{item.rank}</div>
-                                <p className="item-name">{item.name}</p>
+                                <p className="item-name">{item.korName}</p>
                             </div>
                         </div>
                         <div className="img-box">

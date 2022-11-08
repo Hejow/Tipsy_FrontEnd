@@ -7,6 +7,7 @@ const { kakao } = window;
 const KakaoMap = ({keyword, setCurrentShop, setTotalPage, shopHasPage, currentPage, setCurrentPage, myLocation ,setMyLocation, filterOption}) => {
     const [kakaoMap, setKakaoMap] = useState(null);
     const [markers, setMarkers] = useState([]);
+    console.log(setMarkers);
     const container = useRef();
 
     const displayMyMarker = useCallback((locPosition) => {
@@ -19,6 +20,7 @@ const KakaoMap = ({keyword, setCurrentShop, setTotalPage, shopHasPage, currentPa
             map: kakaoMap,
             image: markerImage,
         })
+        console.log(marker);
     }, [kakaoMap]);
 
     const addMarker = useCallback((place) => {
@@ -58,7 +60,6 @@ const KakaoMap = ({keyword, setCurrentShop, setTotalPage, shopHasPage, currentPa
             
             const mylocation = new kakao.maps.LatLng(myLocation.latitude, myLocation.longitude);
             kakaoMap.setCenter(mylocation)     
-            kakaoMap.setBounds(bounds)
 
             removeMarker();
             

@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useCallback} from "react";
+import { Rating } from "react-simple-star-rating";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../../firebase';
 import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc} from "firebase/firestore";
-import WineRating from "./WineRating";
 
 const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) => {
     const [comments, setComments] = useState([]);
@@ -16,8 +16,6 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
         updateComment: "",
         updateRate: 0
     });
-
-    const winePoint = ["당도", "산도", "바디", "타닌"]
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -43,18 +41,17 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
             return (currentTime.getMinutes() - commentTime.getMinutes()) + "분전";
     }
 
-    // 조회수 올리기
-    // const increaseClickCount = () => {
-    //     updateDoc(doc(db, alcohol + "Data", selectedAlcohol.name), {
-    //         clicked: increment(1)
-    //     });
-    // };
+    const increaseClickCount = useCallback(() => {
+        updateDoc(doc(db, alcohol + "Data", selectedAlcohol.korName), {
+            clicked: increment(1)
+        });
+    }, [alcohol, selectedAlcohol.korName]);
 
     const increasePK = (keyRef) => {
         updateDoc(keyRef, {
             id: increment(1)
         }).catch(e => console.log(e.message));
-    }
+    };
 
     const postComment = (e) => {
         e.preventDefault();
@@ -63,7 +60,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
             setDoc(doc(db, "comment", commentPK.data().id.toString()), {
                 writer: userId,
                 content: inputs.comment,
-                alcohol: selectedAlcohol.name,
+                alcohol: selectedAlcohol.korName,
                 created_at: serverTimestamp(),
                 updated_at: serverTimestamp(),
             }).then(() => {
@@ -107,7 +104,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
     };
 
     const getCommentsByAlcohol = useCallback(() => {
-        getDocs(query(collection(db, "comment"), where("alcohol", "==", selectedAlcohol.name)))
+        getDocs(query(collection(db, "comment"), where("alcohol", "==", selectedAlcohol.korName)))
             .then(snapShot => {
                 const commentData = snapShot.docs.map(doc => ({
                     id: doc.id,
@@ -119,21 +116,34 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                 }));
                 setComments(commentData.sort((a,b) => a.created - b.created));
             }).catch(e => console.log(e.message));
-    }, [selectedAlcohol.name]);
+    }, [selectedAlcohol.korName]);
 
     useEffect(() => {
         console.log("Modal effected");
-        // increaseClickCount();
+        increaseClickCount();
         getCommentsByAlcohol();
-    }, [getCommentsByAlcohol])
-    
+    }, [getCommentsByAlcohol, increaseClickCount])
+
+    useEffect(() => {
+        document.body.style.cssText = `
+            position: fixed; 
+            top: -${window.scrollY}px;
+            overflow-y: scroll;
+            width: 100%;`;
+        return () => {
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = '';
+            window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        };
+    }, []);
+
     return(
         <div className = "modal">
             <img className="modalImg" src={selectedAlcohol.img} alt="주종 이미지"/>
             <div className="modalContents">
                 <div className="modal-header">
                     <div className='modal-itemName'>
-                        <div className='modal-itemName-kr'>{selectedAlcohol.name}, <span className='modal-itemName-eng'>{selectedAlcohol.name}</span></div>
+                        <div className='modal-itemName-kr'>{selectedAlcohol.korName}, <span className='modal-itemName-eng'>{selectedAlcohol.engName}</span></div>
                     </div>
                 </div>
                 <div className="modal-middle">
@@ -146,7 +156,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                                 </div>
                         <div className={alcohol !== "cocktail" ? "hide" : "modal-ingredient-box"}>
                             <p className="modal-ingredient">재료 정보</p>
-                            <div className="modal-ingredient-o">
+                            <div className="modal-ingredient-cocktail">
                                 {selectedAlcohol.ingredients?.map(item => 
                                     <div key={item.name} className="modal-ingredient-card">
                                         <img className="modal-ingredient-img" alt="재료 이미지"
@@ -159,10 +169,14 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                         <div className={alcohol !== "wine" ? "hide" : "modal-ingredient-box"}>
                             <p className="modal-ingredient-wine">상세 정보</p>
                             <div className="wine-area">
-                                {winePoint.map(point => 
-                                    <div key={point.toString()} className="wine-box">
-                                        <p className="wine-ingredient">{point}</p>
-                                        <WineRating/>
+                                {selectedAlcohol.wineInfo?.map(detail => 
+                                    <div key={detail.name} className="wine-box">
+                                        <p className="wine-ingredient">{detail.name}</p>
+                                        <Rating
+                                            className='wine-rating'
+                                            initialValue={detail.level}
+                                            readonly={true}
+                                            size={22}/>
                                     </div>)}
                             </div>
                         </div>
@@ -197,7 +211,6 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                                                 id={comment.id} onClick={(e) => deleteComment(e)}>삭제</p>
                                         </div>
                                     </div>
-                                    {/* 리뷰 수정하기 */}
                                     <div className={ updateMode.status && updateMode.id === comment.id ? "comment-update-row" : "hide" } >
                                         <div className='input-id-rating'>
                                             <p className="comment-writer">{comment.writer}</p>
@@ -230,7 +243,6 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                             ))}
                         </div>
                         <div className='modal-divider'></div>
-                        {/* 댓글 입력 */}
                         <div className='modal-input-area'>
                             <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
                             <form className={userId === null ? "hide" : ""}
@@ -247,7 +259,7 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) 
                                             value={inputs.comment}
                                             onChange={onChange} />
                                     </div>
-                                    <button className='pointer' type='submit'>작성</button>
+                                    <p className='pointer' type='submit'>작성</p>
                                 </div>
                             </form>
                         </div>

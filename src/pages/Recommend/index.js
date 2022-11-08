@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import "./Recommend.scss";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
@@ -47,7 +47,8 @@ const Recommend = () => {
     const getAlcoholListByType = useCallback(() => {
         getDocs(collectionGroup(db, alcohol + "Data")).then(snapShot => {
             const alcoholList = snapShot.docChanges().map(item => ({
-                name: item.doc.id,
+                korName: item.doc.data().name[0],
+                engName: item.doc.data().name[1],
                 img:  "https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + item.doc.data().img + "?alt=media",
                 tags: item.doc.data().tags,
                 from: item.doc.data().from,
@@ -55,6 +56,7 @@ const Recommend = () => {
                 description: item.doc.data().description,
                 volume: item.doc.data().level,
                 ingredients: item.doc.data().ingredients ?? null,
+                wineInfo: item.doc.data().info ?? null
             }));
             setRecommends(alcoholList);
             setDefaultRecommends(alcoholList);
@@ -118,8 +120,8 @@ const Recommend = () => {
                                     onClick ={()=> setSelectedAlcohol(item)}/>
                                 <div className="recommend-itemExplain">
                                     <div className="explain-box">
-                                        <p className="recommend-item-name">{item.name}</p>
-                                        <p className="recommend-item-contry">국가/생산지역: {item.from}</p>
+                                        <p className="recommend-item-name">{item.korName}</p>
+                                        <p className={alcohol === "cocktail" ? "hide" : "recommend-item-contry"}>국가/생산지역: {item.from}</p>
                                         <ul className="item-tag">
                                             {item.tags.map(tag => (
                                                 <li key={tag}>{tag}</li>

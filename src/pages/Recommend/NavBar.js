@@ -1,6 +1,4 @@
 import React,{useState} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = ({setAlcohol}) => {    
     const [isOpen, setIsOpen] = useState(false);
@@ -11,9 +9,9 @@ const NavBar = ({setAlcohol}) => {
     }
 
     const data = [
-        {id:1 , titleKR: "와인", titleENG: "wine", content:["메뉴1", "메뉴2", "메뉴3", "메뉴4"]},
-        {id:2 , titleKR: "위스키", titleENG: "whiskey", content:["메뉴1", "메뉴2", "메뉴3", "메뉴4"]},
-        {id:3 , titleKR: "칵테일", titleENG: "cocktail", content:["메뉴1", "메뉴2", "메뉴3", "메뉴4"]},
+        {id:1 , titleKR: "와인", titleENG: "wine"},
+        {id:2 , titleKR: "위스키", titleENG: "whiskey"},
+        {id:3 , titleKR: "칵테일", titleENG: "cocktail"},
     ]
 
     return(
@@ -26,13 +24,7 @@ const NavBar = ({setAlcohol}) => {
                         }}>
                             <div className="title-kr">{item.titleKR}</div>
                             <span className="title-eng">{item.titleENG}</span>
-                            <FontAwesomeIcon className="arrow-down" icon={faAngleDown}/>
                         </div>
-                        <ul className={isOpen === i ? 'content show' : 'content'}>
-                            {item.content.map(content => (
-                                <li key={content}>{content}</li>
-                            ))}
-                        </ul>
                     </div>
                 ))}          
             </div>

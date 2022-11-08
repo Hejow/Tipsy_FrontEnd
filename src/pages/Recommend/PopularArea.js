@@ -28,8 +28,10 @@ const PopularArea = ({recommends}) => {
                 {topRecommends.map(item => (
                     <div key={item.name} className="popular-item">
                         <div className="popularItemHead">
-                            <span className="num">{item.rank}</span>
-                            <p className="item-name">{item.name}</p>
+                            <div className="popularItemHead-num-name">
+                                <div className="num">{item.rank}</div>
+                                <p className="item-name">{item.name}</p>
+                            </div>
                         </div>
                         <div className="img-box">
                             <img className="img" alt="와인이미지" src={item.img}/>

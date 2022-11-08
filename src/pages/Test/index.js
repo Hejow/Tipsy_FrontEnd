@@ -13,6 +13,7 @@ const Test = () => {
     const question_lists = [
         {
             title: '술은 자고로 무슨 맛이지??',
+            img: "img/Tipsy_test_1.jpg",
             options: [
                 {
                     opt:'술은 달아야지!',
@@ -26,6 +27,7 @@ const Test = () => {
         },
         {
             title: '술과 어울리는 향은??',
+            img: "img/Tipsy_test_2.jpg",
             options: [
                 {
                     opt:'본연의 향!',
@@ -39,6 +41,7 @@ const Test = () => {
         },
         {
             title: '오늘 안주는 뭘로 갈까??',
+            img: "img/Tipsy_test_3.jpg",
             options: [
                 {
                     opt:'가벼운거 가자!',
@@ -52,6 +55,7 @@ const Test = () => {
         },
         {
             title: '오늘은 몇 명이랑 마시지??',
+            img: "img/Tipsy_test_4.jpg",
             options: [
                 {
                     opt:'다 불러서 마시자!',
@@ -65,6 +69,7 @@ const Test = () => {
         },
         {
             title: '어떤 분위기가 더 좋아??',
+            img: "img/Tipsy_test_5.jpg",
             options: [
                 {
                     opt:'왁자지껄! 시끌벅적!',
@@ -78,6 +83,7 @@ const Test = () => {
         },
         {
             title: '혹시 주량이??',
+            img: "img/Tipsy_test_6.jpg",
             options: [
                 {
                     opt:'나 좀 마시지!',
@@ -91,6 +97,7 @@ const Test = () => {
         },
         {
             title: '술은 보통 언제 마셔??',
+            img: "img/Tipsy_test_7.jpg",
             options: [
                 {
                     opt:'특별한 날에!',
@@ -104,6 +111,7 @@ const Test = () => {
         },
         {
             title: '월급 들어왔는데 뭐 마시지??',
+            img: "img/Tipsy_test_8.jpg",
             options: [
                 {
                     opt:'비싼거 마시자!',
@@ -117,6 +125,7 @@ const Test = () => {
         },
         {
             title: '술을 향한 나의 마음가짐은??',
+            img: "img/Tipsy_test_9.jpg",
             options: [
                 {
                     opt:'취해야지! 양으로 승부!',
@@ -130,6 +139,7 @@ const Test = () => {
         },
         {
             title: '어떻게 마시는게 좋을까??',
+            img: "img/Tipsy_test_10.jpg",
             options: [
                 {
                     opt:'한 방에 그냥 탁!',
@@ -143,6 +153,7 @@ const Test = () => {
         },
         {
             title: '퇴근하고 술 마려운데 어디갈까??',
+            img: "img/Tipsy_test_11.jpg",
             options: [
                 {
                     opt:'부담없는 근처 술집!',

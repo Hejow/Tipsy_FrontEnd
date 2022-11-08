@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: $header-height 0;
+    padding: $header-height 0 $header-height*0.6 0;
 
     .test-container {
         width: 60vw;

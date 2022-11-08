@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faRoute , faStar, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from "react-simple-star-rating";
-import InfiniteScroll from 'react-infinite-scroll-component';
 import './Modal.scss';
 import { db } from '../../firebase';
 import { getDocs, doc, getDoc, setDoc, query, collection, where, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
@@ -10,7 +9,6 @@ import { getDocs, doc, getDoc, setDoc, query, collection, where, serverTimestamp
 const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
     const [changeAddress, setChangeAddress] = useState(false);
     const [reviews, setReviews] = useState([]);
-    const [currentReviews, setCurrentReviews] = useState(Array.from({length:1}))
     const [meanRate, setMeanRate] = useState(0);
     const [updateMode, setUpdateMode] = useState({
         status:false,
@@ -22,12 +20,6 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
         updateComment: "",
         updateRate: 0
     });
-
-    const fetchReview = () => {
-        setTimeout(() => {
-            setCurrentReviews(Array.from({length:2}));
-        }, 1500);
-    };
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -129,10 +121,11 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                     writer: doc.data().writer,
                     content: doc.data().content,
                     rate: doc.data().rate,
+                    created: doc.data().created_at,
                     time: convertDate(((doc.data().updated_at).seconds) * 1000),
-                    isUpdated: (doc.data().updated_at === doc.data().created_at) ? false : true
+                    isUpdated: (doc.data().updated_at.seconds === doc.data().created_at.seconds) ? false : true
                 }));
-                setReviews(reviewData);
+                setReviews(reviewData.sort((a, b) => a.created - b.created));
             }).then(() => calcurateRate)
             .catch(e => console.log(e.message));
     }, [selectedShop.place_name, calcurateRate]);
@@ -150,7 +143,7 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                 </div>
                 <div className="modal-shop-header">
                     <div className='modal-shop-itemName'>{selectedShop.place_name}</div>
-                    <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-rate" icon={faStar}/> {meanRate}/5</div>
+                    <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-rate" icon={faStar}/> {isNaN(meanRate) ? 0 : meanRate}/5</div>
                 </div>
                 <div className="modal-shop-content">
                     <p className='modal-desc'>상세정보</p>
@@ -160,7 +153,7 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                             <p className='shop-detail-info'>거리</p>
                             <p className='shop-detail-value'>내 위치로부터 <span style={{color:'blue'}}>{selectedShop.distance}</span>m</p>
                             <a className='shop-option pointer' href={selectedShop.place_url}
-                                target="_blank" rel="noreferrer" >자세한 정보 보기</a>
+                                target="_blank" rel="noreferrer" >자세한 정보보기</a>
                         </div>
                         <div className='shop-detail-card'>
                             <div className='shop-icon-area'><FontAwesomeIcon className='shop-icon' icon={faLocationDot}/></div>
@@ -177,93 +170,66 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                         </div>
                     </div>
                     <p className='modal-desc'>댓글 <span style={{color:'blue', fontWeight:800}}>{reviews.length}</span>개</p>
-                    <div className='modal-input-area'>
-                        <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
-                        <form className={userId === null ? "hide" : "modal-shop-CommentInsert"}
-                            onSubmit={postReview} >
-                            <div className='input-id-rating'>
-                                <p className="modal-shop-userName">{userId}</p>
-                                <div className="rating-area">
-                                    <Rating className="star" size={15}
-                                        initialValue={inputs.rate}
-                                        allowFraction={true}
-                                        onClick={(rate) => setInputs({...inputs, rate: rate})} />
-                                    &nbsp;{inputs.rate + "점"}
-                                </div>
-                            </div>
-                            <div className='modal-input-box'>
-                                <div className='modal-input'>
-                                    <input className='modal-shop-input' 
-                                        type="text"
-                                        name="comment"
-                                        placeholder="리뷰를 남겨보세요."
-                                        value={inputs.comment}
-                                        onChange={onChange} />
-                                </div>
-                                <button className='pointer' type='submit'>작성</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className='modal-divider'></div>
                     <div className='maodal-review-area'>
-                        <div className='modal-review-box'>
-                            {/* <InfiniteScroll 
-                                dataLength={reviews.length}
-                                next={fetchReview}
-                                hasMore={true}
-                                loader={<p>가져오는 중...</p>}> */}
-                                {reviews.map(review => (
-                                    <div key={review.id} >
-                                        <div className={updateMode.status && updateMode.id === review.id ? "hide" : "review-row"}>
-                                            <div className='review-info-area'>
-                                                <div className='review-id-rating'>
-                                                    <p className="review-writer">{review.writer}</p>
-                                                    <div className="rating-area">
-                                                        <Rating className="star" size={15}
-                                                            initialValue={review.rate}
-                                                            allowFraction={true}
-                                                            readonly={true}/>
-                                                        &nbsp;{review.rate + "점"}
-                                                    </div>
+                        <div className={reviews.length === 0 ? "modal-review-inNeed" : "hide"}>작성된 리뷰가 없습니다.</div>
+                        <div className={reviews.length === 0 ? "hide" : "modal-review-box"}>
+                            {reviews.map(review => (
+                                <div key={review.id} >
+                                    <div className={updateMode.status && updateMode.id === review.id ? "hide" : "review-row"}>
+                                        <div className='review-info-area'>
+                                            <div className='review-id-rating'>
+                                                <p className="review-writer">{review.writer}</p>
+                                                <div className="rating-area">
+                                                    <Rating className="star" size={15}
+                                                        initialValue={review.rate}
+                                                        allowFraction={true}
+                                                        readonly={true}/>
+                                                    &nbsp;{review.rate + "점"}
                                                 </div>
-                                                <div className='review-time-updated'>
-                                                    <p className="review-time">{review.time}</p>
-                                                    <p className={review.isUpdated ? "review-updated" : "hide"}>&nbsp;수정됨</p>
-                                                </div>
+                                                <p className={review.isUpdated ? "review-updated" : "hide"}>(수정됨)</p>
                                             </div>
-                                            <div className='review-content-btn'>
-                                                <div className='review-content-area'
-                                                    style={userId !== review.writer ? {width: "100%"} : {} }>
-                                                    <p className="review-content">{review.content}</p>
-                                                </div>
-                                                <p className={review.writer === userId ? "review-option pointer" : "hide"}
-                                                    onClick={() => setUpdateMode({
-                                                        status:true,
-                                                        id:review.id
-                                                    })}>수정</p>
-                                                <p className={review.writer === userId ? "review-option pointer" : "hide"}
-                                                    id={review.id} onClick={(e) => deleteReview(e)}>삭제</p>
+                                            <div className='review-time-updated'>
+                                                <p className="review-time">{review.time}</p>
                                             </div>
                                         </div>
-                                        {/* 리뷰 수정하기 */}
-                                        <div className={ updateMode.status && updateMode.id === review.id ? "" : "hide" } >
+                                        <div className='review-content-btn'>
+                                            <div className='review-content-area'
+                                                style={userId !== review.writer ? {width: "100%"} : {} }>
+                                                <p className="review-content">{review.content}</p>
+                                            </div>
+                                            <p className={review.writer === userId ? "review-option pointer" : "hide"}
+                                                onClick={() => setUpdateMode({
+                                                    status:true,
+                                                    id:review.id
+                                                })}>수정</p>
+                                            <p className={review.writer === userId ? "review-option pointer" : "hide"}
+                                                id={review.id} onClick={(e) => deleteReview(e)}>삭제</p>
+                                        </div>
+                                    </div>
+                                    {/* 리뷰 수정하기 */}
+                                    <div className={ updateMode.status && updateMode.id === review.id ? "review-update-row" : "hide" } >
+                                        <div className='input-id-rating'>
                                             <p className="review-writer">{review.writer}</p>
                                             <div className="rating-area">
                                                 <Rating className="star" size={15}
                                                     initialValue={inputs.updateRate}
                                                     allowFraction={true}
                                                     onClick={(rate) => setInputs({...inputs, updateRate: rate})} />
-                                                &nbsp;{ (inputs.rate ?? "0") + "점"}
+                                                &nbsp;{ (inputs.updateRate ?? "0") + "점"}
                                             </div>
-                                            <input className="review-update"
-                                                type="text"
-                                                name="updateComment"
-                                                value={inputs.updateComment}
-                                                placeholder={review.content}
-                                                onChange={onChange} />
-                                            <p className="review pointer" id={review.id}
-                                                onClick={(e) => updateReview(e)}>수정</p>
-                                            <p className="review pointer"
+                                        </div>
+                                        <div className='review-content-btn'>
+                                            <div className='review-update-input'>
+                                                <input className="review-update"
+                                                    type="text"
+                                                    name="updateComment"
+                                                    value={inputs.updateComment}
+                                                    placeholder={review.content}
+                                                    onChange={onChange} />
+                                            </div>
+                                            <p className="review-option pointer" id={review.id}
+                                                onClick={(e) => updateReview(e)}>작성</p>
+                                            <p className="review-option pointer"
                                                 onClick={() => {
                                                     setUpdateMode({
                                                         status:false,
@@ -276,8 +242,37 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                                                 }}>취소</p>
                                         </div>
                                     </div>
-                                ))}
-                            {/* </InfiniteScroll> */}
+                                </div>
+                            ))}
+                        </div>
+                        <div className='modal-divider'></div>
+                        {/* 댓글 입력 */}
+                        <div className='modal-input-area'>
+                            <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
+                            <form className={userId === null ? "hide" : ""}
+                                onSubmit={postReview} >
+                                <div className='input-id-rating'>
+                                    <p className="modal-shop-userName">{userId}</p>
+                                    <div className="rating-area">
+                                        <Rating className="star" size={15}
+                                            initialValue={inputs.rate}
+                                            allowFraction={true}
+                                            onClick={(rate) => setInputs({...inputs, rate: rate})} />
+                                        &nbsp;{(inputs.rate ?? 0) + "점"}
+                                    </div>
+                                </div>
+                                <div className='modal-input-box'>
+                                    <div className='modal-input'>
+                                        <input className='modal-shop-input' 
+                                            type="text"
+                                            name="comment"
+                                            placeholder="리뷰를 남겨보세요."
+                                            value={inputs.comment}
+                                            onChange={onChange} />
+                                    </div>
+                                    <button className='pointer' type='submit'>작성</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

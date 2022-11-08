@@ -2,9 +2,10 @@ import React, {useEffect, useState, useCallback} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../../firebase';
-import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc } from "firebase/firestore";
+import { getDocs, doc, getDoc, query, where, collection, setDoc, serverTimestamp, updateDoc, increment, deleteDoc} from "firebase/firestore";
+import WineRating from "./WineRating";
 
-const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol }) => {
+const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol}) => {
     const [comments, setComments] = useState([]);
     const [updateMode, setUpdateMode] = useState({
         status: false,
@@ -12,8 +13,11 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
     });
     const [inputs, setInputs] = useState({
         comment: "",
-        updateComment: ""
+        updateComment: "",
+        updateRate: 0
     });
+
+    const winePoint = ["당도", "산도", "바디", "타닌"]
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -127,80 +131,125 @@ const Modal = ({ userId, alcohol, keyRef, selectedAlcohol, setSelectedAlcohol })
             <img className="modalImg" src={selectedAlcohol.img} alt="주종 이미지"/>
             <div className="modalContents">
                 <div className="modal-header">
-                    <div className='modal-itemName'>{selectedAlcohol.name}</div>
-                    <div className='modal-itemVolume'>{selectedAlcohol.volume ?? "도수"}</div>
+                    <div className='modal-itemName'>
+                        <div className='modal-itemName-kr'>{selectedAlcohol.name}, <span className='modal-itemName-eng'>{selectedAlcohol.name}</span></div>
+                    </div>
                 </div>
                 <div className="modal-middle">
-                    <div className="modal-description-area">
-                        {selectedAlcohol.description.map(desc => 
-                            <p key={desc}>{desc}</p>
-                        )}
-                    </div>
                     <div className="modal-ingredient-area">
-                        <p className="modal-ingredient">재료 정보</p>
-                        <div className={alcohol !== "cocktail" ? "hide" : "modal-ingredient-box"}>
-                            {selectedAlcohol.ingredients?.map(item => 
-                                <div key={item.name} className="modal-ingredient-card">
-                                    <img className="modal-ingredient-img" alt="재료 이미지"
-                                        src={"https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + item.img + "?alt=media"} />
-                                    <p className="modal-ingredient-name">{item.name}</p>
+                        <p className="modal-ingredient">주류 정보 <span className='modal-itemVolume'>{selectedAlcohol.volume ?? "도수"}</span></p>
+                        <div className="modal-description-area">
+                            {selectedAlcohol.description.map(desc => 
+                                <p key={desc}>{desc}</p>
+                                )}
                                 </div>
-                            )}
+                        <div className={alcohol !== "cocktail" ? "hide" : "modal-ingredient-box"}>
+                            <p className="modal-ingredient">재료 정보</p>
+                            <div className="modal-ingredient-o">
+                                {selectedAlcohol.ingredients?.map(item => 
+                                    <div key={item.name} className="modal-ingredient-card">
+                                        <img className="modal-ingredient-img" alt="재료 이미지"
+                                            src={"https://firebasestorage.googleapis.com/v0/b/mytype-8123d.appspot.com/o/" + item.img + "?alt=media"} />
+                                        <p className="modal-ingredient-name">{item.name}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className={alcohol !== "wine" ? "hide" : "modal-ingredient-box"}>
+                            <p className="modal-ingredient-wine">상세 정보</p>
+                            <div className="wine-area">
+                                {winePoint.map(point => 
+                                    <div key={point.toString()} className="wine-box">
+                                        <p className="wine-ingredient">{point}</p>
+                                        <WineRating/>
+                                    </div>)}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="modal-bottom">
-                    <div className={userId === null ? "CommentInsert" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
-                    <form className={userId === null ? "hide" : "CommentInsert"}
-                        onSubmit={postComment} >
-                        <p className="inputNames">{userId}</p>
-                        <input className='inputContents' 
-                            type="text"
-                            name="comment"
-                            placeholder="댓글을 남겨보세요."
-                            value={inputs.comment}
-                            onChange={onChange} />
-                        <button className="input-submit pointer" type='submit'>댓글 남기기</button>
-                    </form>
-                    <div className='comment'>
-                        {comments.map(comment => (
-                            <div key={comment.id} >
-                                <div className={updateMode.status && updateMode.id === comment.id ? "hide" : "comment-row"}>
-                                    <p className="comment-writer">{comment.writer}</p>
-                                    <p className="comment-content">{comment.content}</p>
-                                    <p className="comment-time">{comment.time}</p>
-                                    <button className={comment.writer === userId ? "pointer" : "hide"}
-                                        onClick={(e) => setUpdateMode({
-                                            status:true,
-                                            id:comment.id
-                                        })}>수정</button>
-                                    <button className={comment.writer === userId ? "pointer" : "hide"}
-                                        id={comment.id} onClick={(e) => deleteComment(e)} >삭제</button>
+                    <p className='modal-desc'>댓글 <span style={{color:'blue', fontWeight:800}}>{comments.length}</span>개</p>
+                    <div className='maodal-comment-area'>
+                        <div className={comments.length === 0 ? "modal-comment-inNeed" : "hide"}>작성된 리뷰가 없습니다.</div>
+                        <div className={comments.length === 0 ? "hide" : "modal-comment-box"}>
+                            {comments.map(comment => (
+                                <div key={comment.id} >
+                                    <div className={updateMode.status && updateMode.id === comment.id ? "hide" : "comment-row"}>
+                                        <div className='comment-info-area'>
+                                            <div className='comment-id-rating'>
+                                                <p className="comment-writer">{comment.writer}</p>
+                                                <p className={comment.isUpdated ? "comment-updated" : "hide"}>(수정됨)</p>
+                                            </div>
+                                            <div className='comment-time-updated'>
+                                                <p className="comment-time">{comment.time}</p>
+                                            </div>
+                                        </div>
+                                        <div className='comment-content-btn'>
+                                            <div className='comment-content-area'
+                                                style={userId !== comment.writer ? {width: "100%"} : {} }>
+                                                <p className="comment-content">{comment.content}</p>
+                                            </div>
+                                            <p className={comment.writer === userId ? "comment-option pointer" : "hide"}
+                                                onClick={() => setUpdateMode({
+                                                    status:true,
+                                                    id:comment.id
+                                                })}>수정</p>
+                                            <p className={comment.writer === userId ? "comment-option pointer" : "hide"}
+                                                id={comment.id} onClick={(e) => deleteComment(e)}>삭제</p>
+                                        </div>
+                                    </div>
+                                    {/* 리뷰 수정하기 */}
+                                    <div className={ updateMode.status && updateMode.id === comment.id ? "comment-update-row" : "hide" } >
+                                        <div className='input-id-rating'>
+                                            <p className="comment-writer">{comment.writer}</p>
+                                        </div>
+                                        <div className='comment-content-btn'>
+                                            <div className='comment-update-input'>
+                                                <input className="comment-update"
+                                                    type="text"
+                                                    name="updateComment"
+                                                    value={inputs.updateComment}
+                                                    placeholder={comment.content}
+                                                    onChange={onChange} />
+                                            </div>
+                                            <p className="comment-option pointer" id={comment.id}
+                                                onClick={(e) => updateComment(e)}>작성</p>
+                                            <p className="comment-option pointer"
+                                                onClick={() => {
+                                                    setUpdateMode({
+                                                        status:false,
+                                                        id:null
+                                                    });
+                                                    setInputs({
+                                                        comment: "",
+                                                        updateComment: ""
+                                                    });
+                                                }}>취소</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className={ updateMode.status && updateMode.id === comment.id ? "comment-row" : "hide" } >
-                                    <p className="comment-writer">{comment.writer}</p>
-                                    <input className="comment-update"
-                                        type="text"
-                                        name="updateComment"
-                                        value={inputs.updateComment}
-                                        placeholder={comment.content}
-                                        onChange={onChange} />
-                                    <button className="pointer" id={comment.id}
-                                        onClick={(e) => updateComment(e)}>수정</button>
-                                    <button className="pointer"
-                                        onClick={() => {
-                                            setUpdateMode({
-                                                status:false,
-                                                id:null
-                                            });
-                                            setInputs({
-                                                comment: "",
-                                                updateComment: ""
-                                            });
-                                        }}>취소</button>
+                            ))}
+                        </div>
+                        <div className='modal-divider'></div>
+                        {/* 댓글 입력 */}
+                        <div className='modal-input-area'>
+                            <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
+                            <form className={userId === null ? "hide" : ""}
+                                onSubmit={postComment} >
+                                <div className='input-id-rating'>
+                                    <p className="modal-shop-userName">{userId}</p>
                                 </div>
-                            </div>
-                        ))}
+                                <div className='modal-input-box'>
+                                    <div className='modal-input'>
+                                        <input className='modal-shop-input' 
+                                            type="text"
+                                            name="comment"
+                                            placeholder="리뷰를 남겨보세요."
+                                            value={inputs.comment}
+                                            onChange={onChange} />
+                                    </div>
+                                    <button className='pointer' type='submit'>작성</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

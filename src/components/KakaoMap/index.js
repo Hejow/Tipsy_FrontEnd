@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useRef, useCallback  } from 'react'
+import React, { useEffect, useState, useRef, useCallback  } from 'react';
+import { db } from '../../firebase';
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const { kakao } = window;
 
-const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPage, myLocation ,setMyLocation, filterOption}) => {
+const KakaoMap = ({keyword, setCurrentShop, setTotalPage, shopHasPage, currentPage, setCurrentPage, myLocation ,setMyLocation, filterOption}) => {
     const [kakaoMap, setKakaoMap] = useState(null);
     const [markers, setMarkers] = useState([]);
     const container = useRef();
 
     const displayMyMarker = useCallback((locPosition) => {
-        console.log("displaymarker started");
         const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
             imageSize = new kakao.maps.Size(30, 38),
             imageOption = { offset: new kakao.maps.Point(27, 69) };
@@ -21,7 +22,6 @@ const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPag
     }, [kakaoMap]);
 
     const addMarker = useCallback((place) => {
-        console.log("addmarker started");
         const infowindow = new kakao.maps.InfoWindow({zIndex: 1});
 
         const marker = new kakao.maps.Marker({
@@ -42,7 +42,6 @@ const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPag
     }, [kakaoMap, markers]);
 
     const removeMarker = useCallback(() => {
-        console.log("removemarker started");
         for(var i = 0; i < markers.length-4; i++){
             markers[i].setMap(null)
         }
@@ -50,10 +49,9 @@ const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPag
     }, [markers]);
 
     const placesSearchCB = useCallback((data, status, pagination) => {
-        console.log("placesearch started");
         if(status === kakao.maps.services.Status.OK) {
             const bounds = new kakao.maps.LatLngBounds();
-            for (var i=0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
                 addMarker(data[i]);
             }
@@ -63,18 +61,25 @@ const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPag
             kakaoMap.setBounds(bounds)
 
             removeMarker();
+            
+            for (const item of data) {
+                getDocs(query(collection(db, "review"), where("shop", "==", item.place_name))).then(snapShot => {
+                    const reviewCount = snapShot.docs.length;
+                    const rating = Math.round(snapShot.docs.reduce((a, b) => a + b.data().rate, 0)) / reviewCount;
 
-            setShopData({
-                data: data,
-                dataCount: pagination.totalCount,
-            })
+                    Object.assign(item, {rating: rating, reviewCount: reviewCount});
+                })
+            }
+
+            setCurrentShop(data);
+            setTotalPage(pagination.totalCount);
 
             if(shopHasPage === true){
                 pagination.gotoPage(currentPage)
                 setCurrentPage(currentPage)
             }
         } else alert("주변에 상점이 없습니다. 지도를 드레그하여 이동해주세요")
-    }, [addMarker, removeMarker, setCurrentPage, setShopData, shopHasPage, kakaoMap, myLocation.latitude, myLocation.longitude, currentPage]);
+    }, [addMarker, removeMarker, setCurrentShop, setCurrentPage, setTotalPage, shopHasPage, kakaoMap, myLocation.latitude, myLocation.longitude, currentPage]);
 
     useEffect(()=>{
         const center = new kakao.maps.LatLng(37.55323, 126.97271);
@@ -109,7 +114,7 @@ const KakaoMap = ({keyword, setShopData, shopHasPage, currentPage, setCurrentPag
             const locPosition = new kakao.maps.LatLng(37.55323, 126.97271);
             displayMyMarker(locPosition);
         };
-    },[kakaoMap, setMyLocation, displayMyMarker])
+    }, [kakaoMap, setMyLocation, displayMyMarker])
     
     useEffect(()=>{
         if(kakaoMap === null)  return;

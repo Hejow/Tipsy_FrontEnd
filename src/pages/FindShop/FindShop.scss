@@ -6,7 +6,6 @@
     display: flex;
     justify-content: flex;
 
-
     .findshop-map-area {
         padding: 1rem 0 1rem 6rem;
         width: 40%;
@@ -273,7 +272,7 @@
     margin-bottom: 1rem;
     border-radius: 28px;
     width: 42%;
-    height: 40vh;
+    height: 36.5vh;
 
     .shop-img-area {
         border-bottom: 1px solid #000;
@@ -286,7 +285,7 @@
         .shop-title-area {
             display: flex;
             justify-content: space-between;
-            padding-bottom: 0.4rem;
+            padding-bottom: 0.5rem;
 
             .shop-name {
                 font-weight: 700;
@@ -307,7 +306,7 @@
 
         .shop-review-area {
             display: flex;
-            padding-bottom: 0.4rem;
+            align-items: center;
 
             .shop-review {
                 font-weight: 800;
@@ -317,17 +316,7 @@
 
             .shop-review-count {
                 color: gray;
-            }
-        }
-
-        .shop-tag-area {
-            display: flex;
-
-            .shop-tag {
-                border: 1px solid #000;
-                border-radius: 24px;
-                margin-right: 0.3rem;
-                padding: 0.2rem 0.4rem;
+                font-size: 12px;
             }
         }
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faRoute , faStar, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Rating } from "react-simple-star-rating";
@@ -9,7 +9,6 @@ import { getDocs, doc, getDoc, setDoc, query, collection, where, serverTimestamp
 const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
     const [changeAddress, setChangeAddress] = useState(false);
     const [reviews, setReviews] = useState([]);
-    const [meanRate, setMeanRate] = useState(0);
     const [updateMode, setUpdateMode] = useState({
         status:false,
         id:null
@@ -107,12 +106,6 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
         } else return;
     };
 
-    const calcurateRate = useMemo(() => {
-        let sumRate = 0;
-        reviews.forEach(review => sumRate += review.rate);
-        setMeanRate(Math.round(sumRate) / reviews.length);
-    }, [reviews])
-
     const getReviewsByShop = useCallback(() => {
         getDocs(query(collection(db, "review"), where("shop", "==", selectedShop.place_name)))
             .then(snapShot => {
@@ -126,9 +119,8 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                     isUpdated: (doc.data().updated_at.seconds === doc.data().created_at.seconds) ? false : true
                 }));
                 setReviews(reviewData.sort((a, b) => a.created - b.created));
-            }).then(() => calcurateRate)
-            .catch(e => console.log(e.message));
-    }, [selectedShop.place_name, calcurateRate]);
+            }).catch(e => console.log(e.message));
+    }, [selectedShop.place_name]);
 
     useEffect(() => {
         console.log("Modal effected");
@@ -143,7 +135,7 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                 </div>
                 <div className="modal-shop-header">
                     <div className='modal-shop-itemName'>{selectedShop.place_name}</div>
-                    <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-rate" icon={faStar}/> {isNaN(meanRate) ? 0 : meanRate}/5</div>
+                    <div className='modal-shop-itemScore'><FontAwesomeIcon className="shop-rate" icon={faStar}/> {isNaN(selectedShop.rating) ? 0 : selectedShop.rating}/5</div>
                 </div>
                 <div className="modal-shop-content">
                     <p className='modal-desc'>상세정보</p>
@@ -169,7 +161,7 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                             <p className='shop-detail-value'>{selectedShop.phone === "" ? "X" : selectedShop.phone}</p>
                         </div>
                     </div>
-                    <p className='modal-desc'>댓글 <span style={{color:'blue', fontWeight:800}}>{reviews.length}</span>개</p>
+                    <p className='modal-desc'>댓글 <span style={{color:'blue', fontWeight:800}}>{selectedShop.reviewCount}</span>개</p>
                     <div className='maodal-review-area'>
                         <div className={reviews.length === 0 ? "modal-review-inNeed" : "hide"}>작성된 리뷰가 없습니다.</div>
                         <div className={reviews.length === 0 ? "hide" : "modal-review-box"}>
@@ -206,7 +198,6 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                                                 id={review.id} onClick={(e) => deleteReview(e)}>삭제</p>
                                         </div>
                                     </div>
-                                    {/* 리뷰 수정하기 */}
                                     <div className={ updateMode.status && updateMode.id === review.id ? "review-update-row" : "hide" } >
                                         <div className='input-id-rating'>
                                             <p className="review-writer">{review.writer}</p>
@@ -246,7 +237,6 @@ const Modal = ({ userId, keyRef, selectedShop, setSelectedShop, }) => {
                             ))}
                         </div>
                         <div className='modal-divider'></div>
-                        {/* 댓글 입력 */}
                         <div className='modal-input-area'>
                             <div className={userId === null ? "modal-login-inNeed" : "hide"}>로그인 후 댓글을 남겨보세요.</div>
                             <form className={userId === null ? "hide" : ""}

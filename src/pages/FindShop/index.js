@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { KakaoMap, Modal, ShopPagination } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { Rating } from "react-simple-star-rating";
 import "./FindShop.scss";
 import { db } from '../../firebase';
@@ -15,10 +15,8 @@ const FindShop = () => {
     const [keyRef, setKeyRef] = useState(null);
     const [userId, setUserId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-    const [shopData, setShopData] = useState({
-        data: [],
-        dataCount: 0
-    });
+    const [currentShop, setCurrentShop] = useState([]);
+    const [totalPage, setTotalPage] = useState(0);
     const [shopHasPage, setShopHasPage] = useState(false);
     const [myLocation, setMyLocation] = useState({
         latitude: null, 
@@ -33,7 +31,8 @@ const FindShop = () => {
     const citiesCoordinateArr = [
         {latitude: 37.55323, longitude: 126.97271}, {latitude: 35.11557, longitude: 129.04292}, {latitude: 37.45539, longitude: 126.70508},
         {latitude: 37.26547, longitude: 126.99946}, {latitude: 36.33161, longitude:127.43470}, {latitude: 35.87594, longitude: 128.59690},
-        {latitude: 35.16567, longitude: 126.91042}, {latitude: 33.49939, longitude: 126.53074}];
+        {latitude: 35.16567, longitude: 126.91042}, {latitude: 33.49939, longitude: 126.53074}
+    ];
     
     const getUserId = () => {
         const userToken = window.sessionStorage.getItem("TIPSY");
@@ -50,8 +49,6 @@ const FindShop = () => {
     //     }
     // };
 
-    // const searchShops = () => { }
-
     const getReviewKeyRef = useCallback(() => {
         setKeyRef(doc(db, "appData", "reviewPK"));
     }, []);
@@ -60,7 +57,7 @@ const FindShop = () => {
         console.log("FindShop Effected");
         getReviewKeyRef();
         getUserId();
-    }, [getReviewKeyRef])
+    }, [getReviewKeyRef]);
 
     return(
         <div className="findshop-area">            
@@ -81,8 +78,8 @@ const FindShop = () => {
                         setShopHasPage={setShopHasPage}
                         currentPage={currentPage}
                         setCurrentPage={setCurrentPage}
-                        shopData={shopData}
-                        setShopData={setShopData}
+                        setCurrentShop={setCurrentShop}
+                        setTotalPage={setTotalPage}
                         myLocation={myLocation}
                         setMyLocation={setMyLocation}
                         filterOption={filterOption}/>
@@ -136,8 +133,8 @@ const FindShop = () => {
                         onClick={() => setFilterOption("distance")}>거리순</span>
                 </div>
                 <div className="findshop-shop-area">
-                    {shopData && shopData.data.map((item) => (        
-                    <div className='shop-container pointer' key={item.id} onClick={()=>setSelectedShop(item)}>
+                    {currentShop && currentShop.map((item) => (
+                    <div key={item.id} className='shop-container pointer' onClick={()=>setSelectedShop(item)}>
                         <div className='shop-img-area'>{item.img}</div>
                         <div className='shop-detail-area'>
                             <div className='shop-title-area'>
@@ -147,22 +144,15 @@ const FindShop = () => {
                             <p className='shop-description'>{item.category_name}</p>
                             <div className='shop-review-area'>
                                 <Rating className="shop-review" size={25}
-                                    initialValue={item.reviews}
+                                    initialValue={isNaN(item.rating) ? 0 : item.rating}
                                     allowFraction={true}
                                     readonly={true}/>
-                                <span className='shop-review-count'>{item.reviews}</span>
-                            </div>
-                            <div className='shop-tag-area'>
-                                {/* {item.tags.map(tag => (
-                                    <span key={tag.toString()} className="shop-tag">{tag}</span>
-                                ))} */}
+                                <span className='shop-review-count'>{`리뷰 ${item.reviewCount}개`}</span>
                             </div>
                         </div>
                     </div>))}
                 </div>
-            <ShopPagination shopData={shopData}
-                shopHasPage={shopHasPage}
-                currentPage={currentPage}
+            <ShopPagination totalPage={totalPage}
                 setShopHasPage={setShopHasPage}
                 setCurrentPage={setCurrentPage}/>
             </div>

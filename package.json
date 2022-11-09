@@ -44,7 +44,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://Tipsy.netlify.app/",
+  "homepage": "https://tipsyu.netlify.app/",
   "browserslist": {
     "production": [
       ">0.2%",
